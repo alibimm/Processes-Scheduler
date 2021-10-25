@@ -5,8 +5,9 @@ public class Service {
 	private ServiceType type;
 	
 	
-//	Implement Service Type Later
-	public Service(double serviceTime) {
+
+	public Service(ServiceType type, double serviceTime) {
+		this.type = type;
 		this.serviceTime = serviceTime; 
 	}
 }
