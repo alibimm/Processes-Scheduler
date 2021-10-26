@@ -1,7 +1,9 @@
 package Project;
 
+import java.util.*;
+
 public class System_helper {
-    public void move_process_from(ArrayList<Process> first, ArrayList<Process> second){
+    public static void move_process_from(ArrayList<Process> first, ArrayList<Process> second){
 
     }
 }
