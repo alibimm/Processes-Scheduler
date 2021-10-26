@@ -51,6 +51,5 @@ public class Process {
 	public void setServices(ArrayList<Service> services) {
 		this.allServices = services;
 	}
-	
-	
+
 }

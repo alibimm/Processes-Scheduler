@@ -17,4 +17,11 @@ public class ProcessInCPU {
 		IntervalPair pair = new IntervalPair(start_tick, end_tick);
 		serviceTimes.add(pair);
 	}
+	
+	public Process getProcess() {
+		return this.process;
+	}
+	public void setProcess(Process p) {
+		this.process = p;
+	}
 }
