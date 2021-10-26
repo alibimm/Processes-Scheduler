@@ -4,6 +4,7 @@ import Exceptions.ExInsufficientCommandArguments;
 import Project.Command;
 import Project.MainSystem;
 import Project.Service;
+import Project.ServiceType;
 
 public class CmdCreateService implements Command {
 	
@@ -17,8 +18,12 @@ public class CmdCreateService implements Command {
                 throw new ExInsufficientCommandArguments();
             }
             MainSystem system = MainSystem.getInstance();
-            s = system.createService(Double.parseDouble(cmdParts[1]), cmdParts[2]);
-            //Add one more argument, serviceType (first in order)
+            
+            if (cmdParts[0] == "C") 
+            	s = system.createService(ServiceType.CPU, Double.parseDouble(cmdParts[1]), cmdParts[2]);
+            else if (cmdParts[0] == "K")
+            	s = system.createService(ServiceType.Keyboard, Double.parseDouble(cmdParts[1]), cmdParts[2]);
+            
         } catch (ExInsufficientCommandArguments e) {
             System.out.println(e.getMessage());
         }

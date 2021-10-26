@@ -43,8 +43,8 @@ public class MainSystem {
     }
     
 //    Create Service
-    public Service createService(double serviceTime, String processId) { // Add one argunment, service type
-    	Service s = new Service(serviceTime); // add one argument service type
+    public Service createService(ServiceType type, double serviceTime, String processId) {
+    	Service s = new Service(type, serviceTime);
     	Process p = getProcess(processId);
     	p.getServices().add(s);
     }
