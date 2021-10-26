@@ -2,9 +2,19 @@ package Project;
 
 public class Service {
 	private double serviceTime;
-	private double time_cost;
+	private ServiceType type;
 	
-	public double getTimeCost() {
-		return time_cost;
+	
+	public Service(ServiceType type, double serviceTime) {
+		this.type = type;
+		this.serviceTime = serviceTime; 
+	}
+	
+	public double getServiceTime() {
+		return this.serviceTime;
+	}
+	
+	public ServiceType getType() {
+		return this.type;
 	}
 }

@@ -15,6 +15,16 @@ public class FCFS implements Algorithm {
     //TODO ADD System_helper.java class
 
     public Result schedule(ArrayList<Process> processes){
+    	
+    	//storage of loggers for each process
+    	HashMap<Integer, ProcessInCPU> logger_map = new HashMap<Integer, ProcessInCPU>();
+    	
+    	//Create new logger for each process
+    	for(int i=0; i<processes.size(); i++) {
+    		ProcessInCPU logger = new ProcessInCPU(processes.get(i));
+    		logger_map.put(processes.get(i).getId(), logger);
+    	}
+    	
         // main loop
         for(int cur_tick = 0; cur_tick < MAX_LOOP; cur_tick++){
             // long term scheduler
@@ -30,9 +40,9 @@ public class FCFS implements Algorithm {
             if (!block_queue_K.isEmpty())
             {
                 Process cur_io_process = block_queue_K.get(0); // always provide service to the first process in block queue
-                if (cur_io_process.cur_service_tick >= cur_io_process.getCurService().getTimeCost())
+                if (cur_io_process.cur_service_tick >= cur_io_process.getCurService().getServiceTime())
                 { // I/O service is completed
-                    cur_io_process.proceed_to_next_service();
+                    cur_io_process.proceedToNextService();
                     System_helper.move_process_from(block_queue_K, ready_queue);
                 }
                 cur_io_process.cur_service_tick++; // increment the num of ticks that have been spent on current service
@@ -46,16 +56,16 @@ public class FCFS implements Algorithm {
             else
             {
                 Process cur_process = ready_queue.get(0); // always dispatch the first process in ready queue
-                cur_process_id = cur_process.getProcessID();
+                cur_process_id = cur_process.getId();
                 if (cur_process_id != prev_process_id)
                 { // store the tick when current process is dispatched
                     dispatched_tick = cur_tick;
                 }
                 cur_process.cur_service_tick++; // increment the num of ticks that have been spent on current service
-                if (cur_process.cur_service_tick >= cur_process.cur_service.time_cost)
+                if (cur_process.cur_service_tick >= cur_process.getCurService().getServiceTime())
                 { // current service is completed
                     Manage_Next_Service_FCFS.manage_next_service_fcfs(cur_process, complete_num, dispatched_tick, cur_tick, ready_queue,
-                                            processes_done, block_queue_K); // look for next service
+                                            processes_done, block_queue_K, logger_map.get(cur_process.getId())); // look for next service
                 }
                 prev_process_id = cur_process_id; // log the previous dispatched process ID
             }
@@ -64,8 +74,13 @@ public class FCFS implements Algorithm {
                 break;
             }
         }
-        Result res = new Result();
-        write_file(processes_done, res); // write output
+        
+//        write_file(processes_done, res); // write output
+        
+        //Generate result
+    	Result res = new Result(processes);
+        res.setSequence(logger_map);
+        
         return res;
 
     }
