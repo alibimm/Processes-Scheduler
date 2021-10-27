@@ -2,6 +2,7 @@ package Project;
 
 public enum ServiceType {
 	CPU,
-	Keyboard
+	Keyboard,
+	None
 }
 

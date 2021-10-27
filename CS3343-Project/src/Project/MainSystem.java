@@ -17,18 +17,24 @@ public class MainSystem {
     	allProcesses = new ArrayList<>();
     	allResults = new ArrayList<>();
     	allAlgorithms = new ArrayList<>();
+    	allAlgorithms.add(FCFS.getInstance()); // First Come First Serve
+    	allAlgorithms.add(RR.getInstance()); // Round Robin
+    	allAlgorithms.add(FB.getInstance()); // Feedback
+    	allAlgorithms.add(SPN.getInstance()); // Shortest Process Next
+    	allAlgorithms.add(SRT.getInstance()); // Shortest Remaining Time
+    	allAlgorithms.add(HRRN.getInstance()); // Highest Response Ratio Next
     }
     
     public static MainSystem getInstance() {
         return instance;
     }
     
-//    Creating Algorithms
     
     
 //    Creating Processes
-    public Process createProcess(int id, double arrivalTime) {
-    	Process p = new Process(id, arrivalTime);
+
+    public Process createProcess(String id, double arrivalTime, ArrayList<Service> services) {
+    	Process p = Process.create(id, arrivalTime, services);
     	allProcesses.add(p);
     	return p;
     }
@@ -44,11 +50,18 @@ public class MainSystem {
     }
     
 //    Create Service
-    public Service createService(ServiceType type, double serviceTime, int processId) {
-    	Service s = new Service(type, serviceTime);
-    	Process p = getProcess(processId);
-    	p.getServices().add(s);
+    public Service createService(String type, String serviceTime) {
+    	return Service.create(type, serviceTime);
     }
+
+	public void scheduleAlgorithms() {
+		
+		for (Algorithm algo : allAlgorithms)
+			allResults.add(algo.schedule(allProcesses));
+		
+	}
+	
+	
     
 //    Creating Results
     

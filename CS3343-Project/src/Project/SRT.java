@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class SRT implements Algorithm {
 	private static SRT instance = new SRT();
 	
+	private SRT() {}
+	
 	public static SRT getInstance() {
 		return instance;
 	}

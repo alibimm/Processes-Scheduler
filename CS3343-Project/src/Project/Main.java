@@ -6,62 +6,33 @@ import java.util.*;
 
 import Commands.CmdCreateProcess;
 import Commands.CmdCreateService;
+import Commands.CmdReadFile;
+import Commands.CmdSchedule;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		// Declaring in scanner to read input from keyboard
         Scanner in = new Scanner(System.in);
         
-     // Reading filepath name to the testcases directory
-        System.out.print("Please input the file pathname: ");
-		String filepathname = in.nextLine();
-		
-		// Testcases file object
-        Scanner inFile = null;
+        String command;
+        do {
+        	System.out.print(">");
+        	command = in.nextLine().trim();
+        	String[] cmdParts = command.split(" ");
+        	
+        	if (cmdParts[0].equals("readfile")) {
+        		(new CmdReadFile()).execute(cmdParts);
+        	} else if (cmdParts[0].equals("schedule")) {
+        		(new CmdSchedule()).execute(cmdParts);
+        	} else {
+        		// Exception
+        	}
+        	
+        	// Something Else
+        	
+        } while (!command.equals("exit"));
         
-        try {
-
-            inFile = new Scanner(new File(filepathname));
-
-            String processNum = inFile.nextLine(); // Input sample_0.txt
-            int numberOfProcesses = Integer.parseInt(processNum);
-            
-            for (int i = 0; i < numberOfProcesses; ++i) {
-            	
-            	while(inFile.hasNext()) {
-                    String cmdLine = inFile.nextLine().trim();
-                    
-                    
-//                    Think About exception 
-                    if (cmdLine.equals("")) {
-                        continue;
-                    }
-//                    
-                    
-                    
-                    String[] cmdParts = cmdLine.split(" "); 
-                    
-                    if (cmdParts[0].equals("#")) {
-                    	
-                    	(new CmdCreateProcess()).execute(cmdParts);
-                    	
-                    	for (int j = 0; j < Integer.parseInt(cmdParts[3]); ++j) {
-                    		String cmdLineServ = inFile.nextLine().trim();
-                    		String[] cmdPartsServ = cmdLineServ.split(" ");
-                    		cmdPartsServ[2] = cmdParts[1];
-                    		(new CmdCreateService()).execute(cmdPartsServ);
-                    	}
-                    }
-            	}   
-            }
-         } catch (FileNotFoundException e) {
-             System.out.println("File not found!");
-         } finally {
-             if (inFile != null) {
-                 inFile.close();
-             }
-             in.close();
-         }
+        in.close();
 	}
 }

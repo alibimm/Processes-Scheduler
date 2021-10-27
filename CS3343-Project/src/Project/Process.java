@@ -10,9 +10,14 @@ public class Process {
 	private Service cur_service;
 	private ArrayList<Service> allServices;
 	
-	public Process(int id, double arrivalTime) {
+	private Process(String id, double arrivalTime, ArrayList<Service> services) {
 		this.id = id;
 		this.arrivalTime = arrivalTime;
+		this.allServices = services;
+	}
+	
+	public static Process create(String id, double arrivalTime, ArrayList<Service> services) {
+		return new Process(id, arrivalTime, services);
 	}
 	
 	 // Call when current service completed
