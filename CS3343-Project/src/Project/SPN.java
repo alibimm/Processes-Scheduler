@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class SPN implements Algorithm {
 	private static SPN instance = new SPN();
 	
+	private SPN() {}
+	
 	public static SPN getInstance() {
 		return instance;
 	}

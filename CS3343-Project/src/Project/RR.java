@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class RR implements Algorithm {
 	private static RR instance = new RR();
 	
+	private RR() {}
+	
 	public static RR getInstance() {
 		return instance;
 	}
