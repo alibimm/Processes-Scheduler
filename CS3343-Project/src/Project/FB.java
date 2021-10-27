@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class FB implements Algorithm {
 	private static FB instance = new FB();
 	
+	private FB() {}
+	
 	public static FB getInstance() {
 		return instance;
 	}
