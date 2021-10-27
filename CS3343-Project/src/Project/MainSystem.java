@@ -34,7 +34,7 @@ public class MainSystem {
 //    Creating Processes
 
     public Process createProcess(String id, double arrivalTime, ArrayList<Service> services) {
-    	Process p = Process.create(id, arrivalTime, services);
+    	Process p = Process.create(Integer.parseInt(id), arrivalTime, services);
     	allProcesses.add(p);
     	return p;
     }
