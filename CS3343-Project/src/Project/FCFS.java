@@ -11,6 +11,13 @@ public class FCFS implements Algorithm {
     private int cur_process_id = -1, prev_process_id = -1;
     private int MAX_LOOP=1000;
 
+    private static FCFS instance = new FCFS();
+    
+    private FCFS() {}
+    
+    public static FCFS getInstance() {
+    	return instance;
+    }
 
     //TODO ADD System_helper.java class
 
