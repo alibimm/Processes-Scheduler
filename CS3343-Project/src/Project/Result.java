@@ -1,8 +1,9 @@
 package Project;
+
 import java.util.*;
 
 public class Result {
-	private ArrayList <ProcessInCPU> sequence;
+	private ArrayList<ProcessInCPU> sequence;
 	private HashMap<String, ProcessInfo> processInfo = new HashMap<String, ProcessInfo>();
 	private double avgQueuingTime;
 	private double avgTurnaroundTime;
@@ -13,6 +14,20 @@ public class Result {
 	private double throughput;
 	private String alghorithmType;
 	
+	
+	Result(ArrayList<Process> processes){
+		for(int i=0; i<processes.size(); i++) {
+			ProcessInCPU p = new ProcessInCPU(processes.get(i));
+			sequence.add(p);
+			//Create processInfo
+		}
+	}
+	
+	public void setSequence(HashMap<Integer, ProcessInCPU> logger_map) {
+		logger_map.forEach((k, v) -> {
+            sequence.add(v);
+        });
+	}
 	
 	public double getAvgQueueingTime() {
 		return this.avgQueuingTime;
@@ -61,8 +76,4 @@ public class Result {
 	public void set(String algType) {
 		this.alghorithmType = algType;
 	}
-	
-	
-	
-
 }

@@ -32,6 +32,7 @@ public class MainSystem {
     
     
 //    Creating Processes
+
     public Process createProcess(String id, double arrivalTime, ArrayList<Service> services) {
     	Process p = Process.create(id, arrivalTime, services);
     	allProcesses.add(p);
@@ -39,9 +40,9 @@ public class MainSystem {
     }
     
 //    Get Process
-    public Process getProcess(String id) {
+    public Process getProcess(int id) {
     	for (Process p : allProcesses) {
-    		if (p.getId().equals(id)) {
+    		if (p.getId()==id) {
     			return p;
     		}
     	}
@@ -51,7 +52,6 @@ public class MainSystem {
 //    Create Service
     public Service createService(String type, String serviceTime) {
     	return Service.create(type, serviceTime);
-    	
     }
 
 	public void scheduleAlgorithms() {

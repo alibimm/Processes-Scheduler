@@ -1,10 +1,22 @@
 package Project;
+
 import java.util.*;
-import javafx.util.Pair;
+
+
 public class ProcessInCPU {
-	
 	private Process process;
-	private Pair <Integer, Integer> p;
+	private ArrayList<IntervalPair> serviceTimes;
+	
+	ProcessInCPU(Process process){
+		this.process=process;
+//		Pair pair = new Pair<Integer ,Integer>
+//		serviceTimes= new ArrayList<Pair<Integer,Integer>>
+	}
+	
+	public void logWorking(int start_tick, int end_tick) {
+		IntervalPair pair = new IntervalPair(start_tick, end_tick);
+		serviceTimes.add(pair);
+	}
 	
 	public Process getProcess() {
 		return this.process;
@@ -12,6 +24,4 @@ public class ProcessInCPU {
 	public void setProcess(Process p) {
 		this.process = p;
 	}
-	
-	
 }
