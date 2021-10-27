@@ -2,10 +2,10 @@ package Project;
 
 public class IntervalPair {
 	private int start;
-	private int second;
+	private int end;
 	
-	IntervalPair(int _start, int _second){
+	IntervalPair(int _start, int _end){
 		this.start = _start;
-		this.second = _second;
+		this.end = _end;
 	}
 }

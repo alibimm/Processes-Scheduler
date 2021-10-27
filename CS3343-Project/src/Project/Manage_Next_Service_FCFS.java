@@ -3,7 +3,7 @@ package Project;
 import java.util.ArrayList;
 
 public class Manage_Next_Service_FCFS {
-    public static void manage_next_service_fcfs(Process cur_process, int complete_num, int dispatched_tick,
+    public static void manageNextServiceFcfs(Process cur_process, int complete_num, int dispatched_tick,
     int cur_tick, ArrayList<Process> ready_queue, ArrayList<Process> processes_done, ArrayList<Process> block_queue_K,
     ProcessInCPU logger)
     {
@@ -14,7 +14,7 @@ public class Manage_Next_Service_FCFS {
             logger.logWorking(dispatched_tick, cur_tick + 1);
             System_helper.move_process_from(ready_queue, processes_done); // remove current process from ready queue
         }
-        else if (cur_process.getCurService().getType() == ServiceType.Keyboard)
+        else if (cur_process.getCurServiceType() == ServiceType.Keyboard)
         { // next service is keyboard input, block current process
 //            cur_process.logWorking(dispatched_tick, cur_tick + 1);
             logger.logWorking(dispatched_tick, cur_tick + 1);

@@ -62,9 +62,9 @@ public class FCFS implements Algorithm {
                     dispatched_tick = cur_tick;
                 }
                 cur_process.cur_service_tick++; // increment the num of ticks that have been spent on current service
-                if (cur_process.cur_service_tick >= cur_process.getCurService().getServiceTime())
+                if (cur_process.cur_service_tick >= cur_process.getCurSurviceTime())
                 { // current service is completed
-                    Manage_Next_Service_FCFS.manage_next_service_fcfs(cur_process, complete_num, dispatched_tick, cur_tick, ready_queue,
+                    Manage_Next_Service_FCFS.manageNextServiceFcfs(cur_process, complete_num, dispatched_tick, cur_tick, ready_queue,
                                             processes_done, block_queue_K, logger_map.get(cur_process.getId())); // look for next service
                 }
                 prev_process_id = cur_process_id; // log the previous dispatched process ID

@@ -52,4 +52,11 @@ public class Process {
 		this.allServices = services;
 	}
 
+	public double getCurSurviceTime() {
+		return cur_service.getServiceTime();
+	}
+	
+	public ServiceType getCurServiceType() {
+		return cur_service.getType();
+	}
 }
