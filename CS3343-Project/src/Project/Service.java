@@ -19,9 +19,9 @@ public class Service {
   }
   
 	public static Service create(String type, String serviceTime) {
-		if (type == "C") 
+		if (type.equals("C")) 
         	return new Service(ServiceType.CPU, Double.parseDouble(serviceTime));
-        else if (type == "K")
+        else if (type.equals("K"))
         	return new Service(ServiceType.Keyboard, Double.parseDouble(serviceTime));
         
 		return new Service(ServiceType.None, 0);

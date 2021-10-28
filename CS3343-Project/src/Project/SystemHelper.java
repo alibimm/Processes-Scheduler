@@ -2,8 +2,10 @@ package Project;
 
 import java.util.*;
 
-public class System_helper {
-    public static void move_process_from(ArrayList<Process> first, ArrayList<Process> second){
-
+public class SystemHelper {
+    public static void moveProcessFrom(ArrayList<Process> first, ArrayList<Process> second){
+    	Process tmp = first.get(0);
+    	second.add(tmp);
+    	first.remove(0);
     }
 }

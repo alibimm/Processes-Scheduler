@@ -3,7 +3,7 @@ package Project;
 import java.util.*;
 
 public class Result {
-	private ArrayList<ProcessInCPU> sequence;
+	private ArrayList<ProcessInCPU> sequence = new ArrayList<>();
 	private HashMap<String, ProcessInfo> processInfo = new HashMap<String, ProcessInfo>();
 	private double avgQueuingTime;
 	private double avgTurnaroundTime;
@@ -27,6 +27,10 @@ public class Result {
 		logger_map.forEach((k, v) -> {
             sequence.add(v);
         });
+	}
+	
+	public ArrayList<ProcessInCPU> getSequence(){
+		return this.sequence;
 	}
 	
 	public double getAvgQueueingTime() {
