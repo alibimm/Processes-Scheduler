@@ -23,4 +23,11 @@ public class ProcessInCPU {
 	public void setProcess(Process p) {
 		this.process = p;
 	}
+	
+	public void print() {
+	    System.out.println("Process " + process.getId());
+	    for(IntervalPair pair : serviceTimes) {
+	      pair.print();
+	    }
+	  }
 }
