@@ -51,14 +51,14 @@ public class MainSystem {
     
 //    Create Service
     public Service createService(String type, String serviceTime) {
-    	return Service.create(type, serviceTime);
+    	Service s = Service.create(type, serviceTime);
+    	return s;
     }
 
 	public void scheduleAlgorithms() {
 		
 		for (Algorithm algo : allAlgorithms)
 			allResults.add(algo.schedule(allProcesses));
-		
 	}
 	
 	

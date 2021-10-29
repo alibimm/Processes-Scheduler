@@ -9,8 +9,7 @@ public class ProcessInCPU {
 	
 	ProcessInCPU(Process process){
 		this.process=process;
-//		Pair pair = new Pair<Integer ,Integer>
-//		serviceTimes= new ArrayList<Pair<Integer,Integer>>
+		this.serviceTimes= new ArrayList<IntervalPair>();
 	}
 	
 	public void logWorking(int start_tick, int end_tick) {

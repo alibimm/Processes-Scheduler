@@ -14,6 +14,9 @@ public class Process {
 		this.id = id;
 		this.arrivalTime = arrivalTime;
 		this.allServices = services;
+		this.cur_service_idx=0;
+		this.cur_service_tick=0;
+		this.cur_service = allServices.get(cur_service_idx);
 	}
 	
 	public static Process create(int id, double arrivalTime, ArrayList<Service> services) {
@@ -57,7 +60,7 @@ public class Process {
 		this.allServices = services;
 	}
 
-	public double getCurSurviceTime() {
+	public double getCurServiceTime() {
 		return cur_service.getServiceTime();
 	}
 	

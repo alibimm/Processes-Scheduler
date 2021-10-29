@@ -59,7 +59,7 @@ public class CmdReadFile implements Command {
     				
     				// Splitting service line into parts
     				serviceLineParts = inFile.nextLine().trim().split(" ");
-					s = system.createService(serviceLineParts[0], serviceLineParts[0]);
+					s = system.createService(serviceLineParts[0], serviceLineParts[1]);
     				services.add(s);
     			}
     			
