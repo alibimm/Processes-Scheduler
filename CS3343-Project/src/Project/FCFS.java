@@ -57,7 +57,8 @@ public class FCFS implements Algorithm {
                     else cur_io_process = null;
                 }
                 if (cur_io_process != null) cur_io_process.cur_service_tick++; // increment the num of ticks that have been spent on current service
-                
+                // AYAN TODO
+                // for all other processes in queue, except for current, increment k_queuing_time: For loop from index 1 to end
             }
 
             // CPU scheduling
@@ -75,6 +76,8 @@ public class FCFS implements Algorithm {
                 }
                 
                 cur_process.cur_service_tick++; // increment the num of ticks that have been spent on current service
+                // AYAN TODO
+                // for all other processes in queue, except for current, increment p_queuing_time: For loop from index 1 to end
                 
                 if (cur_process.cur_service_tick >= cur_process.getCurServiceTime())
                 { // current service is completed
