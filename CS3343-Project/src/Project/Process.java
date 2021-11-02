@@ -9,6 +9,7 @@ public class Process {
 	int cur_service_idx;
 	private Service cur_service;
 	private ArrayList<Service> allServices;
+	private int priority;
 	
 	private Process(int id, double arrivalTime, ArrayList<Service> services) {
 		this.id = id;
@@ -67,4 +68,13 @@ public class Process {
 	public ServiceType getCurServiceType() {
 		return cur_service.getType();
 	}
+	
+	public void setPriority(int pr) {
+		this.priority = pr;
+	}
+	
+	public int getPriority() {
+		return this.priority;
+	}
+	
 }
