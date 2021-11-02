@@ -8,4 +8,8 @@ public class IntervalPair {
 		this.start = _start;
 		this.end = _end;
 	}
+	
+	public void print() {
+	    System.out.print(start + " " + end + " ");
+	  }
 }

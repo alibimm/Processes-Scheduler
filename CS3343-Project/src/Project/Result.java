@@ -80,4 +80,10 @@ public class Result {
 	public void set(String algType) {
 		this.alghorithmType = algType;
 	}
+	
+	public void printSequences() {
+	    for (ProcessInCPU p : sequence) {
+	      p.print();
+	    }
+	  }
 }
