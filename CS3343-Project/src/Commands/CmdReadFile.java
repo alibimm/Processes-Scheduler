@@ -12,7 +12,7 @@ public class CmdReadFile implements Command {
 	
 	private Project.Process p;
 	private Project.Service s;
-	
+	Scanner in = new Scanner(System.in);
 //	// Singleton
 //	private static CmdReadFile instance = new CmdReadFile();
 //	private CmdReadFile() {}
@@ -77,6 +77,8 @@ public class CmdReadFile implements Command {
         } finally {
             if (inFile != null)
             	inFile.close();
+            	System.out.print("File has been read and closed");
+            	
         }
 		
 	}

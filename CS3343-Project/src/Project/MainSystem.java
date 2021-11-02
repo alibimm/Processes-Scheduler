@@ -29,6 +29,7 @@ public class MainSystem {
         return instance;
     }
     
+  
     
     
 //    Creating Processes
@@ -39,6 +40,17 @@ public class MainSystem {
     	return p;
     }
     
+    
+    
+//   getting processes
+    public ArrayList<Process> getProcesses() {
+    	
+    	return allProcesses;
+    }
+    
+    
+    
+    
 //    Get Process
     public Process getProcess(int id) {
     	for (Process p : allProcesses) {
@@ -48,6 +60,9 @@ public class MainSystem {
     	}
     	return null;
     }
+    
+    
+    
     
 //    Create Service
     public Service createService(String type, String serviceTime) {

@@ -15,8 +15,10 @@ public class Main {
         
         String command;
         do {
+        	
         	System.out.print(">");
         	command = in.nextLine().trim();
+        	
         	String[] cmdParts = command.split(" ");
         	
         	if (cmdParts[0].equals("readfile")) {

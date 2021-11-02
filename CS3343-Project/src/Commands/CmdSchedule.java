@@ -10,6 +10,7 @@ public class CmdSchedule implements Command {
 		
 		MainSystem system = MainSystem.getInstance();
 		system.scheduleAlgorithms();
+		System.out.print("processes has been schedule");
 		
 	}
 
