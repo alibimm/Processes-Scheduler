@@ -56,8 +56,8 @@ public class MainSystem {
     }
 
 	public void scheduleAlgorithms() {
-		
-		allResults.add(FB.getInstance().schedule(allProcesses));
+		for (Algorithm algo : allAlgorithms) 
+			allResults.add(algo.schedule(allProcesses));
 	}
 	
 	

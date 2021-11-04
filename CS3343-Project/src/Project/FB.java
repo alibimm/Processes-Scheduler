@@ -127,7 +127,7 @@ public class FB implements Algorithm {
             	
             	prev_process_id = cur_process_id; // log the previous dispatched process ID
             	
-            	if (cur_process.cur_service_tick >= cur_process.getCurServiceTime()) { // current service is completed
+            	if (cur_process.isCurServiceOver()) { // current service is completed
             		
             		service_completed = true; // the service is done
             		
