@@ -77,7 +77,7 @@ public class RR implements Algorithm {
 				}
 				
 				curProcess.cur_service_tick++;
-				if (curProcess.cur_service_tick >= curProcess.getCurServiceTime()) {
+				if (curProcess.isCurServiceOver()) {
 					ManageNextServiceFCFS.manageNextServiceFcfs(curProcess, completeNum, dispatchedTick, curTick, readyQueue,
 							processesDone, blockQueueK, loggerMap.get(curProcess.getId()));
 					loggedWorking = true;
