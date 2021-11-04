@@ -71,4 +71,5 @@ public class Process {
 	public ServiceType getCurServiceType() {
 		return cur_service.getType();
 	}
+	
 }

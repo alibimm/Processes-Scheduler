@@ -4,19 +4,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RR implements Algorithm {
-	private ArrayList<Process> readyQueue = new ArrayList<>();
-	private ArrayList<Process> blockQueueK = new ArrayList<>();
-	private ArrayList<Process> processesDone = new ArrayList<>();
-	private int completeNum = 0;
-	private int dispatchedTick = 0;
-	private int curProcessId = -1;
-	private int prevProcessId = -1;
-	private int maxLoop = 1000;
-	private int CLOCK = 5;
+	private ArrayList<Process> readyQueue;
+	private ArrayList<Process> blockQueueK;
+	private ArrayList<Process> processesDone;
+	private int completeNum;
+	private int dispatchedTick;
+	private int curProcessId;
+	private int prevProcessId;
+	private int maxLoop;
+	private int CLOCK;
 	
 	private static RR instance = new RR();
 	
-	private RR() {}
+	private RR() {
+		readyQueue = new ArrayList<>();
+		blockQueueK = new ArrayList<>();
+		processesDone = new ArrayList<>();
+		completeNum = 0;
+		dispatchedTick = 0;
+		curProcessId = -1;
+		prevProcessId = -1;
+		maxLoop = 1000;
+		CLOCK = 5;
+	}
 	
 	public static RR getInstance() {
 		return instance;
