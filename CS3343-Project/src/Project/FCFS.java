@@ -2,7 +2,7 @@ package Project;
 
 import java.util.*;
 
-public class FCFS implements Algorithm {
+public class FCFS extends Algorithm {
     private ArrayList<ProcessInCPU> readyQueue;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
@@ -28,6 +28,7 @@ public class FCFS implements Algorithm {
     	return instance;
     }
 
+    @Override
     public Result schedule(ArrayList<Process> processes){
     	//storage of loggers for each process
     	HashMap<Integer, ProcessInCPU> loggerMap = new HashMap<Integer, ProcessInCPU>();
@@ -106,7 +107,8 @@ public class FCFS implements Algorithm {
 
     }
     
-    private void manageCurrentProcess(int curTick) {
+    @Override
+    protected void manageCurrentProcess(int curTick) {
     	ProcessInCPU process = readyQueue.get(0);
         boolean processCompleted = process.proceedToNextService();
         

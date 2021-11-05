@@ -157,10 +157,10 @@ public class ProcessInCPU {
 	
 	public void calculateStats() {
 		this.queueingTime = this.k_queuing_time + this.cpu_queuing_time;
-		this.turnaroundTime = serviceTimes.get(serviceTimes.size()-1).getEnd() - serviceTimes.get(0).getStart();
+		this.turnaroundTime = serviceTimes.get(serviceTimes.size()-1).getEnd() - process.getArrivalTime(); 
 		int overallServiceTime = 0;
-		for(int i=0; i<servicesCount; i++) {
-			overallServiceTime+=process.getServiceTime(i);
+		for(int i = 0; i < servicesCount; i++) {
+			overallServiceTime += process.getServiceTime(i);
 		}
 		this.TSRatio = this.turnaroundTime / overallServiceTime ;
 		System.out.println("Process: " + process.getId());

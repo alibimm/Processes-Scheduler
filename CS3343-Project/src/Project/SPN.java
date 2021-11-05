@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class SPN implements Algorithm {
+public class SPN extends Algorithm {
 	private ArrayList<ProcessInCPU> readyQueue;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
-    private int completeNum;
+//    private int completeNum;
     private int dispatchedTick;
     private int curProcessID, prevProcessID;
     private int MAX_LOOP;
@@ -20,7 +20,7 @@ public class SPN implements Algorithm {
 		readyQueue = new ArrayList<>();
         blockQueueIO = new ArrayList<>();
         completedProcesses = new ArrayList<>();
-        completeNum = 0;
+//        completeNum = 0;
         dispatchedTick = 0;
         curProcessID = -1;
         prevProcessID = -1;
@@ -105,8 +105,7 @@ public class SPN implements Algorithm {
                 
                 if (curProcess.isCurServiceOver()) { // current service is completed
                 	flag = false;
-                    ManageNextServiceFCFS.manageNextServiceFcfs(curProcess, completeNum, dispatchedTick, currentTick, readyQueue,
-                                            completedProcesses, blockQueueIO, loggerMap.get(curProcess.getId())); // look for next service
+                    manageCurrentProcess(currentTick);
                 }
                 
                 prevProcessID = curProcessID; // log the previous dispatched process ID
@@ -127,4 +126,18 @@ public class SPN implements Algorithm {
         return res;
 	}
 
+	@Override
+	protected void manageCurrentProcess(int curTick) {
+    	ProcessInCPU process = readyQueue.get(0);
+        boolean processCompleted = process.proceedToNextService();
+        
+        if (processCompleted) { 
+            process.logWorking(dispatchedTick, curTick + 1);
+            SystemHelper.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
+        } else if (process.getCurServiceType() == ServiceType.Keyboard) { // next service is keyboard input, block current process
+            process.logWorking(dispatchedTick, curTick + 1);
+            SystemHelper.moveProcessFrom(readyQueue, blockQueueIO);
+        }
+    }
+	
 }

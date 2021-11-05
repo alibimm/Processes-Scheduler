@@ -3,11 +3,11 @@ package Project;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RR implements Algorithm {
+public class RR extends Algorithm {
 	private ArrayList<ProcessInCPU> readyQueue;
 	private ArrayList<ProcessInCPU> blockQueueIO;
 	private ArrayList<ProcessInCPU> completedProcesses;
-	private int completeNum;
+//	private int completeNum;
 	private int dispatchedTick;
 	private int curProcessId, prevProcessId;
 	private int MAX_LOOP;
@@ -19,7 +19,7 @@ public class RR implements Algorithm {
 		readyQueue = new ArrayList<>();
 		blockQueueIO = new ArrayList<>();
 		completedProcesses = new ArrayList<>();
-		completeNum = 0;
+//		completeNum = 0;
 		dispatchedTick = 0;
 		curProcessId = -1;
 		prevProcessId = -1;
@@ -44,7 +44,7 @@ public class RR implements Algorithm {
 //		
 		
 		// main loop
-		for (int currentTick=0; currentTick < MAX_LOOP; currentTick++) {
+		for (int currentTick = 0; currentTick < MAX_LOOP; currentTick++) {
 			// long term scheduler 
 			for (int i = 0; i < processes.size(); i++) {
 				if (processes.get(i).getArrivalTime() == currentTick) {
@@ -94,8 +94,7 @@ public class RR implements Algorithm {
                 	loggerMap.get(readyQueue.get(i).getId()).updateQueueingTime();
                 }
 				if (curProcess.isCurServiceOver()) {
-					ManageNextServiceFCFS.manageNextServiceFcfs(curProcess, completeNum, dispatchedTick, currentTick, readyQueue,
-							completedProcesses, blockQueueIO, loggerMap.get(curProcess.getId()));
+					manageCurrentProcess(currentTick);
 					loggedWorking = true;
 				}
 				
@@ -121,5 +120,19 @@ public class RR implements Algorithm {
 		res.printStats();
 		return res;
 	}
+	
+	@Override
+	protected void manageCurrentProcess(int curTick) {
+    	ProcessInCPU process = readyQueue.get(0);
+        boolean processCompleted = process.proceedToNextService();
+        
+        if (processCompleted) { 
+            process.logWorking(dispatchedTick, curTick + 1);
+            SystemHelper.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
+        } else if (process.getCurServiceType() == ServiceType.Keyboard) { // next service is keyboard input, block current process
+            process.logWorking(dispatchedTick, curTick + 1);
+            SystemHelper.moveProcessFrom(readyQueue, blockQueueIO);
+        }
+    }
 	
 }
