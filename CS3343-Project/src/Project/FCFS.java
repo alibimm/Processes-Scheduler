@@ -6,9 +6,9 @@ public class FCFS implements Algorithm {
     private ArrayList<ProcessInCPU> readyQueue;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
-    private int complete_num;
+//    private int completeNum;
     private int dispatchedTick;
-    private int curProccessID, prevProccessID;
+    private int curProcessID, prevProcessID;
     private int MAX_LOOP;
 
     private static FCFS instance = new FCFS();
@@ -17,10 +17,10 @@ public class FCFS implements Algorithm {
     	readyQueue = new ArrayList<>();
         blockQueueIO = new ArrayList<>();
         completedProcesses = new ArrayList<>();
-        complete_num = 0;
+//        completeNum = 0;
         dispatchedTick = 0;
-        curProccessID = -1;
-        prevProccessID = -1;
+        curProcessID = -1;
+        prevProcessID = -1;
         MAX_LOOP=1000;
     }
     
@@ -70,11 +70,11 @@ public class FCFS implements Algorithm {
 
             // CPU scheduling
             if (readyQueue.isEmpty()) {
-                prevProccessID = -1; // reset the previous dispatched process ID to empty, no process for scheduling
+                prevProcessID = -1; // reset the previous dispatched process ID to empty, no process for scheduling
             } else {
                 ProcessInCPU curProcess = readyQueue.get(0); // always dispatch the first process in ready queue
-                curProccessID = curProcess.getId();
-                if (curProccessID != prevProccessID)
+                curProcessID = curProcess.getId();
+                if (curProcessID != prevProcessID)
                 { // store the tick when current process is dispatched
                     dispatchedTick = currentTick;
                 }
@@ -86,11 +86,10 @@ public class FCFS implements Algorithm {
                 }
                 
                 if (curProcess.isCurServiceOver()) {
-                    ManageNextServiceFCFS.manageNextServiceFcfs(curProcess, complete_num, dispatchedTick, currentTick, readyQueue,
-                                            completedProcesses, blockQueueIO, loggerMap.get(curProcess.getId())); // look for next service
+                    manageCurrentProcess(currentTick);
                 }
                 
-                prevProccessID = curProccessID;
+                prevProcessID = curProcessID;
             }
             
             if (completedProcesses.size() == processes.size()) break;
@@ -105,5 +104,18 @@ public class FCFS implements Algorithm {
         
         return res;
 
+    }
+    
+    private void manageCurrentProcess(int curTick) {
+    	ProcessInCPU process = readyQueue.get(0);
+        boolean processCompleted = process.proceedToNextService();
+        
+        if (processCompleted) { 
+            process.logWorking(dispatchedTick, curTick + 1);
+            SystemHelper.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
+        } else if (process.getCurServiceType() == ServiceType.Keyboard) { // next service is keyboard input, block current process
+            process.logWorking(dispatchedTick, curTick + 1);
+            SystemHelper.moveProcessFrom(readyQueue, blockQueueIO);
+        }
     }
 }

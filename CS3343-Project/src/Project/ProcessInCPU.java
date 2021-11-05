@@ -2,6 +2,8 @@ package Project;
 
 import java.util.*;
 
+import Project.Process;
+
 
 public class ProcessInCPU {
 	private Process process;
@@ -38,7 +40,7 @@ public class ProcessInCPU {
 	}
 	
 	public boolean isCurServiceOver() {
-		return this.curServiceTick >= this.process.getServiceTime(curServiceIndex);
+		return this.curServiceTick >= this.getCurServiceTime();
 	}
 	public void incrementCurServiceTick() {
 		this.curServiceTick++;
@@ -61,9 +63,26 @@ public class ProcessInCPU {
 	public ServiceType getCurServiceType() {
 		return this.process.getServiceType(curServiceIndex);
 	}
+	public double getCurServiceTime() {
+		return this.process.getServiceTime(curServiceIndex);
+	}
 	
 	public int getId() {
 		return this.process.getId();
+	}
+	
+	public static int findShortestServiceNextProcess(ArrayList<ProcessInCPU> processes) {
+		if (processes.size() == 0) return -1;
+		double shortest = processes.get(0).getCurServiceTime();
+		int shortestIndex = 0;
+		for (int i = 1; i < processes.size(); i++) {
+			if (processes.get(i).getCurServiceTime() < shortest) {
+				shortest = processes.get(i).getCurServiceTime();
+				shortestIndex = i;
+			}
+		}
+
+		return shortestIndex;
 	}
 	
 	public void logWorking(int start_tick, int end_tick) {
