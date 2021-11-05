@@ -12,7 +12,7 @@ public class ProcessInCPU {
 	private double queueingTime;
 	private double TSRatio;
 	
-	ProcessInCPU(Process process){
+	ProcessInCPU(Process process) {
 		this.process=process;
 		this.serviceTimes= new ArrayList<IntervalPair>();
 		this.k_queuing_time=0;
