@@ -5,6 +5,11 @@ import java.util.*;
 
 public class ProcessInCPU {
 	private Process process;
+	
+	int cur_service_tick;
+	int cur_service_idx;
+//	private Service cur_service;
+	
 	private ArrayList<IntervalPair> serviceTimes;
 	private double k_queuing_time;
 	private double cpu_queuing_time;
@@ -12,8 +17,13 @@ public class ProcessInCPU {
 	private double queueingTime;
 	private double TSRatio;
 	
-	ProcessInCPU(Process process) {
-		this.process=process;
+	public ProcessInCPU (Process process) {
+		this.process = process;
+		
+		this.cur_service_idx=0;
+		this.cur_service_tick=0;
+//		this.cur_service = allServices.get(cur_service_idx);
+		
 		this.serviceTimes= new ArrayList<IntervalPair>();
 		this.k_queuing_time=0;
 		this.cpu_queuing_time=0;
@@ -24,6 +34,13 @@ public class ProcessInCPU {
 	
 	public static ProcessInCPU create(Process process) {
 		return new ProcessInCPU(process);
+	}
+	
+	public boolean isCurServiceOver() {
+		return this.cur_service_tick >= this.process.getServiceTime(cur_service_idx);
+	}
+	public void incrementCurServiceTick() {
+		this.cur_service_tick++;
 	}
 	
 	public void logWorking(int start_tick, int end_tick) {

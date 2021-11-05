@@ -27,6 +27,10 @@ public class Process {
 		return new Process(id, arrivalTime, services);
 	}
 	
+	public Service getService(int index) {
+		return allServices.get(index);
+	}
+	
 	 // Call when current service completed
     // if there are no service left, return true. Otherwise, return false
 	public boolean proceedToNextService() {
@@ -44,8 +48,15 @@ public class Process {
 		
 	}
 	
+	public double getServiceTime(int index) {
+		return this.allServices.get(index).getServiceTime();
+	}
+	
 	public boolean isCurServiceOver() {
 		return this.cur_service_tick >= this.cur_service.getServiceTime();
+	}
+	public void incrementCurServiceTick() {
+		this.cur_service_tick++;
 	}
 	
 	public double getArrivalTime() {
