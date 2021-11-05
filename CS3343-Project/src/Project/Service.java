@@ -24,6 +24,7 @@ public class Service {
         else if (type.equals("K"))
         	return new Service(ServiceType.Keyboard, Double.parseDouble(serviceTime));
         
+		// To-Do - Throw exception if ServiceType is not C or K
 		return new Service(ServiceType.None, 0);
 	}
 }

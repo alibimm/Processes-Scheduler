@@ -31,6 +31,10 @@ public class ProcessInCPU {
 		serviceTimes.add(pair);
 	}
 	
+	public ArrayList<IntervalPair> getServiceTimes() {
+		return this.serviceTimes;
+	}
+	
 	public Process getProcess() {
 		return this.process;
 	}
