@@ -3,9 +3,9 @@ package Project;
 import java.util.*;
 
 public class FCFS implements Algorithm {
-    private ArrayList<Process> readyQueue;
-    private ArrayList<Process> blockQueueIO;
-    private ArrayList<Process> completedProcesses;
+    private ArrayList<ProcessInCPU> readyQueue;
+    private ArrayList<ProcessInCPU> blockQueueIO;
+    private ArrayList<ProcessInCPU> completedProcesses;
     private int complete_num;
     private int dispatchedTick;
     private int curProccessID, prevProccessID;
@@ -33,23 +33,25 @@ public class FCFS implements Algorithm {
     	HashMap<Integer, ProcessInCPU> loggerMap = new HashMap<Integer, ProcessInCPU>();
     	
     	//Create new logger for each process
-    	for (int i = 0; i < processes.size(); i++) {
-    		ProcessInCPU logger = ProcessInCPU.create(processes.get(i));
-    		loggerMap.put(processes.get(i).getId(), logger);
-    	}
+//    	for (int i = 0; i < processes.size(); i++) {
+//    		ProcessInCPU logger = ProcessInCPU.create(processes.get(i));
+//    		loggerMap.put(processes.get(i).getId(), logger);
+//    	}
     	
         // main loop
         for (int currentTick = 0; currentTick < MAX_LOOP; currentTick++) {
             // long term scheduler
             for (int i = 0; i < processes.size(); i++) {
                 if (processes.get(i).getArrivalTime() == currentTick) { // process arrives at current tick
-                    readyQueue.add(processes.get(i));
+                	ProcessInCPU logger = ProcessInCPU.create(processes.get(i));
+                	loggerMap.put(processes.get(i).getId(), logger);
+                    readyQueue.add(logger);
                 }
             }
 
              // keyboard I/O device scheduling
             if (!blockQueueIO.isEmpty()) {
-                Process curIOProcess = blockQueueIO.get(0); // always provide service to the first process in block queue
+                ProcessInCPU curIOProcess = blockQueueIO.get(0); // always provide service to the first process in block queue
                 
                 if (curIOProcess.isCurServiceOver()) { // I/O service is completed
                     curIOProcess.proceedToNextService();
@@ -70,7 +72,7 @@ public class FCFS implements Algorithm {
             if (readyQueue.isEmpty()) {
                 prevProccessID = -1; // reset the previous dispatched process ID to empty, no process for scheduling
             } else {
-                Process curProcess = readyQueue.get(0); // always dispatch the first process in ready queue
+                ProcessInCPU curProcess = readyQueue.get(0); // always dispatch the first process in ready queue
                 curProccessID = curProcess.getId();
                 if (curProccessID != prevProccessID)
                 { // store the tick when current process is dispatched

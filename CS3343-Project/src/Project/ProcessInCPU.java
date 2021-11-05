@@ -6,9 +6,9 @@ import java.util.*;
 public class ProcessInCPU {
 	private Process process;
 	
-	int cur_service_tick;
-	int cur_service_idx;
-//	private Service cur_service;
+	int curServiceTick;
+	int curServiceIndex;
+	final int servicesCount;
 	
 	private ArrayList<IntervalPair> serviceTimes;
 	private double k_queuing_time;
@@ -19,12 +19,13 @@ public class ProcessInCPU {
 	
 	public ProcessInCPU (Process process) {
 		this.process = process;
+		this.servicesCount = process.getServicesCount();
 		
-		this.cur_service_idx=0;
-		this.cur_service_tick=0;
-//		this.cur_service = allServices.get(cur_service_idx);
+		this.curServiceIndex=0;
+		this.curServiceTick=0;
 		
 		this.serviceTimes= new ArrayList<IntervalPair>();
+		
 		this.k_queuing_time=0;
 		this.cpu_queuing_time=0;
 		this.turnaroundTime = 0;
@@ -37,10 +38,32 @@ public class ProcessInCPU {
 	}
 	
 	public boolean isCurServiceOver() {
-		return this.cur_service_tick >= this.process.getServiceTime(cur_service_idx);
+		return this.curServiceTick >= this.process.getServiceTime(curServiceIndex);
 	}
 	public void incrementCurServiceTick() {
-		this.cur_service_tick++;
+		this.curServiceTick++;
+	}
+	
+	 // Call when current service completed
+    // if there are no service left, return true. Otherwise, return false
+	public boolean proceedToNextService() {
+		this.curServiceIndex++;
+        this.curServiceTick = 0;
+        if (this.curServiceIndex >= this.servicesCount) { // all services are done, process should end
+            return true;
+        }
+        else
+        { // still requests services
+//            this.cur_service = this.allServices.get(this.curServiceIndex);
+            return false;
+        }
+	}
+	public ServiceType getCurServiceType() {
+		return this.process.getServiceType(curServiceIndex);
+	}
+	
+	public int getId() {
+		return this.process.getId();
 	}
 	
 	public void logWorking(int start_tick, int end_tick) {
@@ -73,10 +96,10 @@ public class ProcessInCPU {
 	  }
 	
 	public void updateQueueingTime() {
-		if(process.getCurServiceType()==ServiceType.Keyboard) {
+		if(process.getServiceType(curServiceIndex)==ServiceType.Keyboard) {
 			this.k_queuing_time++;
 		}
-		else if(process.getCurServiceType()==ServiceType.CPU) {
+		else if(process.getServiceType(curServiceIndex)==ServiceType.CPU) {
 			this.cpu_queuing_time++;
 		}
 		else {
@@ -117,8 +140,8 @@ public class ProcessInCPU {
 		this.queueingTime = this.k_queuing_time + this.cpu_queuing_time;
 		this.turnaroundTime = serviceTimes.get(serviceTimes.size()-1).getEnd() - serviceTimes.get(0).getStart();
 		int overallServiceTime = 0;
-		for(int i=0; i<process.getServices().size(); i++) {
-			overallServiceTime+=process.getServices().get(i).getServiceTime();
+		for(int i=0; i<servicesCount; i++) {
+			overallServiceTime+=process.getServiceTime(i);
 		}
 		this.TSRatio = this.turnaroundTime / overallServiceTime ;
 		System.out.println("Process: " + process.getId());

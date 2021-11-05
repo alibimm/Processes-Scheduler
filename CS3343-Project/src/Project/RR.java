@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RR implements Algorithm {
-	private ArrayList<Process> readyQueue;
-	private ArrayList<Process> blockQueueK;
-	private ArrayList<Process> processesDone;
+	private ArrayList<ProcessInCPU> readyQueue;
+	private ArrayList<ProcessInCPU> blockQueueIO;
+	private ArrayList<ProcessInCPU> completedProcesses;
 	private int completeNum;
 	private int dispatchedTick;
 	private int curProcessId;
@@ -18,8 +18,8 @@ public class RR implements Algorithm {
 	
 	private RR() {
 		readyQueue = new ArrayList<>();
-		blockQueueK = new ArrayList<>();
-		processesDone = new ArrayList<>();
+		blockQueueIO = new ArrayList<>();
+		completedProcesses = new ArrayList<>();
 		completeNum = 0;
 		dispatchedTick = 0;
 		curProcessId = -1;
@@ -55,22 +55,22 @@ public class RR implements Algorithm {
 			}
 			
 			// keyboard I/O device scheduling
-			if (!blockQueueK.isEmpty()) {
-				Process curIoProcess = blockQueueK.get(0);
+			if (!blockQueueIO.isEmpty()) {
+				Process curIoProcess = blockQueueIO.get(0);
 				
 				if (curIoProcess.cur_service_tick >= curIoProcess.getCurServiceTime()) {
 					curIoProcess.proceedToNextService();
-					SystemHelper.moveProcessFrom(blockQueueK, readyQueue);
-					if (!blockQueueK.isEmpty()) {
-						curIoProcess = blockQueueK.get(0);
+					SystemHelper.moveProcessFrom(blockQueueIO, readyQueue);
+					if (!blockQueueIO.isEmpty()) {
+						curIoProcess = blockQueueIO.get(0);
 					} 
 					else {
 						curIoProcess = null;
 					}
 				}
-				for (int i=1; i<blockQueueK.size(); i++) {
-//                	blockQueueK.get(i).updateQueueingTime();
-                	loggerMap.get(blockQueueK.get(i).getId()).updateQueueingTime();
+				for (int i=1; i<blockQueueIO.size(); i++) {
+//                	blockQueueIO.get(i).updateQueueingTime();
+                	loggerMap.get(blockQueueIO.get(i).getId()).updateQueueingTime();
                 }
 				
 				if (curIoProcess != null) {
@@ -97,7 +97,7 @@ public class RR implements Algorithm {
                 }
 				if (curProcess.isCurServiceOver()) {
 					ManageNextServiceFCFS.manageNextServiceFcfs(curProcess, completeNum, dispatchedTick, curTick, readyQueue,
-							processesDone, blockQueueK, loggerMap.get(curProcess.getId()));
+							completedProcesses, blockQueueIO, loggerMap.get(curProcess.getId()));
 					loggedWorking = true;
 				}
 				
