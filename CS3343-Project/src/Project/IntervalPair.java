@@ -12,4 +12,10 @@ public class IntervalPair {
 	public void print() {
 	    System.out.print(start + " " + end + " ");
 	  }
+	public int getStart() {
+		return this.start;
+	}
+	public int getEnd() {
+		return this.end;
+	}
 }

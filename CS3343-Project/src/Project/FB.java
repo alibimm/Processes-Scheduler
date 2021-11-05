@@ -5,10 +5,10 @@ import java.util.HashMap;
 
 public class FB implements Algorithm {
 	
-	private ArrayList<ArrayList<Process>> all_ready_queues;
+	private ArrayList<ArrayList<Process>> allReadyQueues;
 	
 	
-    private ArrayList<Process> block_queue_K;
+    private ArrayList<Process> blockQueueK;
     private ArrayList<Process> processes_done;
     
     private int complete_num;
@@ -26,9 +26,9 @@ public class FB implements Algorithm {
 	// Constructor
 	private FB() {
 		
-		all_ready_queues = new ArrayList<ArrayList<Process>>();
+		allReadyQueues = new ArrayList<ArrayList<Process>>();
 		
-		block_queue_K = new ArrayList<>();
+		blockQueueK = new ArrayList<>();
 		processes_done = new ArrayList<>();
 		
 		complete_num = 0;
@@ -51,15 +51,15 @@ public class FB implements Algorithm {
 		
 		// Adding all ready queues into one arraylist
 		for (int i = 0; i < 3; ++i)
-			all_ready_queues.add(new ArrayList<Process>());
+			allReadyQueues.add(new ArrayList<Process>());
 
 		//storage of loggers for each process
-    	HashMap<Integer, ProcessInCPU> logger_map = new HashMap<Integer, ProcessInCPU>();
+    	HashMap<Integer, ProcessInCPU> loggerMap = new HashMap<Integer, ProcessInCPU>();
     	
     	//Create new logger for each process
     	for(int i=0; i<processes.size(); i++) {
     		ProcessInCPU logger = new ProcessInCPU(processes.get(i));
-    		logger_map.put(processes.get(i).getId(), logger);
+    		loggerMap.put(processes.get(i).getId(), logger);
     	}
     	
     	// Main Loop
@@ -69,24 +69,29 @@ public class FB implements Algorithm {
         	for (int i = 0; i < processes.size(); i++) {
                 if (processes.get(i).getArrivalTime() == cur_tick) { // process arrives at current tick
                 	priority.put(processes.get(i), 0); // Set priority 0, since it just came
-                	all_ready_queues.get(0).add(processes.get(i)); // Add to the first prority queue
+                	allReadyQueues.get(0).add(processes.get(i)); // Add to the first prority queue
                 }
             }
         	
         	// Keyboard I/O device scheduling
-        	if (!block_queue_K.isEmpty()) { // If it is not empty
+        	if (!blockQueueK.isEmpty()) { // If it is not empty
         		
-        		Process cur_io_process = block_queue_K.get(0); // always provide service to the first process in block queue
+        		Process cur_io_process = blockQueueK.get(0); // always provide service to the first process in block queue
                 
         		if (cur_io_process.cur_service_tick >= cur_io_process.getCurServiceTime()) { // I/O service is completed
         			
         			cur_io_process.proceedToNextService();
-        			SystemHelper.moveProcessFrom(block_queue_K, all_ready_queues.get(priority.get(cur_io_process)));
+        			SystemHelper.moveProcessFrom(blockQueueK, allReadyQueues.get(priority.get(cur_io_process)));
         			
-        			if (!block_queue_K.isEmpty()) cur_io_process = block_queue_K.get(0);
+        			if (!blockQueueK.isEmpty()) cur_io_process = blockQueueK.get(0);
         			else cur_io_process = null;
         			
         		}
+        		
+        		for (int i=1; i<blockQueueK.size(); i++) {
+//                	block_queue_K.get(i).updateQueueingTime();
+                	loggerMap.get(blockQueueK.get(i).getId()).updateQueueingTime();
+                }
         		
         		if (cur_io_process != null) cur_io_process.cur_service_tick++; // increment the num of ticks that have been spent on current service
         		
@@ -100,7 +105,7 @@ public class FB implements Algorithm {
         	int not_empty_queue_priority_index = -1; // index of a queue that is not empty, if empty default value = -1
         	
             for (int i = 0; i < 3; ++i) { // loop checks if there is any process in any of ready queues
-            	if (!all_ready_queues.get(i).isEmpty()) {
+            	if (!allReadyQueues.get(i).isEmpty()) {
             		are_all_queues_empty = false;
             		not_empty_queue_priority_index = i;
             		break;
@@ -114,7 +119,7 @@ public class FB implements Algorithm {
             	boolean service_completed = false; // flag to track if cur_process done the CPU service in 5 ticks
             	boolean logged_working = false; // flag to track if cur_process.log_working() already occured
             	
-            	Process cur_process = all_ready_queues.get(not_empty_queue_priority_index).get(0);
+            	Process cur_process = allReadyQueues.get(not_empty_queue_priority_index).get(0);
             	cur_process_id = cur_process.getId();
             	
             	if (cur_process_id != prev_process_id) // store the tick when current process is dispatched
@@ -124,15 +129,23 @@ public class FB implements Algorithm {
             	
             	// TODO
                 // for all other processes in queue, except for current, increment p_queuing_time: For loop from index 1 to end
-            	
+            	for(int j=0; j<allReadyQueues.size(); j++) {
+            		for (int i=1; i<allReadyQueues.get(j).size(); i++) {
+//                    	ready_queue.get(i).updateQueueingTime();
+            			if(allReadyQueues.get(j).get(i).getId()!=cur_process.getId()) {
+                        	loggerMap.get(allReadyQueues.get(j).get(i).getId()).updateQueueingTime();
+            			}
+                    }
+            	}
+            		
             	prev_process_id = cur_process_id; // log the previous dispatched process ID
             	
             	if (cur_process.isCurServiceOver()) { // current service is completed
             		
             		service_completed = true; // the service is done
             		
-            		ManageNextServiceFB.manageNextServiceFb(cur_process, complete_num, dispatched_tick, cur_tick, all_ready_queues.get(not_empty_queue_priority_index),
-                            processes_done, block_queue_K, logger_map.get(cur_process.getId())); // look for next service
+            		ManageNextServiceFB.manageNextServiceFb(cur_process, complete_num, dispatched_tick, cur_tick, allReadyQueues.get(not_empty_queue_priority_index),
+                            processes_done, blockQueueK, loggerMap.get(cur_process.getId())); // look for next service
             		
             		logged_working = true;
             	}
@@ -141,14 +154,14 @@ public class FB implements Algorithm {
             		
             		if (!logged_working) { //check if logWorking already occured in manageNextServiceFb(...)
             			
-            			logger_map.get(cur_process.getId()).logWorking(dispatched_tick, cur_tick + 1);
+            			loggerMap.get(cur_process.getId()).logWorking(dispatched_tick, cur_tick + 1);
             			
             			if (not_empty_queue_priority_index != 2) {  // if process was not in a queue with lowest priority
             				int temp_priority = priority.get(cur_process);
             				priority.put(cur_process, temp_priority + 1); // Increase priority to the next one
-            				SystemHelper.moveProcessFrom(all_ready_queues.get(not_empty_queue_priority_index), all_ready_queues.get(not_empty_queue_priority_index + 1));
+            				SystemHelper.moveProcessFrom(allReadyQueues.get(not_empty_queue_priority_index), allReadyQueues.get(not_empty_queue_priority_index + 1));
             			} else // if process is already in a queue with lowest priority put it to the tail of that queue
-            				SystemHelper.moveProcessFrom(all_ready_queues.get(2), all_ready_queues.get(2)); 
+            				SystemHelper.moveProcessFrom(allReadyQueues.get(2), allReadyQueues.get(2)); 
             			
             			prev_process_id = -1; // reset the previous dispatched process ID to empty
             			
@@ -164,7 +177,8 @@ public class FB implements Algorithm {
         
         //Generate result
     	Result res = new Result(processes);
-        res.setSequence(logger_map);
+        res.setSequence(loggerMap);
+        res.printStats();
 //        res.printSequences();
         return res;
 		

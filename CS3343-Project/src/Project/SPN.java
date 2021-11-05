@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class SPN implements Algorithm {
-	private ArrayList<Process> ready_queue = new ArrayList<>();
-    private ArrayList<Process> block_queue_K = new ArrayList<>();
+	private ArrayList<Process> readyQueue = new ArrayList<>();
+    private ArrayList<Process> blockQueueK = new ArrayList<>();
     private ArrayList<Process> processes_done = new ArrayList<>();
     private int complete_num = 0;
     private int dispatched_tick = 0;
@@ -42,12 +42,12 @@ public class SPN implements Algorithm {
 
 
     	//storage of loggers for each process
-    	HashMap<Integer, ProcessInCPU> logger_map = new HashMap<Integer, ProcessInCPU>();
+    	HashMap<Integer, ProcessInCPU> loggerMap = new HashMap<Integer, ProcessInCPU>();
     	
     	//Create new logger for each process
     	for(int i=0; i<processes.size(); i++) {
     		ProcessInCPU logger = new ProcessInCPU(processes.get(i));
-    		logger_map.put(processes.get(i).getId(), logger);
+    		loggerMap.put(processes.get(i).getId(), logger);
     	}
     	
         // main loop
@@ -57,28 +57,29 @@ public class SPN implements Algorithm {
             {
                 if (processes.get(i).getArrivalTime() == cur_tick)
                 { // process arrives at current tick
-                    ready_queue.add(processes.get(i));
+                    readyQueue.add(processes.get(i));
                 }
             }
 
              // keyboard I/O device scheduling
-            if (!block_queue_K.isEmpty())
+            if (!blockQueueK.isEmpty())
             {
-                Process cur_io_process = block_queue_K.get(0); // always provide service to the first process in block queue
+                Process cur_io_process = blockQueueK.get(0); // always provide service to the first process in block queue
                 // AYAN TODO
                 // for all other processes in queue, except for current, increment k_queuing_time: For loop from index 1 to end
                 
                 if (cur_io_process.cur_service_tick >= cur_io_process.getCurServiceTime())
                 { // I/O service is completed
                     cur_io_process.proceedToNextService();
-                    SystemHelper.moveProcessFrom(block_queue_K, ready_queue);
+                    SystemHelper.moveProcessFrom(blockQueueK, readyQueue);
                     
-                    if (!block_queue_K.isEmpty()) cur_io_process = block_queue_K.get(0); 
+                    if (!blockQueueK.isEmpty()) cur_io_process = blockQueueK.get(0); 
                     else cur_io_process = null;
                 }
                 
-                for (int i=1; i<block_queue_K.size(); i++) {
-                	block_queue_K.get(i).updateQueueingTime();
+                for (int i=1; i<blockQueueK.size(); i++) {
+//                	blockQueueK.get(i).updateQueueingTime();
+                	loggerMap.get(blockQueueK.get(i).getId()).updateQueueingTime();
                 }
                 if (cur_io_process != null) cur_io_process.cur_service_tick++; // increment the num of ticks that have been spent on current service
                 
@@ -86,13 +87,13 @@ public class SPN implements Algorithm {
             }
 
             // CPU scheduling
-            if (ready_queue.isEmpty())
+            if (readyQueue.isEmpty())
             {                         // no process for scheduling
                 prev_process_id = -1; // reset the previous dispatched process ID to empty
             }
             else
             {
-            	Process cur_process = flag ? ready_queue.get(0) : shortestProcess(ready_queue);
+            	Process cur_process = flag ? readyQueue.get(0) : shortestProcess(readyQueue);
 //            	if (flag) {
 //            		
 //            	}
@@ -107,15 +108,16 @@ public class SPN implements Algorithm {
                 cur_process.cur_service_tick++; // increment the num of ticks that have been spent on current service
                 // AYAN TODO
                 // for all other processes in queue, except for current, increment p_queuing_time: For loop from index 1 to end
-                for (int i=1; i<ready_queue.size(); i++) {
-                	ready_queue.get(i).updateQueueingTime();
+                for (int i=1; i<readyQueue.size(); i++) {
+//                	readyQueue.get(i).updateQueueingTime();
+                	loggerMap.get(readyQueue.get(i).getId()).updateQueueingTime();
                 }
                 
                 if (cur_process.cur_service_tick >= cur_process.getCurServiceTime())
                 { // current service is completed
                 	flag = false;
-                    ManageNextServiceFCFS.manageNextServiceFcfs(cur_process, complete_num, dispatched_tick, cur_tick, ready_queue,
-                                            processes_done, block_queue_K, logger_map.get(cur_process.getId())); // look for next service
+                    ManageNextServiceFCFS.manageNextServiceFcfs(cur_process, complete_num, dispatched_tick, cur_tick, readyQueue,
+                                            processes_done, blockQueueK, loggerMap.get(cur_process.getId())); // look for next service
                 }
                 
                 prev_process_id = cur_process_id; // log the previous dispatched process ID
@@ -129,10 +131,11 @@ public class SPN implements Algorithm {
         
         //Generate result
     	Result res = new Result(processes);
-        res.setSequence(logger_map);
+        res.setSequence(loggerMap);
         
-        res.printSequences();
-        res.printQueueingTimes();
+//        res.printSequences();
+//        res.printQueueingTimes();
+        res.printStats();
         
         return res;
 	}

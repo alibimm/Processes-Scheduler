@@ -81,15 +81,11 @@ public class Result {
 		this.alghorithmType = algType;
 	}
 	
-	public void printSequences() {
-	    for (ProcessInCPU p : sequence) {
-	      p.print();
-	    }
-	  }
-	
-	public void printQueueingTimes() {
+	public void printStats() {
 		for (ProcessInCPU p : sequence) {
+			  p.print();
 		      p.printQueueingTime();
-		    }
+		      p.calculateStats();
+		}
 	}
 }
