@@ -86,4 +86,10 @@ public class Result {
 	      p.print();
 	    }
 	  }
+	
+	public void printQueueingTimes() {
+		for (ProcessInCPU p : sequence) {
+		      p.printQueueingTime();
+		    }
+	}
 }

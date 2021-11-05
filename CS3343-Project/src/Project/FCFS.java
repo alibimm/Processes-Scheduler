@@ -19,8 +19,6 @@ public class FCFS implements Algorithm {
     	return instance;
     }
 
-    //TODO ADD System_helper.java class
-
     public Result schedule(ArrayList<Process> processes){
     	
     	
@@ -48,6 +46,11 @@ public class FCFS implements Algorithm {
             if (!block_queue_K.isEmpty())
             {
                 Process cur_io_process = block_queue_K.get(0); // always provide service to the first process in block queue
+                // AYAN TODO
+                // for all other processes in queue, except for current, increment k_queuing_time: For loop from index 1 to end
+                for (int i=1; i<block_queue_K.size(); i++) {
+                	block_queue_K.get(i).updateQueueingTime();
+                }
                 
                 if (cur_io_process.cur_service_tick >= cur_io_process.getCurServiceTime())
                 { // I/O service is completed
@@ -57,8 +60,8 @@ public class FCFS implements Algorithm {
                     else cur_io_process = null;
                 }
                 if (cur_io_process != null) cur_io_process.cur_service_tick++; // increment the num of ticks that have been spent on current service
-                // AYAN TODO
-                // for all other processes in queue, except for current, increment k_queuing_time: For loop from index 1 to end
+                
+                
             }
 
             // CPU scheduling
@@ -78,16 +81,15 @@ public class FCFS implements Algorithm {
                 cur_process.cur_service_tick++; // increment the num of ticks that have been spent on current service
                 // AYAN TODO
                 // for all other processes in queue, except for current, increment p_queuing_time: For loop from index 1 to end
+                for (int i=1; i<ready_queue.size(); i++) {
+                	ready_queue.get(i).updateQueueingTime();
+                }
                 
                 if (cur_process.cur_service_tick >= cur_process.getCurServiceTime())
                 { // current service is completed
-                	System.out.println("FCFS75: cur_proc.gerCurServTime="+cur_process.getCurServiceTime() + " Process" + cur_process.getId() +
-                            " Dispatched_tick:"+dispatched_tick + " cur_tick:"+cur_tick + " getCurServTime="+cur_process.getCurServiceTime()
-                            + " CurServTick="+ cur_process.cur_service_tick);
                     ManageNextServiceFCFS.manageNextServiceFcfs(cur_process, complete_num, dispatched_tick, cur_tick, ready_queue,
                                             processes_done, block_queue_K, logger_map.get(cur_process.getId())); // look for next service
                 }
-                
                 
                 prev_process_id = cur_process_id; // log the previous dispatched process ID
             }
@@ -103,6 +105,7 @@ public class FCFS implements Algorithm {
         res.setSequence(logger_map);
         
         res.printSequences();
+        res.printQueueingTimes();
         
         return res;
 

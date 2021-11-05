@@ -9,6 +9,8 @@ public class Process {
 	int cur_service_idx;
 	private Service cur_service;
 	private ArrayList<Service> allServices;
+	private double k_queuing_time;
+	private double cpu_queuing_time;
 	
 	private Process(int id, double arrivalTime, ArrayList<Service> services) {
 		this.id = id;
@@ -16,6 +18,8 @@ public class Process {
 		this.allServices = services;
 		this.cur_service_idx=0;
 		this.cur_service_tick=0;
+		this.k_queuing_time=0;
+		this.cpu_queuing_time=0;
 		this.cur_service = allServices.get(cur_service_idx);
 	}
 	
@@ -72,4 +76,24 @@ public class Process {
 		return cur_service.getType();
 	}
 	
+	public void updateQueueingTime() {
+		if(this.getCurServiceType()==ServiceType.Keyboard) {
+			this.k_queuing_time++;
+		}
+		else if(this.getCurServiceType()==ServiceType.CPU) {
+			this.cpu_queuing_time++;
+		}
+		else {
+			//commented because nothing is handling this exception
+			//TODO add 'catch' somewhere
+			//throw new Exception("Service type of current process is None");
+		}
+	}
+	//TMP 
+	public double getCPUQT() {
+		return this.cpu_queuing_time;
+	}
+	public double getKeybQT() {
+		return this.k_queuing_time;
+	}
 }
