@@ -17,10 +17,10 @@ public class MainSystem {
     	allProcesses = new ArrayList<>();
     	allResults = new ArrayList<>();
     	allAlgorithms = new ArrayList<>();
-    	allAlgorithms.add(FCFS.getInstance()); // First Come First Serve
+//    	allAlgorithms.add(FCFS.getInstance()); // First Come First Serve
 //    	allAlgorithms.add(RR.getInstance()); // Round Robin
 //    	allAlgorithms.add(FB.getInstance()); // Feedback
-//    	allAlgorithms.add(SPN.getInstance()); // Shortest Process Next
+    	allAlgorithms.add(SPN.getInstance()); // Shortest Process Next
 //    	allAlgorithms.add(SRT.getInstance()); // Shortest Remaining Time
 //    	allAlgorithms.add(HRRN.getInstance()); // Highest Response Ratio Next
     }
