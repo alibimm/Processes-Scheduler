@@ -71,8 +71,7 @@ public class MainSystem {
     }
 
 	public void scheduleAlgorithms() {
-		
-		for (Algorithm algo : allAlgorithms)
+		for (Algorithm algo : allAlgorithms) 
 			allResults.add(algo.schedule(allProcesses));
 	}
 	

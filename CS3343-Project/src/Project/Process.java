@@ -40,6 +40,10 @@ public class Process {
 		
 	}
 	
+	public boolean isCurServiceOver() {
+		return this.cur_service_tick >= this.cur_service.getServiceTime();
+	}
+	
 	public double getArrivalTime() {
 		return arrivalTime;
 	}
@@ -67,4 +71,5 @@ public class Process {
 	public ServiceType getCurServiceType() {
 		return cur_service.getType();
 	}
+	
 }
