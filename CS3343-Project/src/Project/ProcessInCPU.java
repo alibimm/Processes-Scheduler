@@ -30,4 +30,11 @@ public class ProcessInCPU {
 	      pair.print();
 	    }
 	  }
+	
+	public void printQueueingTime() {
+	    System.out.println("Process " + process.getId());
+	    System.out.println("CPU Queuing Time: " + process.getCPUQT());
+	    System.out.println("Keyboard Queuing Time: " + process.getKeybQT());
+	  }
+	
 }

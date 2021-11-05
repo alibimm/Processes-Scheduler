@@ -132,7 +132,9 @@ public class FB implements Algorithm {
             		service_completed = true; // the service is done
             		
             		ManageNextServiceFB.manageNextServiceFb(cur_process, complete_num, dispatched_tick, cur_tick, all_ready_queues.get(not_empty_queue_priority_index),
-                            processes_done, block_queue_K, logger_map.get(cur_process.getId()), logged_working); // look for next service
+                            processes_done, block_queue_K, logger_map.get(cur_process.getId())); // look for next service
+            		
+            		logged_working = true;
             	}
             	
             	if (cur_tick + 1 - dispatched_tick >= CLOCK && !service_completed) { // Check clock interrupts and if interrupt should occur but service is completed - ignore

@@ -16,11 +16,11 @@ public class Result {
 	
 	
 	Result(ArrayList<Process> processes){
-		for(int i=0; i<processes.size(); i++) {
-			ProcessInCPU p = new ProcessInCPU(processes.get(i));
-			sequence.add(p);
-			//Create processInfo
-		}
+//		for(int i=0; i<processes.size(); i++) {
+//			ProcessInCPU p = new ProcessInCPU(processes.get(i));
+//			sequence.add(p);
+//			//Create processInfo
+//		}
 	}
 	
 	public void setSequence(HashMap<Integer, ProcessInCPU> logger_map) {
@@ -86,4 +86,10 @@ public class Result {
 	      p.print();
 	    }
 	  }
+	
+	public void printQueueingTimes() {
+		for (ProcessInCPU p : sequence) {
+		      p.printQueueingTime();
+		    }
+	}
 }
