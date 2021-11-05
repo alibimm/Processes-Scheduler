@@ -22,6 +22,7 @@ public class TestFCFS {
     	Project.Result res = FCFS.getInstance().schedule(allprocesses);
     	
     	
+    	
 
 	}
 	

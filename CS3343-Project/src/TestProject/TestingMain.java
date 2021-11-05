@@ -32,8 +32,9 @@ public class TestingMain {
 	    System.setIn(in1);
 	    System.setIn(System.in);
 	    
-//		Main.main(null);
-//		System.setIn(System.in);
+	    
+		Main.main(null);
+		System.setIn(System.in);
 //		
 		
 	}
