@@ -48,16 +48,18 @@ public class FCFS implements Algorithm {
                 Process cur_io_process = block_queue_K.get(0); // always provide service to the first process in block queue
                 // AYAN TODO
                 // for all other processes in queue, except for current, increment k_queuing_time: For loop from index 1 to end
-                for (int i=1; i<block_queue_K.size(); i++) {
-                	block_queue_K.get(i).updateQueueingTime();
-                }
                 
                 if (cur_io_process.cur_service_tick >= cur_io_process.getCurServiceTime())
                 { // I/O service is completed
                     cur_io_process.proceedToNextService();
                     SystemHelper.moveProcessFrom(block_queue_K, ready_queue);
+                    
                     if (!block_queue_K.isEmpty()) cur_io_process = block_queue_K.get(0); 
                     else cur_io_process = null;
+                }
+                
+                for (int i=1; i<block_queue_K.size(); i++) {
+                	block_queue_K.get(i).updateQueueingTime();
                 }
                 if (cur_io_process != null) cur_io_process.cur_service_tick++; // increment the num of ticks that have been spent on current service
                 

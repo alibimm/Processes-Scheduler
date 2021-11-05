@@ -68,6 +68,9 @@ public class RR implements Algorithm {
 						curIoProcess = null;
 					}
 				}
+				for (int i=1; i<blockQueueK.size(); i++) {
+                	blockQueueK.get(i).updateQueueingTime();
+                }
 				
 				if (curIoProcess != null) {
 					curIoProcess.cur_service_tick++;
@@ -87,6 +90,9 @@ public class RR implements Algorithm {
 				}
 				
 				curProcess.cur_service_tick++;
+				for (int i=1; i<readyQueue.size(); i++) {
+                	readyQueue.get(i).updateQueueingTime();
+                }
 				if (curProcess.isCurServiceOver()) {
 					ManageNextServiceFCFS.manageNextServiceFcfs(curProcess, completeNum, dispatchedTick, curTick, readyQueue,
 							processesDone, blockQueueK, loggerMap.get(curProcess.getId()));
@@ -112,6 +118,7 @@ public class RR implements Algorithm {
 		res.setSequence(loggerMap);
 		
 		res.printSequences();
+        res.printQueueingTimes();
 		
 		return res;
 	}
