@@ -1,7 +1,6 @@
 package Project;
 
 import java.util.*;
-import java.util.Collections;
 
 public class MainSystem {
 	
@@ -9,7 +8,7 @@ public class MainSystem {
 	private ArrayList<Result> allResults;
 	private ArrayList<Algorithm> allAlgorithms;
 	
-	// Using Singleton to instanciate Main System, to have only one System
+	// Using Singleton to instantiate Main System, to have only one System
     private static MainSystem instance = new MainSystem();
     
     // Constructor
@@ -17,7 +16,7 @@ public class MainSystem {
     	allProcesses = new ArrayList<>();
     	allResults = new ArrayList<>();
     	allAlgorithms = new ArrayList<>();
-    	allAlgorithms.add(FCFS.getInstance()); // First Come First Serve
+//    	allAlgorithms.add(FCFS.getInstance()); // First Come First Serve
     	allAlgorithms.add(RR.getInstance()); // Round Robin
 //    	allAlgorithms.add(FB.getInstance()); // Feedback
 //    	allAlgorithms.add(SPN.getInstance()); // Shortest Process Next

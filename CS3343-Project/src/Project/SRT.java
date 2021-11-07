@@ -18,7 +18,7 @@ public class SRT extends Algorithm {
 	}
 
 	@Override
-	protected void manageCurrentProcess(int currentTick) {
+	protected void manageCurrentCPUProcess(int currentTick) {
 		// TODO Auto-generated method stub
 		
 	}

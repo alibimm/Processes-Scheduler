@@ -3,5 +3,5 @@ import java.util.ArrayList;
 
 public abstract class Algorithm {
 	public abstract Result schedule(ArrayList<Process> processes);
-	protected abstract void manageCurrentProcess(int currentTick);
+	protected abstract void manageCurrentCPUProcess(int currentTick);
 }

@@ -15,12 +15,13 @@ public class Result {
 	private String alghorithmType;
 	
 	
-	Result(ArrayList<Process> processes){
+	Result(ArrayList<ProcessInCPU> processes){
 //		for(int i=0; i<processes.size(); i++) {
 //			ProcessInCPU p = new ProcessInCPU(processes.get(i));
 //			sequence.add(p);
 //			//Create processInfo
 //		}
+		this.sequence = processes;
 	}
 	
 	public void setSequence(HashMap<Integer, ProcessInCPU> logger_map) {

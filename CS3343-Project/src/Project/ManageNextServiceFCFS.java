@@ -10,10 +10,10 @@ public class ManageNextServiceFCFS {
         
         if (processCompleted) { 
             process.logWorking(dispatchedTick, curTick + 1);
-            SystemHelper.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
+            Util.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
         } else if (process.getCurServiceType() == ServiceType.Keyboard) { // next service is keyboard input, block current process
             process.logWorking(dispatchedTick, curTick + 1);
-            SystemHelper.moveProcessFrom(readyQueue, block_queue_K);
+            Util.moveProcessFrom(readyQueue, block_queue_K);
         }
     }
 }
