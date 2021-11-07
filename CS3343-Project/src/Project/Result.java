@@ -3,8 +3,7 @@ package Project;
 import java.util.*;
 
 public class Result {
-	private ArrayList<ProcessInCPU> sequence = new ArrayList<>();
-//	private HashMap<String, ProcessInfo> processInfo = new HashMap<String, ProcessInfo>();
+	private ArrayList<ProcessResult> processes = new ArrayList<ProcessResult>();
 	private double avgQueuingTime;
 	private double avgTurnaroundTime;
 	private double avgTSRatio;
@@ -15,18 +14,14 @@ public class Result {
 	private String alghorithmType;
 	
 	
-	Result(ArrayList<ProcessInCPU> processes){
-//		for(int i=0; i<processes.size(); i++) {
-//			ProcessInCPU p = new ProcessInCPU(processes.get(i));
-//			sequence.add(p);
-//			//Create processInfo
-//		}
-		this.sequence = processes;
+	private Result(ArrayList<ProcessInCPU> rawProcessResults) {
+		processes = ProcessResult.createResultList(rawProcessResults);
+		
+	}
+	public static Result create(ArrayList<ProcessInCPU> processes) {
+		return new Result(processes);
 	}
 	
-	public ArrayList<ProcessInCPU> getSequence(){
-		return this.sequence;
-	}
 	
 	public double getAvgQueueingTime() {
 		return this.avgQueuingTime;
@@ -77,10 +72,9 @@ public class Result {
 	}
 	
 	public void printStats() {
-		for (ProcessInCPU p : sequence) {
-//			  p.print();
-//		      p.printQueueingTime();
-//		      p.calculateStats();
+		for (ProcessResult process : processes) {
+			  process.print();
+		      process.printQueueingTime();
 		}
 	}
 }

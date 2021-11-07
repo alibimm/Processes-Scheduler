@@ -55,9 +55,11 @@ public class MainSystem {
     }
 
 	public void scheduleAlgorithms() {
-		ArrayList<ArrayList<ProcessInCPU>> processResults = new ArrayList<ArrayList<ProcessInCPU>>();
+		
 		for (Algorithm algo : allAlgorithms) {
-			processResults.add(algo.schedule(allProcesses));
+			ArrayList<ProcessInCPU> rawProcessResults = algo.schedule(allProcesses);
+			Result algoResult = Result.create(rawProcessResults);
+			allResults.add(algoResult);
 		}
 	}
 	

@@ -35,6 +35,14 @@ public class ProcessResult {
 		return new ProcessResult(process);
 	}
 	
+	public static ArrayList<ProcessResult> createResultList(ArrayList<ProcessInCPU> processes) {
+		ArrayList<ProcessResult> results = new ArrayList<ProcessResult>(); 
+		for (ProcessInCPU rawProcess : processes) {
+			results.add(new ProcessResult(rawProcess));
+		}
+		return results;
+	}
+	
 	public void print() {
 	    System.out.println("Process " + process.getId());
 	    for (IntervalPair pair : serviceIntervals) {
