@@ -1,9 +1,6 @@
 package Project;
 
-import java.util.*;
-
-import Project.Process;
-
+import java.util.ArrayList;
 
 public class ProcessInCPU {
 	private Process process;
@@ -13,12 +10,10 @@ public class ProcessInCPU {
 	final int servicesCount;
 	
 	private ArrayList<IntervalPair> serviceTimes;
-	private double k_queuing_time;
-	private double cpu_queuing_time;
-	private double turnaroundTime;
-	private double queueingTime;
-	private double TSRatio;
+	private int queuingTimeIO;
+	private int queuingTimeCPU;
 	
+	// CONSTRUCTOR
 	public ProcessInCPU (Process process) {
 		this.process = process;
 		this.servicesCount = process.getServicesCount();
@@ -28,25 +23,22 @@ public class ProcessInCPU {
 		
 		this.serviceTimes= new ArrayList<IntervalPair>();
 		
-		this.k_queuing_time=0;
-		this.cpu_queuing_time=0;
-		this.turnaroundTime = 0;
-		this.queueingTime = 0;
-		this.TSRatio = 0;
+		this.queuingTimeIO=0;
+		this.queuingTimeCPU=0;
 	}
-	
 	public static ProcessInCPU create(Process process) {
 		return new ProcessInCPU(process);
 	}
 	
+	// METHODS
 	public boolean isCurServiceOver() {
-		return this.curServiceTick >= this.getCurServiceTime();
+		return curServiceTick >= getCurServiceTime();
 	}
 	public void incrementCurServiceTick() {
-		this.curServiceTick++;
+		curServiceTick++;
 	}
 	
-	 // Call when current service completed
+	// Call when current service completed
     // if there are no service left, return true. Otherwise, return false
 	public boolean proceedToNextService() {
 		this.curServiceIndex++;
@@ -54,23 +46,29 @@ public class ProcessInCPU {
         if (this.curServiceIndex >= this.servicesCount) { // all services are done, process should end
             return true;
         }
-        else
-        { // still requests services
-//            this.cur_service = this.allServices.get(this.curServiceIndex);
-            return false;
-        }
-	}
-	public ServiceType getCurServiceType() {
-		return this.process.getServiceType(curServiceIndex);
-	}
-	public double getCurServiceTime() {
-		return this.process.getServiceTime(curServiceIndex);
+        // still requests services
+        return false;
 	}
 	
-	public int getId() {
-		return this.process.getId();
+	public void updateQueueingTime() {
+		if (process.getServiceType(curServiceIndex) == ServiceType.Keyboard) {
+			this.queuingTimeIO++;
+		} else if (process.getServiceType(curServiceIndex) == ServiceType.CPU) { // TODO: check is this way correct? why access service type outside
+			this.queuingTimeCPU++;
+		}
+		else {
+			//commented because nothing is handling this exception
+			//TODO add 'catch' somewhere
+			//throw new Exception("Service type of current process is None");
+		}
 	}
 	
+	public void logWorking(int start_tick, int end_tick) {
+		IntervalPair pair = new IntervalPair(start_tick, end_tick);
+		serviceTimes.add(pair);
+	}
+	
+	// STATIC FUNCS
 	public static int findShortestServiceNextProcess(ArrayList<ProcessInCPU> processes) {
 		if (processes.size() == 0) return -1;
 		double shortest = processes.get(0).getCurServiceTime();
@@ -85,87 +83,26 @@ public class ProcessInCPU {
 		return shortestIndex;
 	}
 	
-	public void logWorking(int start_tick, int end_tick) {
-		IntervalPair pair = new IntervalPair(start_tick, end_tick);
-		serviceTimes.add(pair);
+	// GETTERS
+	public ServiceType getCurServiceType() {
+		return this.process.getServiceType(curServiceIndex);
 	}
-	
+	private double getCurServiceTime() {
+		return this.process.getServiceTime(curServiceIndex);
+	}
+	public int getId() {
+		return this.process.getId();
+	}
 	public ArrayList<IntervalPair> getServiceTimes() {
 		return this.serviceTimes;
 	}
-	
 	public Process getProcess() {
 		return this.process;
 	}
-	public void setProcess(Process p) {
-		this.process = p;
+	public int getQueuingTimeCPU() {
+		return this.queuingTimeCPU;
 	}
-	
-	public void print() {
-	    System.out.println("Process " + process.getId());
-	    for(IntervalPair pair : serviceTimes) {
-	      pair.print();
-	    }
-	  }
-	
-	public void printQueueingTime() {
-	    System.out.println("Process " + process.getId());
-	    System.out.println("CPU Queuing Time: " + this.getCPUQT());
-	    System.out.println("Keyboard Queuing Time: " + this.getKeybQT());
-	  }
-	
-	public void updateQueueingTime() {
-		if(process.getServiceType(curServiceIndex)==ServiceType.Keyboard) {
-			this.k_queuing_time++;
-		}
-		else if(process.getServiceType(curServiceIndex)==ServiceType.CPU) {
-			this.cpu_queuing_time++;
-		}
-		else {
-			//commented because nothing is handling this exception
-			//TODO add 'catch' somewhere
-			//throw new Exception("Service type of current process is None");
-		}
-	}
-	
-	public double getCPUQT() {
-		return this.cpu_queuing_time;
-	}
-	public double getKeybQT() {
-		return this.k_queuing_time;
-	}
-	
-	public double getTurnaroundTime() {
-		return this.turnaroundTime;
-	}
-	public double getQueueingTime() {
-		return this.queueingTime;
-	}
-	public double getTSRatio() {
-		return this.TSRatio;
-	}
-	
-	public void setTurnaroundTime(double tt) {
-		this.turnaroundTime = tt;
-	}
-	public void setQueueingTime(double qt) {
-		this.queueingTime = qt;
-	}
-	public void setTSRatio(double tsr) {
-		this.TSRatio = tsr;
-	}
-	
-	public void calculateStats() {
-		this.queueingTime = this.k_queuing_time + this.cpu_queuing_time;
-		this.turnaroundTime = serviceTimes.get(serviceTimes.size()-1).getEnd() - process.getArrivalTime(); 
-		int overallServiceTime = 0;
-		for(int i = 0; i < servicesCount; i++) {
-			overallServiceTime += process.getServiceTime(i);
-		}
-		this.TSRatio = this.turnaroundTime / overallServiceTime ;
-		System.out.println("Process: " + process.getId());
-		System.out.println("Queuing time: " + this.queueingTime);
-		System.out.println("Turnaround time: " + this.turnaroundTime);
-		System.out.println("TS ratio: " + this.TSRatio);
+	public int getQueuingTimeIO() {
+		return this.queuingTimeIO;
 	}
 }

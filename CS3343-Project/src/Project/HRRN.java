@@ -12,7 +12,7 @@ public class HRRN extends Algorithm {
 	}
 
 	@Override
-	public Result schedule(ArrayList<Process> processes) {
+	public ArrayList<ProcessInCPU> schedule(ArrayList<Process> processes) {
 		// add functionality
 		return null;
 	}

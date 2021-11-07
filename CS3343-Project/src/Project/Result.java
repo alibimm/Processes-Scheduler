@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Result {
 	private ArrayList<ProcessInCPU> sequence = new ArrayList<>();
-	private HashMap<String, ProcessInfo> processInfo = new HashMap<String, ProcessInfo>();
+//	private HashMap<String, ProcessInfo> processInfo = new HashMap<String, ProcessInfo>();
 	private double avgQueuingTime;
 	private double avgTurnaroundTime;
 	private double avgTSRatio;
@@ -22,12 +22,6 @@ public class Result {
 //			//Create processInfo
 //		}
 		this.sequence = processes;
-	}
-	
-	public void setSequence(HashMap<Integer, ProcessInCPU> logger_map) {
-		logger_map.forEach((k, v) -> {
-            sequence.add(v);
-        });
 	}
 	
 	public ArrayList<ProcessInCPU> getSequence(){
@@ -84,9 +78,9 @@ public class Result {
 	
 	public void printStats() {
 		for (ProcessInCPU p : sequence) {
-			  p.print();
-		      p.printQueueingTime();
-		      p.calculateStats();
+//			  p.print();
+//		      p.printQueueingTime();
+//		      p.calculateStats();
 		}
 	}
 }

@@ -22,8 +22,7 @@ public class RR extends Algorithm {
 	public static RR getInstance() { return instance; }
 	
 	@Override
-	public Result schedule(ArrayList<Process> processes) {
-		Result result;
+	public ArrayList<ProcessInCPU> schedule(ArrayList<Process> processes) {
 		
 		// main loop
 		for (int tick = 0; tick < Constants.MAX_LOOP; tick++) {
@@ -72,10 +71,7 @@ public class RR extends Algorithm {
 			if (completedProcesses.size() == processes.size()) break;
 		}
 		
-		result = new Result(completedProcesses);
-		result.printStats();
-		
-		return result;
+		return completedProcesses;
 	}
 	
 	@Override

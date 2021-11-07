@@ -1,42 +1,36 @@
 package Project;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class Process {
 	private int id;
-	private double arrivalTime;
+	private int arrivalTime;
 	private ArrayList<Service> allServices;
 	
-	private Process(int id, double arrivalTime, ArrayList<Service> services) {
+	// CONSTRUCTOR
+	private Process(int id, int arrivalTime, ArrayList<Service> services) {
 		this.id = id;
 		this.arrivalTime = arrivalTime;
 		this.allServices = services;
 	}
-	
-	public static Process create(int id, double arrivalTime, ArrayList<Service> services) {
+	public static Process create(int id, int arrivalTime, ArrayList<Service> services) {
 		return new Process(id, arrivalTime, services);
 	}
 	
-	
+	// GETTERS
 	public double getServiceTime(int index) {
-		return this.allServices.get(index).getServiceTime();
+		return allServices.get(index).getServiceTime();
 	}
 	public ServiceType getServiceType(int index) {
-		return this.allServices.get(index).getType();
+		return allServices.get(index).getType();
 	}
 	public int getServicesCount() {
-		return this.allServices.size();
+		return allServices.size();
 	}
-	
-	public double getArrivalTime() {
+	public int getArrivalTime() {
 		return arrivalTime;
 	}
-	
 	public int getId() {
 		return id;
-	}
-	
-	public void setServices(ArrayList<Service> services) {
-		this.allServices = services;
 	}
 }

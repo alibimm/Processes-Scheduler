@@ -27,9 +27,8 @@ public class FB extends Algorithm {
 	public static FB getInstance() { return instance; }
 	
 	@Override
-	public Result schedule(ArrayList<Process> processes) {
-		Result result;
-		
+	public ArrayList<ProcessInCPU> schedule(ArrayList<Process> processes) {
+
 		// Adding all ready queues into one arraylist
 		for (int i = 0; i < Constants.PRIORITY_COUNT; i++) {
 			allReadyQueues.add(new ArrayList<ProcessInCPU>());
@@ -90,10 +89,7 @@ public class FB extends Algorithm {
             if (completedProcesses.size() == processes.size()) break; // all process completed
         }   
         
-        //Generate result
-    	result = new Result(completedProcesses);
-        result.printStats();
-        return result;
+        return completedProcesses;
 		
 	}
 	

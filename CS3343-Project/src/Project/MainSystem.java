@@ -1,6 +1,6 @@
 package Project;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class MainSystem {
 	
@@ -32,7 +32,7 @@ public class MainSystem {
     
 //    Creating Processes
 
-    public Process createProcess(String id, double arrivalTime, ArrayList<Service> services) {
+    public Process createProcess(String id, int arrivalTime, ArrayList<Service> services) {
     	Process p = Process.create(Integer.parseInt(id), arrivalTime, services);
     	allProcesses.add(p);
     	return p;
@@ -55,11 +55,16 @@ public class MainSystem {
     }
 
 	public void scheduleAlgorithms() {
-		for (Algorithm algo : allAlgorithms) 
-			allResults.add(algo.schedule(allProcesses));
+		ArrayList<ArrayList<ProcessInCPU>> processResults = new ArrayList<ArrayList<ProcessInCPU>>();
+		for (Algorithm algo : allAlgorithms) {
+			processResults.add(algo.schedule(allProcesses));
+		}
 	}
 	
-	
+	public void clear() {
+		allProcesses.clear();
+    	allResults.clear();
+	}
     
 //    Creating Results
     

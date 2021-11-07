@@ -22,8 +22,7 @@ public class FCFS extends Algorithm {
     public static FCFS getInstance() { return instance; }
 
     @Override
-    public Result schedule(ArrayList<Process> processes) {
-    	Result result;
+    public ArrayList<ProcessInCPU> schedule(ArrayList<Process> processes) {
     	
         // main loop
         for (int tick = 0; tick < Constants.MAX_LOOP; tick++) {
@@ -71,12 +70,8 @@ public class FCFS extends Algorithm {
             
             if (completedProcesses.size() == processes.size()) break;
         }
-        
-        //Generate result
-    	result = new Result(completedProcesses);
-        result.printStats();
-        
-        return result;
+
+        return completedProcesses;
 
     }
     
