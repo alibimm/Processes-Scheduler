@@ -67,8 +67,9 @@ public class MainSystem {
 		allInputs.add(input);
 		curInd++;
 	}
-    
-//    Creating Results
-    
+	
+	public ArrayList<ArrayList<Process>> getAllInputs() {
+		return allInputs;
+	}
 	
 }

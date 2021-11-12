@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import Commands.CmdReadFile;
-import Exceptions.ExIndexOutOfBounds;
 import Exceptions.ExInvalidInput;
 import Exceptions.ExInvalidServiceType;
 import Project.MainSystem;
@@ -31,7 +30,7 @@ public class TestCmdReadFile {
 		(new CmdReadFile()).execute(cmdParts);
 		
 		// Initializing actual result
-		ArrayList<Process> actual = system.getAllProcesses();
+		ArrayList<Process> actual = system.getAllInputs().get(0);
 		
 		// Initializing expected result
 		ArrayList<Process> expected = new ArrayList<>();
@@ -350,7 +349,7 @@ public class TestCmdReadFile {
 		(new CmdReadFile()).execute(cmdParts);
 		
 		// Initializing actual result
-		ArrayList<Process> actual = system.getAllProcesses();
+		ArrayList<Process> actual = system.getAllInputs().get(0);
 		
 		// Initializing expected result
 		ArrayList<Process> expected = new ArrayList<>();

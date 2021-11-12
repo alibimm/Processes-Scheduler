@@ -21,7 +21,14 @@ public class Case {
 	}
 	
 	public static Case create(ArrayList<Algorithm> algorithms, ArrayList<Process> processes) {
-		return new Case(newid++, algorithms, processes);
+		Case newCase;
+		try {
+			newCase = new Case(newid++, algorithms, processes);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(e.getMessage());
+			newCase = null;
+		}
+		return newCase;
 	}
 	
 	public void printTable() {
