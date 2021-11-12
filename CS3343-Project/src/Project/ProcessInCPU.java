@@ -5,26 +5,26 @@ import java.util.ArrayList;
 public class ProcessInCPU {
 	private Process process;
 	
-	int curServiceTick;
-	int curServiceIndex;
-	final int servicesCount;
+	private int curServiceTick;
+	private int curServiceIndex;
+	private final int servicesCount;
 	
-	private ArrayList<IntervalPair> serviceTimes;
+	private ArrayList<Interval> serviceTimes;
 	private int queuingTimeIO;
 	private int queuingTimeCPU;
 	
 	// CONSTRUCTOR
 	public ProcessInCPU (Process process) {
 		this.process = process;
-		this.servicesCount = process.getServicesCount();
+		servicesCount = process.getServicesCount();
 		
-		this.curServiceIndex=0;
-		this.curServiceTick=0;
+		setCurServiceIndex(0);
+		curServiceTick = 0;
 		
-		this.serviceTimes= new ArrayList<IntervalPair>();
+		serviceTimes= new ArrayList<Interval>();
 		
-		this.queuingTimeIO=0;
-		this.queuingTimeCPU=0;
+		queuingTimeIO = 0;
+		queuingTimeCPU = 0;
 	}
 	public static ProcessInCPU create(Process process) {
 		return new ProcessInCPU(process);
@@ -41,9 +41,9 @@ public class ProcessInCPU {
 	// Call when current service completed
     // if there are no service left, return true. Otherwise, return false
 	public boolean proceedToNextService() {
-		this.curServiceIndex++;
+		this.setCurServiceIndex(this.getCurServiceIndex() + 1);
         this.curServiceTick = 0;
-        if (this.curServiceIndex >= this.servicesCount) { // all services are done, process should end
+        if (this.getCurServiceIndex() >= this.servicesCount) { // all services are done, process should end
             return true;
         }
         // still requests services
@@ -51,15 +51,15 @@ public class ProcessInCPU {
 	}
 	
 	public void updateQueueingTime() {
-		if (process.getServiceType(curServiceIndex) == ServiceType.Keyboard) {
+		if (process.getServiceType(getCurServiceIndex()) == ServiceType.Keyboard) {
 			this.queuingTimeIO++;
-		} else if (process.getServiceType(curServiceIndex) == ServiceType.CPU) { // TODO: check is this way correct? why access service type outside
+		} else if (process.getServiceType(getCurServiceIndex()) == ServiceType.CPU) { // TODO: check is this way correct? why access service type outside
 			this.queuingTimeCPU++;
 		}
 	}
 	
-	public void logWorking(int start_tick, int end_tick) {
-		IntervalPair pair = new IntervalPair(start_tick, end_tick);
+	public void logWorking(int startTick, int endTick) {
+		Interval pair = Interval.create(startTick, endTick);
 		serviceTimes.add(pair);
 	}
 	
@@ -77,18 +77,51 @@ public class ProcessInCPU {
 
 		return shortestIndex;
 	}
+	public static int findShortestRemainingTimeProcess(ArrayList<ProcessInCPU> processes) {
+		if (processes.size() == 0) return -1;
+		double shortest = processes.get(0).getCurServiceRemainingTime();
+		int shortestIndex = 0;
+		for (int i = 1; i < processes.size(); i++) {
+			if (processes.get(i).getCurServiceRemainingTime() < shortest) {
+				shortest = processes.get(i).getCurServiceRemainingTime();
+				shortestIndex = i;
+			}
+		}
+		
+		return shortestIndex;
+	}
+	public static int findHighestResponseRatioProcess(ArrayList<ProcessInCPU> processes) {
+		if (processes.size() == 0) return -1;
+		double highest = processes.get(0).getResponseRatio();
+		int highestIndex = 0;
+		for (int i = 1; i < processes.size(); i++) {
+			if (processes.get(i).getResponseRatio() > highest) {
+				highest = processes.get(i).getResponseRatio();
+				highestIndex = i;
+			}
+		}
+		
+		return highestIndex;
+	}
 	
 	// GETTERS
 	public ServiceType getCurServiceType() {
-		return this.process.getServiceType(curServiceIndex);
+		return process.getServiceType(getCurServiceIndex());
 	}
 	private double getCurServiceTime() {
-		return this.process.getServiceTime(curServiceIndex);
+		return process.getServiceTime(getCurServiceIndex());
 	}
+	private double getCurServiceRemainingTime() {
+		return getCurServiceTime() - curServiceTick;
+	}
+	private double getResponseRatio() {
+		return (queuingTimeCPU + process.getServiceTime(getCurServiceIndex())) / process.getServiceTime(getCurServiceIndex());
+	}
+	
 	public int getId() {
 		return this.process.getId();
 	}
-	public ArrayList<IntervalPair> getServiceTimes() {
+	public ArrayList<Interval> getServiceTimes() {
 		return this.serviceTimes;
 	}
 	public Process getProcess() {
@@ -99,5 +132,11 @@ public class ProcessInCPU {
 	}
 	public int getQueuingTimeIO() {
 		return this.queuingTimeIO;
+	}
+	public int getCurServiceIndex() {
+		return curServiceIndex;
+	}
+	public void setCurServiceIndex(int curServiceIndex) {
+		this.curServiceIndex = curServiceIndex;
 	}
 }
