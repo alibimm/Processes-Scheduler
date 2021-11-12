@@ -3,6 +3,7 @@ package Project;
 import java.util.*;
 
 public class FCFS extends Algorithm {
+	private final AlgorithmType type = AlgorithmType.FCFS;
     private ArrayList<ProcessInCPU> readyQueue;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
@@ -86,6 +87,10 @@ public class FCFS extends Algorithm {
         } else if (process.getCurServiceType() == ServiceType.Keyboard) { 
             Util.moveProcessFrom(readyQueue, blockQueueIO); // next service is keyboard input, block current process
         }
-        
     }
+    
+    @Override
+	public AlgorithmType getType() {
+		return type;
+	}
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class MainSystem {
 	
 	private ArrayList<Process> allProcesses;
-	private ArrayList<Result> allResults;
+	private ArrayList<Case> allCases;
 	private ArrayList<Algorithm> allAlgorithms;
 	
 	// Using Singleton to instantiate Main System, to have only one System
@@ -14,11 +14,11 @@ public class MainSystem {
     // Constructor
     private MainSystem() {
     	allProcesses = new ArrayList<>();
-    	allResults = new ArrayList<>();
+//    	allResults = new ArrayList<>();
     	allAlgorithms = new ArrayList<>();
 //    	allAlgorithms.add(FCFS.getInstance()); // First Come First Serve
-    	allAlgorithms.add(RR.getInstance()); // Round Robin
-//    	allAlgorithms.add(FB.getInstance()); // Feedback
+//    	allAlgorithms.add(RR.getInstance()); // Round Robin
+    	allAlgorithms.add(FB.getInstance()); // Feedback
 //    	allAlgorithms.add(SPN.getInstance()); // Shortest Process Next
 //    	allAlgorithms.add(SRT.getInstance()); // Shortest Remaining Time
 //    	allAlgorithms.add(HRRN.getInstance()); // Highest Response Ratio Next
@@ -28,24 +28,11 @@ public class MainSystem {
         return instance;
     }
     
-    
-    
 //    Creating Processes
-
     public Process createProcess(String id, int arrivalTime, ArrayList<Service> services) {
     	Process p = Process.create(Integer.parseInt(id), arrivalTime, services);
     	allProcesses.add(p);
     	return p;
-    }
-    
-//    Get Process
-    public Process getProcess(int id) {
-    	for (Process p : allProcesses) {
-    		if (p.getId()==id) {
-    			return p;
-    		}
-    	}
-    	return null;
     }
     
 //    Create Service
@@ -54,18 +41,15 @@ public class MainSystem {
     	return s;
     }
 
-	public void scheduleAlgorithms() {
-		
-		for (Algorithm algo : allAlgorithms) {
-			ArrayList<ProcessInCPU> rawProcessResults = algo.schedule(allProcesses);
-			Result algoResult = Result.create(rawProcessResults);
-			allResults.add(algoResult);
-		}
+	public boolean scheduleAlgorithms() {
+		if (allProcesses.size() == 0) return false;
+		Case newCase = Case.create(allAlgorithms, allProcesses);
+		allCases.add(newCase);
+		return true;
 	}
 	
 	public void clear() {
 		allProcesses.clear();
-    	allResults.clear();
 	}
     
 //    Creating Results
