@@ -6,252 +6,286 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import Exceptions.ExIndexOutOfBounds;
+import Exceptions.ExInvalidServiceType;
 import Project.Process;
 import Project.Service;
 import Project.ServiceType;
 
 public class TestProcess {
+	
+	// 
+	// getServiceTime Method Testcases
+	// 
+	@Test
+	// This testcase adds only one service to the process, and checks that process gets its service time
+	void testGetServiceTimeWith1Service() throws ExInvalidServiceType {
+		
+		// Initializing new services ArrayList
+		ArrayList<Service> services = new ArrayList<>();
+		
+		// Initializing Dummy Service
+		Service s = Service.create("C", "5");
+		
+		// Adding dummy service to an ArrayList
+		services.add(s);
+		
+		// Initializing test Process object
+		Process testProcess = Process.create(0, 1, services);
+		
+		// Initializing the result of the method call
+		// Trying to get the first service time of the process
+		int actual = testProcess.getServiceTime(0);
+		
+		// Initializing expected result
+		int expected = 5;
+		
+		// Check the correctness
+		assertEquals(expected, actual);
+		
+	}
+	
+	@Test
+	// This testcase adds more than 1 service to the process, and checks that process gets its service time
+	void testGetServiceTimeWithMoreThan1Service() throws ExInvalidServiceType {
+		
+		// Initializing new services ArrayList
+		ArrayList<Service> services = new ArrayList<>();
+		
+		// Initializing Dummy Services
+		Service s1 = Service.create("C", "5");
+		Service s2 = Service.create("K", "3");
+		Service s3 = Service.create("C", "7");
+		
+		// Adding dummy services to an ArrayList
+		services.add(s1);
+		services.add(s2);
+		services.add(s3);
+		
+		// Initializing test Process object
+		Process testProcess = Process.create(0, 1, services);
+		
+		// Initializing the result of the method call
+		// Trying to get the second service time of the process
+		int actual = testProcess.getServiceTime(1);
+		// Initializing expected result
+		int expected = 3;
+		// Check the correctness
+		assertEquals(expected, actual);
+		
+		
+		// Initializing the result of the method call
+		// Trying to get the third service time of the process
+		actual =testProcess.getServiceTime(2);
+		// Initializing expected result
+		expected = 7;
+		// Check the correctness
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testGetServiceTimeWithNoServices()  {
+		
+		// Initializing new services ArrayList
+		ArrayList<Service> services = new ArrayList<>();
 
-	@Test
-	void testProceedToNextServiceTrue() {
-		ArrayList<Service> services = new ArrayList<>();
+		// Initializing test Process object
+		Process testProcess = Process.create(0, 1, services);
 		
-		Service s = Service.create("C", "5");
+		// Initializing the result of the method call
+		// Trying to get the first service time of the process
+		IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class, () -> {testProcess.getServiceTime(0);});
 		
-		services.add(s);
-		
-		Process testProcess = Process.create(0, 0, services);
-		
-		boolean testProceed = testProcess.proceedToNextService();
-		
-		assertEquals(testProceed, true);
 	}
 	
+	//
+	//
+	//
+	
+	//
+	// getServiceType Method Testcase
+	//
 	
 	@Test
-	void testProceedToNextServiceFalse() {
-		ArrayList<Service> services = new ArrayList<>();
+	void testGetServiceTypeWith1ServiceCPU() throws ExInvalidServiceType {
 		
-		Service s = Service.create("C", "5");
-		Service d = Service.create("K", "4");
-		
-		services.add(s);
-		services.add(d);
-		
-		Process testProcess = Process.create(0, 0, services);
-		
-		boolean testProceed = testProcess.proceedToNextService();
-		
-		assertEquals(testProceed, false);
+		// Initializing new services ArrayList
+				ArrayList<Service> services = new ArrayList<>();
+				
+				// Initializing Dummy Service
+				Service s = Service.create("C", "5");
+				
+				// Adding dummy service to an ArrayList
+				services.add(s);
+				
+				// Initializing test Process object
+				Process testProcess = Process.create(0, 1, services);
+				
+				// Initializing the result of the method call
+				// Trying to get the first service type of the process
+				ServiceType actual = testProcess.getServiceType(0);
+				
+				// Initializing expected result
+				ServiceType expected = ServiceType.CPU;
+				
+				// Check the correctness
+				assertEquals(expected, actual);
 	}
 	
-	
 	@Test
-	void testIsCurServiceOverTrue() {
-		ArrayList<Service> services = new ArrayList<>();
+	void testGetServiceTypeWith1ServiceKeyboard() throws ExInvalidServiceType {
 		
-		Service s = Service.create("C", "0");
-		
-		services.add(s);
-		
-		Process testProcess = Process.create(0, 0, services);
-		
-		boolean testProceed = testProcess.isCurServiceOver();
-		
-		assertEquals(testProceed, true);
+		// Initializing new services ArrayList
+				ArrayList<Service> services = new ArrayList<>();
+				
+				// Initializing Dummy Service
+				Service s = Service.create("K", "5");
+				
+				// Adding dummy service to an ArrayList
+				services.add(s);
+				
+				// Initializing test Process object
+				Process testProcess = Process.create(0, 1, services);
+				
+				// Initializing the result of the method call
+				// Trying to get the first service type of the process
+				ServiceType actual = testProcess.getServiceType(0);
+				
+				// Initializing expected result
+				ServiceType expected = ServiceType.Keyboard;
+				
+				// Check the correctness
+				assertEquals(expected, actual);
 	}
 	
-	
 	@Test
-	void testIsCurServiceOverFalse() {
-		ArrayList<Service> services = new ArrayList<>();
+	void testGetServiceTypeWithMoreThan1Service() throws  ExInvalidServiceType {
 		
-		Service s = Service.create("C", "5");
-		
-		services.add(s);
-		
-		Process testProcess = Process.create(0, 0, services);
-		
-		boolean testProceed = testProcess.isCurServiceOver();
-		
-		assertEquals(testProceed, false);
+		// Initializing new services ArrayList
+				ArrayList<Service> services = new ArrayList<>();
+				
+				// Initializing Dummy Services
+				Service s1 = Service.create("C", "5");
+				Service s2 = Service.create("K", "3");
+				Service s3 = Service.create("C", "7");
+				
+				// Adding dummy services to an ArrayList
+				services.add(s1);
+				services.add(s2);
+				services.add(s3);
+				
+				// Initializing test Process object
+				Process testProcess = Process.create(0, 1, services);
+				
+				// Initializing the result of the method call
+				// Trying to get the second service time of the process
+				ServiceType actual = testProcess.getServiceType(1);
+				// Initializing expected result
+				ServiceType expected = ServiceType.Keyboard;
+				// Check the correctness
+				assertEquals(expected, actual);
+				
+				
+				// Initializing the result of the method call
+				// Trying to get the third service time of the process
+				actual = testProcess.getServiceType(2);
+				// Initializing expected result
+				expected = ServiceType.CPU;
+				// Check the correctness
+				assertEquals(expected, actual);
 	}
 	
-	
 	@Test
+	void testGetServiceTypeWithNoService()  {
+		
+		// Initializing new services ArrayList
+		ArrayList<Service> services = new ArrayList<>();
+
+		// Initializing test Process object
+		Process testProcess = Process.create(0, 1, services);
+				
+		// Initializing the result of the method call
+		// Trying to get the first service time of the process
+		IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class, () -> {testProcess.getServiceType(0);});
+		
+	}
+	
+	//
+	//
+	//
+	
+	//
+	// getServicesCount Method Testcase
+	//
+	@Test
+	void testGetServicesCount() throws ExInvalidServiceType {
+		// Initializing new services ArrayList
+		ArrayList<Service> services = new ArrayList<>();
+		
+		// Initializing Dummy Services
+		Service s1 = Service.create("C", "5");
+		Service s2 = Service.create("K", "3");
+		Service s3 = Service.create("C", "7");
+		
+		// Adding dummy services to an ArrayList
+		services.add(s1);
+		services.add(s2);
+		services.add(s3);
+		
+		// Initializing test Process object
+		Process testProcess = Process.create(0, 1, services);
+		
+		// Initializing actual result
+		int actual = testProcess.getServicesCount();
+		
+		// Initializing expected result
+		int expected = 3;
+		
+		// Check the correctness
+		assertEquals(expected, actual);
+	}
+	
+	//
+	// getArrivalTime Method Testcases
+	// 
+	@Test
+	// This testcase creates new Process and checks getArrivalTime Method
 	void testGetArrivalTime() {
-		ArrayList<Service> services = new ArrayList<>();
 		
-		Service s = Service.create("C", "5");
+		// Initializing test Process object
+		Process testProcess = Process.create(0, 1, new ArrayList<>());
 		
-		services.add(s);
+		// Initializing the actual result
+		int actual = testProcess.getArrivalTime();
 		
-		Process testProcess = Process.create(0, 1, services);
+		// Initializing the expected result
+		int expected = 1; 
 		
-		double testProceed = testProcess.getArrivalTime();
-		
-		assertEquals(testProceed, 1);
+		assertEquals(expected, actual);
 	}
+	//
+	//
+	//
 	
+	//
+	// getId Method Testcases
+	// 
 	
 	@Test
-	void testGetCurService() {
-		ArrayList<Service> services = new ArrayList<>();
-		
-		Service s = Service.create("C", "5");
-		
-		services.add(s);
-		
-		Process testProcess = Process.create(0, 1, services);
-		
-		Service testProceed = testProcess.getCurService();
-		
-		assertEquals(testProceed, services.get(0));
-	}
-	
-	
-	@Test
+	// This testcase creates new Process and checks getId Method
 	void testGetId() {
-		ArrayList<Service> services = new ArrayList<>();
 		
-		Service s = Service.create("C", "5");
+		// Initializing test Process object
+		Process testProcess = Process.create(5, 1, new ArrayList<>());
 		
-		services.add(s);
+		// Initializing the actual result
+		int actual = testProcess.getId();
 		
-		Process testProcess = Process.create(5, 1, services);
+		// Initializing the expected result
+		int expected = 5; 
 		
-		int testProceed = testProcess.getId();
-		
-		assertEquals(testProceed, 5);
+		assertEquals(expected, actual);
 	}
 	
 	
-	@Test
-	void testGetServices() {
-		ArrayList<Service> services = new ArrayList<>();
-		
-		Service s = Service.create("C", "5");
-		
-		services.add(s);
-		
-		Process testProcess = Process.create(0, 1, services);
-		
-		ArrayList<Service> testProceed = testProcess.getServices();
-		
-		assertEquals(testProceed, services);
-	}
-	
-	
-	@Test
-	void testSetServices() {
-		ArrayList<Service> services = new ArrayList<>();
-		ArrayList<Service> services_another = new ArrayList<>();
-		
-		Service s = Service.create("C", "5");
-		Service d = Service.create("K", "4");
-		
-		services.add(s);
-		services_another.add(d);
-		
-		Process testProcess = Process.create(0, 1, services);
-		
-		testProcess.setServices(services_another);
-		
-		assertEquals(testProcess.getServices(), services_another);
-	}
-	
-	
-	@Test
-	void testGetCurServiceTime() {
-		ArrayList<Service> services = new ArrayList<>();
-		
-		Service s = Service.create("C", "5");
-
-		services.add(s);
-
-		Process testProcess = Process.create(0, 1, services);
-		
-		double testProceed = testProcess.getCurServiceTime();
-		
-		assertEquals(testProceed, 5.0);
-	}
-	
-	
-	@Test
-	void testGetCurServiceType() {
-		ArrayList<Service> services = new ArrayList<>();
-		
-		Service s = Service.create("C", "5");
-
-		services.add(s);
-
-		Process testProcess = Process.create(0, 1, services);
-		
-		ServiceType testProceed = testProcess.getCurServiceType();
-		
-		assertEquals(testProceed, ServiceType.CPU);	
-	}
-	
-	
-	@Test
-	void testGetCpuQt() {
-		ArrayList<Service> services = new ArrayList<>();
-		
-		Service s = Service.create("C", "5");
-
-		services.add(s);
-
-		Process testProcess = Process.create(0, 1, services);
-		
-		double testProceed = testProcess.getCPUQT();
-		
-		assertEquals(testProceed, 0.0);	
-	}
-	
-	@Test
-	void testGetKeybQt() {
-		ArrayList<Service> services = new ArrayList<>();
-		
-		Service s = Service.create("K", "5");
-
-		services.add(s);
-
-		Process testProcess = Process.create(0, 1, services);
-		
-		double testProceed = testProcess.getKeybQT();
-		
-		assertEquals(testProceed, 0.0);	
-	}
-	
-	
-	@Test
-	void testUpdateQtCpu() {
-		ArrayList<Service> services = new ArrayList<>();
-		
-		Service s = Service.create("C", "5");
-
-		services.add(s);
-
-		Process testProcess = Process.create(0, 1, services);
-		
-		testProcess.updateQueueingTime();
-		
-		assertEquals(testProcess.getCPUQT(), 1.0);	
-	}
-	
-	
-	@Test
-	void testUpdateQtKeyboard() {
-		ArrayList<Service> services = new ArrayList<>();
-		
-		Service s = Service.create("K", "5");
-
-		services.add(s);
-
-		Process testProcess = Process.create(0, 1, services);
-		
-		testProcess.updateQueueingTime();
-		
-		assertEquals(testProcess.getKeybQT(), 1.0);	
-	}
 }

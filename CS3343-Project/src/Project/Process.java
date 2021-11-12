@@ -2,6 +2,7 @@ package Project;
 
 import java.util.ArrayList;
 
+
 public class Process {
 	private int id;
 	private int arrivalTime;
@@ -18,7 +19,7 @@ public class Process {
 	}
 	
 	// GETTERS
-	public double getServiceTime(int index) {
+	public int getServiceTime(int index) {
 		return allServices.get(index).getServiceTime();
 	}
 	public ServiceType getServiceType(int index) {

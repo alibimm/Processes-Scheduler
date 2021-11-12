@@ -56,11 +56,6 @@ public class ProcessInCPU {
 		} else if (process.getServiceType(curServiceIndex) == ServiceType.CPU) { // TODO: check is this way correct? why access service type outside
 			this.queuingTimeCPU++;
 		}
-		else {
-			//commented because nothing is handling this exception
-			//TODO add 'catch' somewhere
-			//throw new Exception("Service type of current process is None");
-		}
 	}
 	
 	public void logWorking(int start_tick, int end_tick) {

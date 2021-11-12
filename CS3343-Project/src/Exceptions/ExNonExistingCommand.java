@@ -10,5 +10,7 @@ public class ExNonExistingCommand extends Exception {
 	
 	public ExNonExistingCommand(String cmd) {
 		super(String.format("Command %s doesn't exist. To see all commands use 'help'.", cmd));
+		String msg = String.format("Command %s doesn't exist. To see all commands use 'help'.", cmd);
+		System.out.println(msg);
 	}
 }

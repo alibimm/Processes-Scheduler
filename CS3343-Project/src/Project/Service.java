@@ -1,27 +1,29 @@
 package Project;
 
+import Exceptions.ExInvalidServiceType;
+
 public class Service {
-	private double serviceTime;
+	private int serviceTime;
 	private ServiceType type;
 	
 	// CONSTRUCTOR
-	private Service(ServiceType type, double serviceTime) {
+	private Service(ServiceType type, int serviceTime) {
 		this.type = type;
 		this.serviceTime = serviceTime; 
 	}
 
-	public static Service create(String type, String serviceTime) {
+	public static Service create(String type, String serviceTime) throws ExInvalidServiceType {
 		if (type.equals("C")) {
-        	return new Service(ServiceType.CPU, Double.parseDouble(serviceTime));
+        	return new Service(ServiceType.CPU, Integer.parseInt(serviceTime));
 		} else if (type.equals("K")) {
-        	return new Service(ServiceType.Keyboard, Double.parseDouble(serviceTime));
+        	return new Service(ServiceType.Keyboard, Integer.parseInt(serviceTime));
+        } else {
+        	throw new ExInvalidServiceType(type + " is Invalid Service Type");
         }
-		// To-Do - Throw exception if ServiceType is not C or K
-		return new Service(ServiceType.None, 0);
 	}
 	
 	// GETTERS
-	public double getServiceTime() {
+	public int getServiceTime() {
 		return serviceTime;
 	}
 	public ServiceType getType() {

@@ -2,6 +2,8 @@ package Project;
 
 import java.util.ArrayList;
 
+import Exceptions.ExInvalidServiceType;
+
 public class MainSystem {
 	
 	private ArrayList<Process> allProcesses;
@@ -48,8 +50,13 @@ public class MainSystem {
     	return null;
     }
     
+//    Get all Processes
+    public ArrayList<Process> getAllProcesses() {
+    	return this.allProcesses;
+    }
+    
 //    Create Service
-    public Service createService(String type, String serviceTime) {
+    public Service createService(String type, String serviceTime) throws ExInvalidServiceType {
     	Service s = Service.create(type, serviceTime);
     	return s;
     }
