@@ -1,8 +1,8 @@
 package Project;
 
-import java.util.*;
+import java.util.ArrayList;
 
-public class Result {
+public class AlgorithmResult {
 	private ArrayList<ProcessResult> processes = new ArrayList<ProcessResult>();
 	private double avgQueuingTime;
 	private double avgTurnaroundTime;
@@ -11,10 +11,10 @@ public class Result {
 	private double maxTurnaroundTime;
 	private double cpuUtil;
 	private double throughput;
-	private String algorithmType;
+	private AlgorithmType algorithmType;
 	
-	private Result(ArrayList<ProcessInCPU> rawProcessResults, String algoName) {
-		algorithmType = algoName;
+	private AlgorithmResult(ArrayList<ProcessInCPU> rawProcessResults, AlgorithmType algoType) {
+		algorithmType = algoType;
 		processes = ProcessResult.createResultList(rawProcessResults);
 		
 		double[] queuingTime = ProcessResult.calcMaxAvgQueuingTime(processes);
@@ -26,8 +26,8 @@ public class Result {
 		double[] ratioTS = ProcessResult.calcMaxAvgRatioTS(processes);
 		avgRatioTS = ratioTS[1];
 	}
-	public static Result create(ArrayList<ProcessInCPU> processes, String algoName) {
-		return new Result(processes, algoName);
+	public static AlgorithmResult create(ArrayList<ProcessInCPU> processes, AlgorithmType algoName) {
+		return new AlgorithmResult(processes, algoName);
 	}
 	
 	
@@ -52,10 +52,6 @@ public class Result {
 	public double getThroughput() {
 		return this.throughput;
 	}
-	public String getAlgorithmType() {
-		return this.algorithmType;
-	}
-	
 	
 	public void setAvgQueueingTime(double aqt) {
 		this.avgQueuingTime = aqt;
@@ -74,9 +70,6 @@ public class Result {
 	}
 	public void setThroughput(double t) {
 		this.throughput = t;
-	}
-	public void set(String algType) {
-		this.algorithmType = algType;
 	}
 	
 	public void printStats() {

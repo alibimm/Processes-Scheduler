@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FB extends Algorithm {
-	private final String name = "Feedback";
+	private final AlgorithmType type = AlgorithmType.FB;
 	private ArrayList<ArrayList<ProcessInCPU>> allReadyQueues;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
     private int dispatchedTick;
     private int curProcessID, prevProcessID;
     private HashMap<Integer, Integer> priorityMap;
-    
-    @Override
-    public String getName() { return name; }
     
 	// Constructor
 	private FB() {
@@ -129,4 +126,8 @@ public class FB extends Algorithm {
 		return -1;
 	}
 
+	@Override
+	public AlgorithmType getType() {
+		return type;
+	}
 }

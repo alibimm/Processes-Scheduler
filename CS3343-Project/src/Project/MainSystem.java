@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class MainSystem {
 	
 	private ArrayList<Process> allProcesses;
-	private ArrayList<Result> allResults;
+	private ArrayList<Case> allCases;
 	private ArrayList<Algorithm> allAlgorithms;
 	
 	// Using Singleton to instantiate Main System, to have only one System
@@ -14,7 +14,7 @@ public class MainSystem {
     // Constructor
     private MainSystem() {
     	allProcesses = new ArrayList<>();
-    	allResults = new ArrayList<>();
+//    	allResults = new ArrayList<>();
     	allAlgorithms = new ArrayList<>();
 //    	allAlgorithms.add(FCFS.getInstance()); // First Come First Serve
 //    	allAlgorithms.add(RR.getInstance()); // Round Robin
@@ -39,14 +39,14 @@ public class MainSystem {
     }
     
 //    Get Process
-    public Process getProcess(int id) {
-    	for (Process p : allProcesses) {
-    		if (p.getId()==id) {
-    			return p;
-    		}
-    	}
-    	return null;
-    }
+//    public Process getProcess(int id) {
+//    	for (Process p : allProcesses) {
+//    		if (p.getId() == id) {
+//    			return p;
+//    		}
+//    	}
+//    	return null;
+//    }
     
 //    Create Service
     public Service createService(String type, String serviceTime) {
@@ -57,17 +57,12 @@ public class MainSystem {
 	public void scheduleAlgorithms() {
 		
 		for (Algorithm algo : allAlgorithms) {
-			ArrayList<ProcessInCPU> rawProcessResults = algo.schedule(allProcesses);
-			Result algoResult = Result.create(rawProcessResults, algo.getName());
 			
-			algoResult.printStats();
-			allResults.add(algoResult);
 		}
 	}
 	
 	public void clear() {
 		allProcesses.clear();
-    	allResults.clear();
 	}
     
 //    Creating Results

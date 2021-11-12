@@ -3,15 +3,12 @@ package Project;
 import java.util.*;
 
 public class FCFS extends Algorithm {
-	private final String name = "First Come First Serve";
+	private final AlgorithmType type = AlgorithmType.FCFS;
     private ArrayList<ProcessInCPU> readyQueue;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
     private int dispatchedTick;
     private int curProcessID, prevProcessID;
-    
-    @Override
-    public String getName() { return name; }
     
     private FCFS() {
     	readyQueue = new ArrayList<ProcessInCPU>();
@@ -91,4 +88,9 @@ public class FCFS extends Algorithm {
             Util.moveProcessFrom(readyQueue, blockQueueIO); // next service is keyboard input, block current process
         }
     }
+    
+    @Override
+	public AlgorithmType getType() {
+		return type;
+	}
 }

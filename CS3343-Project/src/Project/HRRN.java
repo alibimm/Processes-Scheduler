@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class HRRN extends Algorithm {
-	private final String name = "Highest Response Ratio Next";
+	private final AlgorithmType type = AlgorithmType.HRRN;
 	private ArrayList<ProcessInCPU> readyQueue;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
     private int dispatchedTick;
     private int curProcessID, prevProcessID;
     private boolean isBusy;
-	
-	@Override
-    public String getName() { return name; }
 	
 	private HRRN() {
 		readyQueue = new ArrayList<ProcessInCPU>();
@@ -99,4 +96,8 @@ public class HRRN extends Algorithm {
         }
 	}
 
+	@Override
+	public AlgorithmType getType() {
+		return type;
+	}
 }

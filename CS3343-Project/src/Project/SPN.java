@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class SPN extends Algorithm {
-	private final String name = "Shortest Process Next";
+	private final AlgorithmType type = AlgorithmType.SPN;
 	private ArrayList<ProcessInCPU> readyQueue;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
     private int dispatchedTick;
     private int curProcessID, prevProcessID;
     private boolean isBusy; // change later
-    
-    @Override
-    public String getName() { return name; }
 	
 	private SPN() {
 		readyQueue = new ArrayList<ProcessInCPU>();
@@ -100,4 +97,8 @@ public class SPN extends Algorithm {
         }
     }
 	
+	@Override
+	public AlgorithmType getType() {
+		return type;
+	}
 }

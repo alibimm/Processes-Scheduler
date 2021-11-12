@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class SRT extends Algorithm {
-	private final String name = "Shortest Remaining Time";
+	private final AlgorithmType type = AlgorithmType.SRT;
 	private ArrayList<ProcessInCPU> readyQueue;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
     private int dispatchedTick;
     private int curProcessID, prevProcessID;
     private boolean isBusy;
-	
-	@Override
-    public String getName() { return name; }
 	
 	private SRT() {
 		readyQueue = new ArrayList<ProcessInCPU>();
@@ -104,4 +101,8 @@ public class SRT extends Algorithm {
     	}
 	}
 
+	@Override
+	public AlgorithmType getType() {
+		return type;
+	}
 }
