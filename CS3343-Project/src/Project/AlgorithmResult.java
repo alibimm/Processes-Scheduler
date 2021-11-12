@@ -90,6 +90,7 @@ public class AlgorithmResult {
 				avgQueuingTime);
 	}
 	public void printDetails() {
+		System.out.println("---------------------------------------------------");
 		System.out.println(algorithmType.toString());
 		for (ProcessResult process : processes) {
 			process.print();
