@@ -82,10 +82,19 @@ public class AlgorithmResult {
 //	}
 	
 	public void printStats() {
+		System.out.format("%-30s%-15.0f%-15.2f%-15.2f%-15.2f\n", 
+				algorithmType.toString(), 
+				duration,
+				cpuUtil,
+				avgTurnaroundTime,
+				avgQueuingTime);
+	}
+	public void printDetails() {
+		System.out.println("---------------------------------------------------");
+		System.out.println(algorithmType.toString());
 		for (ProcessResult process : processes) {
-			  process.print();
-		      process.printQueueingTime();
-		      System.out.println();
+			process.print();
 		}
+		System.out.println();
 	}
 }
