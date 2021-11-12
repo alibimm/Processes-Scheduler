@@ -10,7 +10,6 @@ public class SRT extends Algorithm {
     private ArrayList<ProcessInCPU> completedProcesses;
     private int dispatchedTick;
     private int curProcessID, prevProcessID;
-    private boolean isBusy;
 	
 	private SRT() {
 		readyQueue = new ArrayList<ProcessInCPU>();
@@ -19,7 +18,6 @@ public class SRT extends Algorithm {
         dispatchedTick = 0;
         curProcessID = -1;
         prevProcessID = -1;
-        isBusy = false;
 	}
 
 	private static SRT instance = new SRT();
@@ -55,11 +53,8 @@ public class SRT extends Algorithm {
             if (readyQueue.isEmpty()) {
                 prevProcessID = -1; // reset the previous dispatched process ID to empty, no process for scheduling
             } else {
-            	if (!isBusy) {
-            		int shortestRemainingIndex = ProcessInCPU.findShortestRemainingTimeProcess(readyQueue);
-            		Collections.swap(readyQueue, 0,	shortestRemainingIndex);
-            		isBusy = true;
-            	}
+        		int shortestRemainingIndex = ProcessInCPU.findShortestRemainingTimeProcess(readyQueue);
+        		Collections.swap(readyQueue, 0,	shortestRemainingIndex);
                 ProcessInCPU curProcess = readyQueue.get(0); // always dispatch the first process in ready queue
                 curProcessID = curProcess.getId();
                 if (curProcessID != prevProcessID) { // store the tick when current process is dispatched
@@ -86,7 +81,6 @@ public class SRT extends Algorithm {
 	protected void manageCurrentCPUProcess(int curTick) {
 		ProcessInCPU process = readyQueue.get(0);
     	process.logWorking(dispatchedTick, curTick + 1);
-    	isBusy = false;
         
     	if (process.isCurServiceOver()) {
     		boolean processCompleted = process.proceedToNextService();

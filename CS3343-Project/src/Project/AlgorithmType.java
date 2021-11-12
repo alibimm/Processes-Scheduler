@@ -5,7 +5,7 @@ public enum AlgorithmType {
 	RR("Round Robin"),
 	FB("Feedback"),
 	SPN("Shortest Process Next"),
-	SRT("Shortest Response Time Next"),
+	SRT("Shortest Remaining Time Next"),
 	HRRN("Highest Response Ratio Next"),
 	None("None");
 	
