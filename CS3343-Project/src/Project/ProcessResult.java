@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ProcessResult {
 	private final Process process;
-	private final ArrayList<IntervalPair> serviceIntervals;
+	private final ArrayList<Interval> serviceIntervals;
 	private final int exitTime;
 	private final int serviceTime;
 	private final int turnaroundTime;
@@ -72,10 +72,20 @@ public class ProcessResult {
 		result[1] = (double) accumulator / processes.size();
 		return result;
 	}
+	
+	// GETTERS
+	public int getExitTime() { return exitTime; }
+	public int getTimeInCPU() {
+		int accumulator = 0;
+		for (Interval i : serviceIntervals) {
+			accumulator += i.getEnd() - i.getStart();
+		}
+		return accumulator;
+	}
  	
 	public void print() {
 	    System.out.println("Process " + process.getId());
-	    for (IntervalPair pair : serviceIntervals) {
+	    for (Interval pair : serviceIntervals) {
 	    	pair.print();
 	    }
 	    System.out.println();

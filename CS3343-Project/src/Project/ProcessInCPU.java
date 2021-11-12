@@ -5,26 +5,26 @@ import java.util.ArrayList;
 public class ProcessInCPU {
 	private Process process;
 	
-	int curServiceTick;
-	int curServiceIndex;
-	final int servicesCount;
+	private int curServiceTick;
+	private int curServiceIndex;
+	private final int servicesCount;
 	
-	private ArrayList<IntervalPair> serviceTimes;
+	private ArrayList<Interval> serviceTimes;
 	private int queuingTimeIO;
 	private int queuingTimeCPU;
 	
 	// CONSTRUCTOR
 	public ProcessInCPU (Process process) {
 		this.process = process;
-		this.servicesCount = process.getServicesCount();
+		servicesCount = process.getServicesCount();
 		
-		this.curServiceIndex=0;
-		this.curServiceTick=0;
+		curServiceIndex = 0;
+		curServiceTick = 0;
 		
-		this.serviceTimes= new ArrayList<IntervalPair>();
+		serviceTimes= new ArrayList<Interval>();
 		
-		this.queuingTimeIO=0;
-		this.queuingTimeCPU=0;
+		queuingTimeIO = 0;
+		queuingTimeCPU = 0;
 	}
 	public static ProcessInCPU create(Process process) {
 		return new ProcessInCPU(process);
@@ -64,7 +64,7 @@ public class ProcessInCPU {
 	}
 	
 	public void logWorking(int start_tick, int end_tick) {
-		IntervalPair pair = new IntervalPair(start_tick, end_tick);
+		Interval pair = new Interval(start_tick, end_tick);
 		serviceTimes.add(pair);
 	}
 	
@@ -126,7 +126,7 @@ public class ProcessInCPU {
 	public int getId() {
 		return this.process.getId();
 	}
-	public ArrayList<IntervalPair> getServiceTimes() {
+	public ArrayList<Interval> getServiceTimes() {
 		return this.serviceTimes;
 	}
 	public Process getProcess() {

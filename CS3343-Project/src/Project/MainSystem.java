@@ -28,25 +28,12 @@ public class MainSystem {
         return instance;
     }
     
-    
-    
 //    Creating Processes
-
     public Process createProcess(String id, int arrivalTime, ArrayList<Service> services) {
     	Process p = Process.create(Integer.parseInt(id), arrivalTime, services);
     	allProcesses.add(p);
     	return p;
     }
-    
-//    Get Process
-//    public Process getProcess(int id) {
-//    	for (Process p : allProcesses) {
-//    		if (p.getId() == id) {
-//    			return p;
-//    		}
-//    	}
-//    	return null;
-//    }
     
 //    Create Service
     public Service createService(String type, String serviceTime) {
@@ -54,11 +41,11 @@ public class MainSystem {
     	return s;
     }
 
-	public void scheduleAlgorithms() {
-		
-		for (Algorithm algo : allAlgorithms) {
-			
-		}
+	public boolean scheduleAlgorithms() {
+		if (allProcesses.size() == 0) return false;
+		Case newCase = Case.create(allAlgorithms, allProcesses);
+		allCases.add(newCase);
+		return true;
 	}
 	
 	public void clear() {
