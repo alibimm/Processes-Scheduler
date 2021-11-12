@@ -84,15 +84,18 @@ public class ProcessResult {
 	}
  	
 	public void print() {
-	    System.out.println("Process " + process.getId());
+	    System.out.print(String.format("Process #%d: ", process.getId()));
 	    for (Interval pair : serviceIntervals) {
 	    	pair.print();
 	    }
 	    System.out.println();
+	    System.out.println("CPU Queuing Time: " + queuingTimeCPU);
+	    System.out.println("Keyboard Queuing Time: " + queuingTimeIO);
+	    System.out.println("Turnaround Time: " + turnaroundTime);
+	    System.out.println();
 	}
 	
 	public void printQueueingTime() {
-	    System.out.println("CPU Queuing Time: " + queuingTimeCPU);
-	    System.out.println("Keyboard Queuing Time: " + queuingTimeIO);
+	    
 	}
 }
