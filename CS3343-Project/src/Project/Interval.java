@@ -13,10 +13,6 @@ public class Interval {
 		return new Interval(start, end);
 	}
 	
-	public static Interval create(int _start, int _end) {
-		return new Interval(_start, _end);
-	}
-	
 	public void print() {
 	    System.out.print(start + " " + end + " ");
 	  }

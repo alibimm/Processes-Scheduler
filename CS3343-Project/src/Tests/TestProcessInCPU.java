@@ -13,6 +13,7 @@ import Project.Interval;
 import Project.MainSystem;
 import Project.ProcessInCPU;
 import Project.Service;
+import Project.ServiceType;
 import Project.Process;
 
 class TestProcessInCPU {
@@ -255,8 +256,8 @@ class TestProcessInCPU {
 	}
 	
 	@Test
-	// Testing findShortestServiceNextProcess() method in ProcessInCPU class
-	void testFindShortestServiceNextProcess() {
+	// Testing findShortestRemainingTimeProcess() method in ProcessInCPU class
+	void testFindShortestRemainingTimeProcess() {
 
 		//creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcesses = new ArrayList<ProcessInCPU>();
@@ -328,6 +329,14 @@ class TestProcessInCPU {
 		//creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcesses = new ArrayList<ProcessInCPU>();
 		
+		//expected result
+		int expected = -1;
+		
+		//actual result
+		int actual = ProcessInCPU.findHighestResponseRatioProcess(testProcesses);
+		
+		assertEquals(actual, expected);
+		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices = new ArrayList<Service>();
 		testServices.add(Service.create("C", "2"));
@@ -356,10 +365,10 @@ class TestProcessInCPU {
 		testProcesses.add(testProcessInCPU2);
 		
 		//expected result
-		int expected = 0;
+		expected = 0;
 		
 		//actual result
-		int actual = ProcessInCPU.findHighestResponseRatioProcess(testProcesses);
+		actual = ProcessInCPU.findHighestResponseRatioProcess(testProcesses);
 		
 		assertEquals(actual, expected);
 		
@@ -407,6 +416,122 @@ class TestProcessInCPU {
 		
 		//actual result
 		actual = ProcessInCPU.findHighestResponseRatioProcess(testProcesses2);
+		
+		assertEquals(actual, expected);
+	}
+	
+	@Test
+	// Testing findShortestServiceNextProcess() method in ProcessInCPU class
+	void testFindShortestServiceNextProcess() {
+
+		//creating dummy ArrayList<ProcessInCPU>
+		ArrayList<ProcessInCPU> testProcesses = new ArrayList<ProcessInCPU>();
+		
+		//expected result
+		int expected = -1;
+		
+		//actual result
+		int actual = ProcessInCPU.findShortestServiceNextProcess(testProcesses);
+		
+		assertEquals(actual, expected);
+		
+
+		// Creating  ArrayList of Services to create a Process
+		ArrayList<Service> testServices = new ArrayList<Service>();
+		testServices.add(Service.create("C", "2"));
+		testServices.add(Service.create("K", "1"));
+		
+		// Creating Process using its static create method
+		Process testProcess1 = Process.create(0, 2, testServices);
+		
+		// Creating ProcessInCPU instance using its create() static method
+		ProcessInCPU testProcessInCPU1 = ProcessInCPU.create(testProcess1);
+		
+		//locate service index to the end of list
+		testProcessInCPU1.setCurServiceIndex(1);
+		
+		
+		// Creating  ArrayList of Services to create a Process
+		ArrayList<Service> testServices2 = new ArrayList<Service>();
+		testServices2.add(Service.create("C", "2"));
+		testServices2.add(Service.create("K", "1"));
+		
+		// Creating Process using its static create method
+		Process testProcess2 = Process.create(0, 2, testServices);
+		
+		// Creating ProcessInCPU instance using its create() static method
+		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess1);
+		
+		//locate service index to the end of list
+		testProcessInCPU2.setCurServiceIndex(0);
+		
+		//add these entries to ArrayList
+		testProcesses.add(testProcessInCPU1);
+		testProcesses.add(testProcessInCPU2);
+		
+		expected = 0;
+		
+		actual = ProcessInCPU.findShortestServiceNextProcess(testProcesses);
+		
+		assertEquals(actual, expected);
+		
+		//locate service index to the beginning of list
+		testProcessInCPU1.setCurServiceIndex(0);
+		
+		//locate service index to the end of list
+		testProcessInCPU2.setCurServiceIndex(1);
+		
+		expected = 1;
+		
+		actual = ProcessInCPU.findShortestServiceNextProcess(testProcesses);
+		
+		assertEquals(actual, expected);
+	}
+	
+	@Test
+	// Testing getCurServiceType() method in ProcessInCPU class
+	void testGetCurServiceType() {
+		
+		// Creating  ArrayList of Services to create a Process
+		ArrayList<Service> testServices = new ArrayList<Service>();
+		testServices.add(Service.create("C", "2"));
+		testServices.add(Service.create("K", "1"));
+		
+		// Creating Process using its static create method
+		Process testProcess1 = Process.create(0, 2, testServices);
+		
+		// Creating ProcessInCPU instance using its create() static method
+		ProcessInCPU testProcessInCPU = ProcessInCPU.create(testProcess1);
+		
+		//expected result
+		ServiceType expected = ServiceType.CPU;
+		
+		//actual result
+		ServiceType actual = testProcessInCPU.getCurServiceType();
+		
+		assertEquals(actual, expected);
+	}
+	
+	@Test
+	// Testing getId() method in ProcessInCPU class
+	void testGetId() {
+		
+		// Creating  ArrayList of Services to create a Process
+		ArrayList<Service> testServices = new ArrayList<Service>();
+		testServices.add(Service.create("C", "2"));
+		testServices.add(Service.create("K", "1"));
+		
+		// Creating Process using its static create method
+		Process testProcess1 = Process.create(0, 2, testServices);
+		
+		// Creating ProcessInCPU instance using its create() static method
+		ProcessInCPU testProcessInCPU = ProcessInCPU.create(testProcess1);
+		
+		//expected result
+		int expected = 0;
+		
+		//actual result
+		int actual = testProcessInCPU.getId();
 		
 		assertEquals(actual, expected);
 	}
