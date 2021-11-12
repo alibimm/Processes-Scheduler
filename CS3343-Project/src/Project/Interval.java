@@ -4,9 +4,13 @@ public class Interval {
 	private int start;
 	private int end;
 	
-	Interval(int _start, int _end){
-		this.start = _start;
-		this.end = _end;
+	private Interval(int start, int end){
+		this.start = start;
+		this.end = end;
+	}
+	
+	public static Interval create(int start, int end) {
+		return new Interval(start, end);
 	}
 	
 	public void print() {

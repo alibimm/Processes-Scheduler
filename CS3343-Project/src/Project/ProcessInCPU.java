@@ -63,8 +63,8 @@ public class ProcessInCPU {
 		}
 	}
 	
-	public void logWorking(int start_tick, int end_tick) {
-		Interval pair = new Interval(start_tick, end_tick);
+	public void logWorking(int startTick, int endTick) {
+		Interval pair = Interval.create(startTick, endTick);
 		serviceTimes.add(pair);
 	}
 	
