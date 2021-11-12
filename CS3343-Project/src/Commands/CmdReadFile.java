@@ -38,6 +38,8 @@ public class CmdReadFile implements Command {
         	// Placeholder for number of Processes (Read first line of input file)
         	int numberOfProcesses = Integer.parseInt(inFile.nextLine());
         	
+        	system.startReading();
+        	
         	// Iterating through all the processes in file
         	for (int i = 0; i < numberOfProcesses; ++i) {
         		
