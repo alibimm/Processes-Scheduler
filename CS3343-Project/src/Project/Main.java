@@ -28,7 +28,7 @@ public class Main {
             	} else if (cmdParts[0].equals("suggest")) {
             		(new CmdSuggest()).execute(cmdParts);
             	} else if (cmdParts[0].equals("open")) {
-            		
+            		(new )
             	} else {
             		throw new ExNonExistingCommand(cmdParts[0]);
             	}
