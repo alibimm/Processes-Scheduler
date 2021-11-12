@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class SPN extends Algorithm {
+	private final String name = "Shortest Process Next";
 	private ArrayList<ProcessInCPU> readyQueue;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
@@ -11,7 +12,8 @@ public class SPN extends Algorithm {
     private int curProcessID, prevProcessID;
     private boolean isBusy; // change later
     
-	
+    @Override
+    public String getName() { return name; }
 	
 	private SPN() {
 		readyQueue = new ArrayList<ProcessInCPU>();
@@ -60,6 +62,7 @@ public class SPN extends Algorithm {
             	if (!isBusy) {
             		int shortestIndex = ProcessInCPU.findShortestServiceNextProcess(readyQueue);
             		Collections.swap(readyQueue, 0, shortestIndex);
+            		isBusy = true;
             	}
             	ProcessInCPU curProcess = readyQueue.get(0);
                 curProcessID = curProcess.getId();
@@ -88,9 +91,8 @@ public class SPN extends Algorithm {
     	ProcessInCPU process = readyQueue.get(0);
     	process.logWorking(dispatchedTick, curTick + 1);
     	isBusy = false;
+    	
         boolean processCompleted = process.proceedToNextService();
-		
-		
         if (processCompleted) {
             Util.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
         } else if (process.getCurServiceType() == ServiceType.Keyboard) { // next service is keyboard input, block current process

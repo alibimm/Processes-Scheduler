@@ -82,14 +82,47 @@ public class ProcessInCPU {
 
 		return shortestIndex;
 	}
+	public static int findShortestRemainingTimeProcess(ArrayList<ProcessInCPU> processes) {
+		if (processes.size() == 0) return -1;
+		double shortest = processes.get(0).getCurServiceRemainingTime();
+		int shortestIndex = 0;
+		for (int i = 1; i < processes.size(); i++) {
+			if (processes.get(i).getCurServiceRemainingTime() < shortest) {
+				shortest = processes.get(i).getCurServiceRemainingTime();
+				shortestIndex = i;
+			}
+		}
+		
+		return shortestIndex;
+	}
+	public static int findHighestResponseRatioProcess(ArrayList<ProcessInCPU> processes) {
+		if (processes.size() == 0) return -1;
+		double highest = processes.get(0).getResponseRatio();
+		int highestIndex = 0;
+		for (int i = 1; i < processes.size(); i++) {
+			if (processes.get(i).getResponseRatio() > highest) {
+				highest = processes.get(i).getResponseRatio();
+				highestIndex = i;
+			}
+		}
+		
+		return highestIndex;
+	}
 	
 	// GETTERS
 	public ServiceType getCurServiceType() {
-		return this.process.getServiceType(curServiceIndex);
+		return process.getServiceType(curServiceIndex);
 	}
 	private double getCurServiceTime() {
-		return this.process.getServiceTime(curServiceIndex);
+		return process.getServiceTime(curServiceIndex);
 	}
+	private double getCurServiceRemainingTime() {
+		return getCurServiceTime() - curServiceTick;
+	}
+	private double getResponseRatio() {
+		return (queuingTimeCPU + process.getServiceTime(curServiceIndex)) / process.getServiceTime(curServiceIndex);
+	}
+	
 	public int getId() {
 		return this.process.getId();
 	}

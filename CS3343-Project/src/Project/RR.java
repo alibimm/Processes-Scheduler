@@ -3,11 +3,15 @@ package Project;
 import java.util.ArrayList;
 
 public class RR extends Algorithm {
+	private final String name = "Round Robin";
 	private ArrayList<ProcessInCPU> readyQueue;
 	private ArrayList<ProcessInCPU> blockQueueIO;
 	private ArrayList<ProcessInCPU> completedProcesses;
 	private int dispatchedTick;
 	private int curProcessId, prevProcessId;
+	
+	@Override
+    public String getName() { return name; }
 	
 	private RR() {
 		readyQueue = new ArrayList<ProcessInCPU>();

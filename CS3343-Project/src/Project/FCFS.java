@@ -3,11 +3,15 @@ package Project;
 import java.util.*;
 
 public class FCFS extends Algorithm {
+	private final String name = "First Come First Serve";
     private ArrayList<ProcessInCPU> readyQueue;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
     private int dispatchedTick;
     private int curProcessID, prevProcessID;
+    
+    @Override
+    public String getName() { return name; }
     
     private FCFS() {
     	readyQueue = new ArrayList<ProcessInCPU>();
@@ -86,6 +90,5 @@ public class FCFS extends Algorithm {
         } else if (process.getCurServiceType() == ServiceType.Keyboard) { 
             Util.moveProcessFrom(readyQueue, blockQueueIO); // next service is keyboard input, block current process
         }
-        
     }
 }
