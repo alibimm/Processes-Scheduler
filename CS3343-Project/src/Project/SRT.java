@@ -64,7 +64,7 @@ public class SRT extends Algorithm {
                 curProcess.incrementCurServiceTick();
                 Util.updateQueingTime(readyQueue, 1, readyQueue.size());
                 
-                if (curProcess.isCurServiceOver() || tick + 1 - dispatchedTick >= Constants.CLOCK) {
+                if (curProcess.isCurServiceOver()) {
                     manageCurrentCPUProcess(tick);
                 }
                 
@@ -82,17 +82,12 @@ public class SRT extends Algorithm {
 		ProcessInCPU process = readyQueue.get(0);
     	process.logWorking(dispatchedTick, curTick + 1);
         
-    	if (process.isCurServiceOver()) {
-    		boolean processCompleted = process.proceedToNextService();
-            if (processCompleted) {
-                Util.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
-            } else if (process.getCurServiceType() == ServiceType.Keyboard) { 
-                Util.moveProcessFrom(readyQueue, blockQueueIO); // next service is keyboard input, block current process
-            }
-    	} else {
-			Util.moveProcessFrom(readyQueue, readyQueue);
-			dispatchedTick = curTick + 1;
-    	}
+		boolean processCompleted = process.proceedToNextService();
+        if (processCompleted) {
+            Util.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
+        } else if (process.getCurServiceType() == ServiceType.Keyboard) { 
+            Util.moveProcessFrom(readyQueue, blockQueueIO); // next service is keyboard input, block current process
+        }
 	}
 
 	@Override
