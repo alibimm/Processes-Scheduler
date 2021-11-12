@@ -3,8 +3,9 @@ package Project;
 import java.util.ArrayList;
 
 public class MainSystem {
+	private static int curInd = -1;
 	
-	private ArrayList<Process> allProcesses;
+	private ArrayList<ArrayList<Process>> allInputs;
 	private ArrayList<Case> allCases;
 	private ArrayList<Algorithm> allAlgorithms;
 	
@@ -13,7 +14,7 @@ public class MainSystem {
     
     // Constructor
     private MainSystem() {
-    	allProcesses = new ArrayList<Process>();
+    	allInputs = new ArrayList<ArrayList<Process>>();
     	allCases = new ArrayList<Case>();
 //    	allResults = new ArrayList<>();
     	allAlgorithms = new ArrayList<>();
@@ -32,7 +33,7 @@ public class MainSystem {
 //    Creating Processes
     public Process createProcess(String id, int arrivalTime, ArrayList<Service> services) {
     	Process p = Process.create(Integer.parseInt(id), arrivalTime, services);
-    	allProcesses.add(p);
+    	allInputs.get(curInd).add(p);
     	return p;
     }
     
@@ -43,14 +44,26 @@ public class MainSystem {
     }
 
 	public boolean scheduleAlgorithms() {
-		if (allProcesses.size() == 0) return false;
-		Case newCase = Case.create(allAlgorithms, allProcesses);
-		allCases.add(newCase);
+		if (allInputs.size() == 0) return false;
+		for (ArrayList<Process> input : allInputs) {
+			Case newCase = Case.create(allAlgorithms, input);
+			if (newCase != null) {
+				allCases.add(newCase);
+			}
+		}
+		allInputs.clear();
 		return true;
 	}
 	
 	public void clear() {
-		allProcesses.clear();
+		allInputs.clear();
+		allCases.clear();
+	}
+	
+	public void startReading() {
+		ArrayList<Process> input = new ArrayList<Process>();
+		allInputs.add(input);
+		curInd++;
 	}
     
 //    Creating Results
