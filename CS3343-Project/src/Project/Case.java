@@ -31,6 +31,28 @@ public class Case {
 		return newCase;
 	}
 	
+	public ArrayList<AlgorithmType> bestAlgorithm() {
+		ArrayList<AlgorithmType> bestAlgorithms = new ArrayList<AlgorithmType>();
+		
+		double minAvgTRT = results.get(0).getAvgTurnaroundTime();
+		
+		for (int i = 1; i < results.size(); i++) {
+			AlgorithmResult result = results.get(i);
+			if (result.getAvgTurnaroundTime() < minAvgTRT) {
+				minAvgTRT = result.getAvgTurnaroundTime();
+			}
+		}
+		
+		for (AlgorithmResult result : results) {
+			if (result.getAvgTurnaroundTime() == minAvgTRT) {
+				bestAlgorithms.add(result.getAlgorithmType());
+			}
+		}
+		return bestAlgorithms;
+	}
+	
+	public int getId() { return id; }
+	
 	public void printTable() {
 		System.out.format("%-30s%-15s%-15s%-15s%-15s\n", 
 				"Type", 
