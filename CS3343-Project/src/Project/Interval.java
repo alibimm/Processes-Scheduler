@@ -9,6 +9,10 @@ public class Interval {
 		this.end = _end;
 	}
 	
+	public static Interval create(int _start, int _end) {
+		return new Interval(_start, _end);
+	}
+	
 	public void print() {
 	    System.out.print(start + " " + end + " ");
 	  }
