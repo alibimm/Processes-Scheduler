@@ -9,6 +9,10 @@ public class IntervalPair {
 		this.end = _end;
 	}
 	
+	public static IntervalPair create(int _start, int _end){
+		return new IntervalPair(_start, _end);
+	}
+	
 	public void print() {
 	    System.out.print(start + " " + end + " ");
 	  }
