@@ -29,6 +29,10 @@ public class Main {
             		(new CmdSuggest()).execute(cmdParts);
             	} else if (cmdParts[0].equals("open")) {
             		(new CmdOpen()).execute(cmdParts);
+            	} else if (cmdParts[0].equals("close")) {
+            		(new CmdClose()).execute(cmdParts);
+            	} else if (cmdParts[0].equals("display")) {
+            		(new CmdDisplay()).execute(cmdParts);
             	} else {
             		throw new ExNonExistingCommand(cmdParts[0]);
             	}

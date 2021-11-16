@@ -28,7 +28,8 @@ public class FB extends Algorithm {
 	
 	@Override
 	public ArrayList<ProcessInCPU> schedule(ArrayList<Process> processes) {
-
+		reset();
+		
 		// Adding all ready queues into one arraylist
 		for (int i = 0; i < Constants.PRIORITY_COUNT; i++) {
 			allReadyQueues.add(new ArrayList<ProcessInCPU>());
@@ -90,7 +91,6 @@ public class FB extends Algorithm {
         }   
         
         return completedProcesses;
-		
 	}
 	
 	@Override
@@ -118,6 +118,16 @@ public class FB extends Algorithm {
 			dispatchedTick = curTick + 1; // reset the previous dispatched process ID to empty
     	}
     }
+	
+	private void reset() {
+		allReadyQueues.clear();
+		blockQueueIO.clear();
+		completedProcesses.clear();
+	    dispatchedTick = 0;
+	    curProcessID = -1;
+	    prevProcessID = -1;
+	    priorityMap.clear();;
+	}
 	
 	private int firstNonEmptyQueue(ArrayList<ArrayList<ProcessInCPU>> queues) {
 		for (int i = 0; i < queues.size(); i++) {

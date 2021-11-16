@@ -10,7 +10,7 @@ public class AlgorithmResult {
 	private double avgRatioTS;
 	private double maxQueuingTime;
 	private double maxTurnaroundTime;
-	private double cpuUtil;
+	private double cpuUtil; 
 	private double throughput;
 	private AlgorithmType algorithmType;
 	
@@ -89,8 +89,8 @@ public class AlgorithmResult {
 //	}
 	
 	public void printStats() {
-		System.out.format("%-30s%-15.0f%-15.2f%-15.2f%-15.2f\n", 
-				algorithmType.toString(), 
+		System.out.format("%-15s%-15.0f%-15.2f%-15.2f%-15.2f\n", 
+				algorithmType.toShort(), 
 				duration,
 				cpuUtil,
 				avgTurnaroundTime,
