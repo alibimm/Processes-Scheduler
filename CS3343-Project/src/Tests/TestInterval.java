@@ -8,7 +8,7 @@ import Project.Interval;
 
 public class TestInterval {
 	@Test
-	// Testing create() method in ProcessInCPU class
+	// Testing create() method in Interval class
 	void TestCreate() {
 		//Initialize testing instance
 		Interval testInterval = Interval.create(0,5);
@@ -18,7 +18,7 @@ public class TestInterval {
 	}
 	
 	@Test
-	// Testing getStart() method in ProcessInCPU class
+	// Testing getStart() method in Interval class
 	void TestGetStart() {
 		//Initialize testing instance
 		Interval testInterval = Interval.create(0,5);
@@ -27,7 +27,7 @@ public class TestInterval {
 	}
 	
 	@Test
-	// Testing getEnd() method in ProcessInCPU class
+	// Testing getEnd() method in Interval class
 	void TestGetEnd() {
 		//Initialize testing instance
 		Interval testInterval = Interval.create(0,5);

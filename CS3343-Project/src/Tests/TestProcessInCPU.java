@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 
+import Exceptions.ExInvalidServiceType;
 import Project.Interval;
 import Project.MainSystem;
 import Project.ProcessInCPU;
@@ -133,7 +134,7 @@ class TestProcessInCPU {
 	
 	@Test
 	// Testing isCurServiceOver() method in ProcessInCPU class
-	void testIsCurServiceOver() {
+	void testIsCurServiceOver() throws ExInvalidServiceType {
 		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices = new ArrayList<Service>();
@@ -174,7 +175,7 @@ class TestProcessInCPU {
 	
 	@Test
 	// Testing proceedToNextService() method in ProcessInCPU class
-	void testProceedToNextService() {
+	void testProceedToNextService() throws ExInvalidServiceType {
 		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices = new ArrayList<Service>();
@@ -212,7 +213,7 @@ class TestProcessInCPU {
 	
 	@Test
 	// Testing updateQueueingTime() method in ProcessInCPU class
-	void testUpdateQueueingTime() {
+	void testUpdateQueueingTime() throws ExInvalidServiceType {
 
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices = new ArrayList<Service>();
@@ -257,7 +258,7 @@ class TestProcessInCPU {
 	
 	@Test
 	// Testing findShortestRemainingTimeProcess() method in ProcessInCPU class
-	void testFindShortestRemainingTimeProcess() {
+	void testFindShortestRemainingTimeProcess() throws ExInvalidServiceType {
 
 		//creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcesses = new ArrayList<ProcessInCPU>();
@@ -324,7 +325,7 @@ class TestProcessInCPU {
 	
 	@Test
 	// Testing findHighestResponseRatioProcess() method in ProcessInCPU class
-	void testFindHighestResponseRatioProcess() {
+	void testFindHighestResponseRatioProcess() throws ExInvalidServiceType {
 		
 		//creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcesses = new ArrayList<ProcessInCPU>();
@@ -398,7 +399,7 @@ class TestProcessInCPU {
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU4 = ProcessInCPU.create(testProcess1);
 		
-		//locate service index to the middle of list
+		//locate service index to the beginning of list
 		testProcessInCPU4.setCurServiceIndex(0);
 		
 		 //execute updateQueueingTime()
@@ -422,7 +423,7 @@ class TestProcessInCPU {
 	
 	@Test
 	// Testing findShortestServiceNextProcess() method in ProcessInCPU class
-	void testFindShortestServiceNextProcess() {
+	void testFindShortestServiceNextProcess() throws ExInvalidServiceType {
 
 		//creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcesses = new ArrayList<ProcessInCPU>();
@@ -490,7 +491,7 @@ class TestProcessInCPU {
 	
 	@Test
 	// Testing getCurServiceType() method in ProcessInCPU class
-	void testGetCurServiceType() {
+	void testGetCurServiceType() throws ExInvalidServiceType {
 		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices = new ArrayList<Service>();
@@ -514,7 +515,7 @@ class TestProcessInCPU {
 	
 	@Test
 	// Testing getId() method in ProcessInCPU class
-	void testGetId() {
+	void testGetId() throws ExInvalidServiceType {
 		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices = new ArrayList<Service>();
