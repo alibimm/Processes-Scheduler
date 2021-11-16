@@ -39,6 +39,13 @@ public class AlgorithmResult {
 		return new AlgorithmResult(processes, algoName);
 	}
 	
+	public double getAvgTurnaroundTime() {
+		return avgTurnaroundTime;
+	}
+	public AlgorithmType getAlgorithmType() {
+		return algorithmType;
+	}
+	
 	
 //	public double getAvgQueueingTime() {
 //		return this.avgQueuingTime;

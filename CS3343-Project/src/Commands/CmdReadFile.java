@@ -32,17 +32,16 @@ public class CmdReadFile implements Command {
         Scanner inFile = null;
         
         MainSystem system = MainSystem.getInstance();
+        boolean finished = false;
+        system.startReading();
         
         try {
-        	
         	// Reading File
         	inFile = new Scanner(new File(filepathname));
         	
         	// Placeholder for number of Processes (Read first line of input file)
         	int numberOfProcesses = Integer.parseInt(inFile.nextLine());
         	if (numberOfProcesses < 0) throw new ExInvalidInput("Number of processes should be non-negative integer");
-        	
-        	system.startReading();
         	
         	// Iterating through all the processes in file
         	for (int i = 0; i < numberOfProcesses; ++i) {
@@ -76,6 +75,8 @@ public class CmdReadFile implements Command {
         		
         	}
         	
+        	finished = true;
+        	
         	
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
@@ -86,6 +87,7 @@ public class CmdReadFile implements Command {
         } catch(ExInvalidServiceType e) {
         	
         } finally {
+        	system.stopReading(finished);
             if (inFile != null)
             	inFile.close();
         }

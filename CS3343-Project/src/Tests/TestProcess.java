@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import Exceptions.ExIndexOutOfBounds;
 import Exceptions.ExInvalidServiceType;
 import Project.Process;
 import Project.Service;

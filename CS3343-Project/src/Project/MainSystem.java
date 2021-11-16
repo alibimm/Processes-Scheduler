@@ -1,6 +1,7 @@
 package Project;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Exceptions.ExInvalidServiceType;
 
@@ -39,7 +40,6 @@ public class MainSystem {
     	return p;
     }
     
-
 //    Create Service
     public Service createService(String type, String serviceTime) throws ExInvalidServiceType {
     	Service s = Service.create(type, serviceTime);
@@ -55,7 +55,42 @@ public class MainSystem {
 			}
 		}
 		allInputs.clear();
+		curInd = -1; // BUG TO TRACK: WITHOUT THIS LINE WHEN INPUTS ARE CLEARED SYSTEM WOULD GO OUT OF BOUNDS
 		return true;
+	}
+	
+	public HashMap<Integer, ArrayList<AlgorithmType>> suggest() {
+		HashMap<Integer, ArrayList<AlgorithmType>> performance = new HashMap<Integer, ArrayList<AlgorithmType>>();
+		HashMap<AlgorithmType, Integer> frequencies = new HashMap<AlgorithmType, Integer>();
+		int maxFreq = 0;
+		for (Case c : allCases) {
+			ArrayList<AlgorithmType> best = c.bestAlgorithm();
+			for (AlgorithmType algo : best) {
+				if (!frequencies.containsKey(algo)) frequencies.put(algo, 0);
+				int freq = frequencies.get(algo);
+				if (freq + 1 > maxFreq) maxFreq = freq + 1;
+				frequencies.put(algo, freq + 1);
+			}
+			performance.put(c.getId(), best);
+		}
+		
+		System.out.print("The best performing algorithm(s):");
+		boolean first = true;
+		for (HashMap.Entry<AlgorithmType, Integer> entry : frequencies.entrySet()) {
+			AlgorithmType algo = entry.getKey();
+		    int freq = entry.getValue();
+		    if (freq == maxFreq) {
+		    	if (!first) {
+		    		System.out.print(",");
+		    	} else {
+		    		first = false;
+		    	}
+		    	System.out.print(String.format(" %s", algo.toString()));
+		    }
+		}
+		System.out.println();
+		
+		return performance;
 	}
 	
 	public void clear() {
@@ -68,8 +103,15 @@ public class MainSystem {
 		allInputs.add(input);
 		curInd++;
 	}
-    
-//    Creating Results
-    
+	public void stopReading(boolean finished) {
+		if (!finished) {
+			allInputs.remove(curInd);
+			curInd--;
+		}
+	}
+	
+	public ArrayList<ArrayList<Process>> getAllInputs() {
+		return allInputs;
+	}
 	
 }
