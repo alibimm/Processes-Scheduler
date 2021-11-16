@@ -58,8 +58,5 @@ public class CmdOpen implements Command {
 				system.display();
 			}
 		}
-		
-		
 	}
-
 }
