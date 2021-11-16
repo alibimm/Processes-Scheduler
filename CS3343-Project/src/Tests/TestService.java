@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import Exceptions.ExIndexOutOfBounds;
 import Exceptions.ExInvalidServiceType;
 import Project.MainSystem;
 import Project.Service;
@@ -65,22 +64,4 @@ class TestService {
 		assertEquals(expected, actual);
 		
 	}
-	
-	@Test
-	// Test Invalid Type
-	void testGetTypeIsInvalid() throws ExInvalidServiceType {
-		
-		// Initializing dummy service with Invalid type
-		// then, initializing the result of the method call
-		ExInvalidServiceType ex = assertThrows(ExInvalidServiceType.class, () -> {Service.create("Q", "5");});
-		String actual = ex.getMessage();
-				
-		// Initializing expected result
-		String expected =  "Q is Invalid Service Type";
-				
-		// Check the correctness
-		assertTrue(actual.contains(expected));
-		
-	}
-
 }
