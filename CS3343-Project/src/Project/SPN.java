@@ -27,7 +27,8 @@ public class SPN extends Algorithm {
 
 	@Override
 	public ArrayList<ProcessInCPU> schedule(ArrayList<Process> processes) {
-
+		reset();
+		
         // main loop
         for(int tick = 0; tick < Constants.MAX_LOOP; tick++) {
         	
@@ -96,6 +97,16 @@ public class SPN extends Algorithm {
             Util.moveProcessFrom(readyQueue, blockQueueIO);
         }
     }
+	
+	private void reset() {
+		readyQueue.clear();
+        blockQueueIO.clear();
+        completedProcesses.clear();
+        dispatchedTick = 0;
+        curProcessID = -1;
+        prevProcessID = -1;
+        isBusy = false;
+	}
 	
 	@Override
 	public AlgorithmType getType() {

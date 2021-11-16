@@ -25,6 +25,8 @@ public class SRT extends Algorithm {
 	
 	@Override
 	public ArrayList<ProcessInCPU> schedule(ArrayList<Process> processes) {
+		reset();
+		
 		// main loop
         for (int tick = 0; tick < Constants.MAX_LOOP; tick++) {
         	
@@ -88,6 +90,15 @@ public class SRT extends Algorithm {
         } else if (process.getCurServiceType() == ServiceType.Keyboard) { 
             Util.moveProcessFrom(readyQueue, blockQueueIO); // next service is keyboard input, block current process
         }
+	}
+	
+	private void reset() {
+		readyQueue.clear();
+        blockQueueIO.clear();
+        completedProcesses.clear();
+        dispatchedTick = 0;
+        curProcessID = -1;
+        prevProcessID = -1;
 	}
 
 	@Override

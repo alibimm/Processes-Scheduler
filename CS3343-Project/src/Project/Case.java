@@ -17,7 +17,7 @@ public class Case {
 			
 			results.add(algoResult);
 		}
-		printTable();
+//		printTable();
 	}
 	
 	public static Case create(ArrayList<Algorithm> algorithms, ArrayList<Process> processes) {
@@ -51,10 +51,17 @@ public class Case {
 		return bestAlgorithms;
 	}
 	
+	public static Case findCaseWithId(int id, ArrayList<Case> cases) {
+		for (Case c : cases) {
+			if (c.id == id) return c;
+		}
+		return null;
+	}
+	
 	public int getId() { return id; }
 	
 	public void printTable() {
-		System.out.format("%-30s%-15s%-15s%-15s%-15s\n", 
+		System.out.format("%-15s%-15s%-15s%-15s%-15s\n", 
 				"Type", 
 				"Duration",
 				"CPU Util",
@@ -64,9 +71,22 @@ public class Case {
 			res.printStats();
 		}
 		System.out.println();
-		
-		for (AlgorithmResult res : results) {
-			res.printDetails();
+	}
+	
+	public void printAlgoShort(AlgorithmType algo) {
+		System.out.print(String.format("%-15s", ("Case #" + id)));
+		for (AlgorithmResult result : results) {
+			if (result.getAlgorithmType() == algo) {
+				result.printStats();
+			}
+		}
+	}
+	
+	public void printAlgoDetail(AlgorithmType algo) {
+		for (AlgorithmResult result : results) {
+			if (result.getAlgorithmType() == algo) {
+				result.printDetails();
+			}
 		}
 	}
 }

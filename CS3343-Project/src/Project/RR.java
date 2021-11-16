@@ -24,6 +24,7 @@ public class RR extends Algorithm {
 	
 	@Override
 	public ArrayList<ProcessInCPU> schedule(ArrayList<Process> processes) {
+		reset();
 		
 		// main loop
 		for (int tick = 0; tick < Constants.MAX_LOOP; tick++) {
@@ -92,6 +93,15 @@ public class RR extends Algorithm {
 			dispatchedTick = curTick + 1;
     	}
     }
+	
+	private void reset() {
+		readyQueue.clear();
+		blockQueueIO .clear();
+		completedProcesses.clear();
+		dispatchedTick = 0;
+		curProcessId = -1;
+		prevProcessId = -1;
+	}
 	
 	@Override
 	public AlgorithmType getType() {
