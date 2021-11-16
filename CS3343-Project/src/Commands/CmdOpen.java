@@ -10,7 +10,7 @@ public class CmdOpen implements Command {
 
 	@Override
 	public void execute(String[] cmdParts) throws ExInsufficientCommandArguments {
-		if (cmdParts.length < 2) throw new ExInsufficientCommandArguments();
+		if (cmdParts.length < 2) throw new ExInsufficientCommandArguments("Open Command should have more than 2 arguments");
 		
 		String path = cmdParts[1];
 		
