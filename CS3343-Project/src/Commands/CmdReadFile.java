@@ -85,9 +85,9 @@ public class CmdReadFile implements Command {
         } catch (NumberFormatException e) {
         	System.out.println(e.getMessage());
         } catch (ExInvalidInput e) {
-        	
+        	System.out.println(e.getMessage());
         } catch(ExInvalidServiceType e) {
-        	
+        	System.out.println(e.getMessage());
         } finally {
         	system.stopReading(finished);
             if (inFile != null)
