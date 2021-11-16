@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import Exceptions.ExInvalidServiceType;
 
 public class MainSystem {
+	private static int curInd = -1;
 	
-	private ArrayList<Process> allProcesses;
-	private ArrayList<Result> allResults;
+	private ArrayList<ArrayList<Process>> allInputs;
+	private ArrayList<Case> allCases;
 	private ArrayList<Algorithm> allAlgorithms;
 	
 	// Using Singleton to instantiate Main System, to have only one System
@@ -15,64 +16,57 @@ public class MainSystem {
     
     // Constructor
     private MainSystem() {
-    	allProcesses = new ArrayList<>();
-    	allResults = new ArrayList<>();
+    	allInputs = new ArrayList<ArrayList<Process>>();
+    	allCases = new ArrayList<Case>();
+//    	allResults = new ArrayList<>();
     	allAlgorithms = new ArrayList<>();
-//    	allAlgorithms.add(FCFS.getInstance()); // First Come First Serve
+    	allAlgorithms.add(FCFS.getInstance()); // First Come First Serve
     	allAlgorithms.add(RR.getInstance()); // Round Robin
-//    	allAlgorithms.add(FB.getInstance()); // Feedback
-//    	allAlgorithms.add(SPN.getInstance()); // Shortest Process Next
-//    	allAlgorithms.add(SRT.getInstance()); // Shortest Remaining Time
-//    	allAlgorithms.add(HRRN.getInstance()); // Highest Response Ratio Next
+    	allAlgorithms.add(FB.getInstance()); // Feedback
+    	allAlgorithms.add(SPN.getInstance()); // Shortest Process Next
+    	allAlgorithms.add(SRT.getInstance()); // Shortest Remaining Time
+    	allAlgorithms.add(HRRN.getInstance()); // Highest Response Ratio Next
     }
     
     public static MainSystem getInstance() {
         return instance;
     }
     
-    
-    
 //    Creating Processes
-
     public Process createProcess(String id, int arrivalTime, ArrayList<Service> services) {
     	Process p = Process.create(Integer.parseInt(id), arrivalTime, services);
-    	allProcesses.add(p);
+    	allInputs.get(curInd).add(p);
     	return p;
     }
     
-//    Get Process
-    public Process getProcess(int id) {
-    	for (Process p : allProcesses) {
-    		if (p.getId()==id) {
-    			return p;
-    		}
-    	}
-    	return null;
-    }
-    
-//    Get all Processes
-    public ArrayList<Process> getAllProcesses() {
-    	return this.allProcesses;
-    }
-    
+
 //    Create Service
     public Service createService(String type, String serviceTime) throws ExInvalidServiceType {
     	Service s = Service.create(type, serviceTime);
     	return s;
     }
 
-	public void scheduleAlgorithms() {
-		
-		for (Algorithm algo : allAlgorithms) {
-			ArrayList<ProcessInCPU> rawProcessResults = algo.schedule(allProcesses);
-			Result algoResult = Result.create(rawProcessResults);
-			allResults.add(algoResult);
+	public boolean scheduleAlgorithms() {
+		if (allInputs.size() == 0) return false;
+		for (ArrayList<Process> input : allInputs) {
+			Case newCase = Case.create(allAlgorithms, input);
+			if (newCase != null) {
+				allCases.add(newCase);
+			}
 		}
+		allInputs.clear();
+		return true;
 	}
 	
 	public void clear() {
-		allProcesses.clear();
-    	allResults.clear();
+		allInputs.clear();
+		allCases.clear();
+	}
+	
+	public void startReading() {
+		ArrayList<Process> input = new ArrayList<Process>();
+		allInputs.add(input);
+		curInd++;
 	}
     
 //    Creating Results

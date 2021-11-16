@@ -42,6 +42,8 @@ public class CmdReadFile implements Command {
         	int numberOfProcesses = Integer.parseInt(inFile.nextLine());
         	if (numberOfProcesses < 0) throw new ExInvalidInput("Number of processes should be non-negative integer");
         	
+        	system.startReading();
+        	
         	// Iterating through all the processes in file
         	for (int i = 0; i < numberOfProcesses; ++i) {
         		

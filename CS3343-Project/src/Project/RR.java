@@ -3,6 +3,7 @@ package Project;
 import java.util.ArrayList;
 
 public class RR extends Algorithm {
+	private final AlgorithmType type = AlgorithmType.RR;
 	private ArrayList<ProcessInCPU> readyQueue;
 	private ArrayList<ProcessInCPU> blockQueueIO;
 	private ArrayList<ProcessInCPU> completedProcesses;
@@ -92,4 +93,8 @@ public class RR extends Algorithm {
     	}
     }
 	
+	@Override
+	public AlgorithmType getType() {
+		return type;
+	}
 }

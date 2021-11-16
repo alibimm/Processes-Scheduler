@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FB extends Algorithm {
+	private final AlgorithmType type = AlgorithmType.FB;
 	private ArrayList<ArrayList<ProcessInCPU>> allReadyQueues;
     private ArrayList<ProcessInCPU> blockQueueIO;
     private ArrayList<ProcessInCPU> completedProcesses;
     private int dispatchedTick;
     private int curProcessID, prevProcessID;
     private HashMap<Integer, Integer> priorityMap;
-	
+    
 	// Constructor
 	private FB() {
 		allReadyQueues = new ArrayList<ArrayList<ProcessInCPU>>();
@@ -20,7 +21,6 @@ public class FB extends Algorithm {
 	    curProcessID = -1;
 	    prevProcessID = -1;
 	    priorityMap = new HashMap<Integer, Integer>();
-	    
 	}
 	
 	private static FB instance = new FB();
@@ -126,4 +126,8 @@ public class FB extends Algorithm {
 		return -1;
 	}
 
+	@Override
+	public AlgorithmType getType() {
+		return type;
+	}
 }
