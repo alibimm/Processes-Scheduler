@@ -63,4 +63,21 @@ class TestService {
 		assertEquals(expected, actual);
 		
 	}
+	
+	@Test
+	// Test Invalid Type
+	void testGetTypeIsNull() {
+		
+		// Initializing dummy service
+		Service testService = Service.create("Q", "5");
+		
+		// Initializing actual result
+		Service actual = testService;
+		
+		// Initializing expected result
+		Service expected = null;
+		
+		assertEquals(expected, actual);
+		
+	}
 }
