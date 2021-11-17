@@ -70,7 +70,6 @@ public class CmdReadFile implements Command {
     				if (!serviceLineParts[0].equals("C") && !serviceLineParts[0].equals("K")) throw new ExInvalidServiceType("Service Type Should be C or K");
     				if (Integer.parseInt(serviceLineParts[1]) < 1) throw new ExInvalidInput("Service time should be positive integer");
 					s = system.createService(serviceLineParts[0], serviceLineParts[1]);
-					
     				services.add(s);
     			}
     			p = system.createProcess(processLineParts[1], Integer.parseInt(processLineParts[2]), services);
