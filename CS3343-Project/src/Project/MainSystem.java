@@ -3,10 +3,14 @@ package Project;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Exceptions.ExCaseNotFound;
 import Exceptions.ExInvalidServiceType;
 
 public class MainSystem {
 	private static int curInd = -1;
+	
+	private Case openCase;
+	private AlgorithmType openAlgoType;
 	
 	private ArrayList<ArrayList<Process>> allInputs;
 	private ArrayList<Case> allCases;
@@ -19,14 +23,17 @@ public class MainSystem {
     private MainSystem() {
     	allInputs = new ArrayList<ArrayList<Process>>();
     	allCases = new ArrayList<Case>();
-//    	allResults = new ArrayList<>();
-    	allAlgorithms = new ArrayList<>();
+    	allAlgorithms = new ArrayList<Algorithm>();
+    	
     	allAlgorithms.add(FCFS.getInstance()); // First Come First Serve
     	allAlgorithms.add(RR.getInstance()); // Round Robin
     	allAlgorithms.add(FB.getInstance()); // Feedback
     	allAlgorithms.add(SPN.getInstance()); // Shortest Process Next
     	allAlgorithms.add(SRT.getInstance()); // Shortest Remaining Time
     	allAlgorithms.add(HRRN.getInstance()); // Highest Response Ratio Next
+    	
+    	openCase = null;
+    	openAlgoType = AlgorithmType.None;
     }
     
     public static MainSystem getInstance() {
@@ -57,6 +64,62 @@ public class MainSystem {
 		allInputs.clear();
 		curInd = -1; // BUG TO TRACK: WITHOUT THIS LINE WHEN INPUTS ARE CLEARED SYSTEM WOULD GO OUT OF BOUNDS
 		return true;
+	}
+	
+	public boolean openAlgo(AlgorithmType type) {
+		if (openAlgoType != AlgorithmType.None) return false;
+		openAlgoType = type;
+		return true;
+	}
+	
+	public boolean openCase(int id) throws ExCaseNotFound {
+		if (openCase != null) return false;
+		openCase = Case.findCaseWithId(id, allCases);
+		if (openCase == null) throw new ExCaseNotFound(id);
+		return true;
+	}
+	
+	public boolean close() {
+		if (openAlgoType != AlgorithmType.None) {
+			openAlgoType = AlgorithmType.None;
+		} else {
+			if (openCase != null) {
+				openCase = null;
+			} else {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public void display() {
+		if (openCase != null) {
+			if (openAlgoType != AlgorithmType.None) {
+				openCase.printAlgoDetail(openAlgoType);
+			} else {
+				openCase.printTable();
+			}
+		} else {
+			if (openAlgoType != AlgorithmType.None) {
+				System.out.println(String.format("Current algorithm filter: %s", openAlgoType.toString()));
+				System.out.format("%-15s%-15s%-15s%-15s%-15s%-15s\n", 
+						"Case", 
+						"Type",
+						"Duration",
+						"CPU Util",
+						"Avg Turnaround",
+						"Avg Queuing");
+				for (Case c : allCases) {
+					c.printAlgoShort(openAlgoType);
+				}
+			} else {
+				System.out.println("Scheduled cases:");
+				for (Case c : allCases) {
+					System.out.println(String.format("Case %d", c.getId()));
+				}
+				System.out.println(String.format("Unscheduled files: %d", allInputs.size()));
+			}
+		}
 	}
 	
 	public HashMap<Integer, ArrayList<AlgorithmType>> suggest() {
