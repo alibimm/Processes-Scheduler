@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import Exceptions.ExInvalidServiceType;
-import Project.MainSystem;
+
 import Project.Service;
 import Project.ServiceType;
 
@@ -14,7 +13,7 @@ class TestService {
 	// Test getServiceTime Method
 	@Test
 	// 
-	void testGetServiceTime() throws ExInvalidServiceType {
+	void testGetServiceTime() {
 		
 		// Initializing dummy service
 		Service testService = Service.create("C", "5");
@@ -33,7 +32,7 @@ class TestService {
 	// Test getType Method
 	@Test
 	// Test CPU Type
-	void testGetTypeIsCPU() throws ExInvalidServiceType {
+	void testGetTypeIsCPU() {
 		
 		// Initializing dummy service
 		Service testService = Service.create("C", "5");
@@ -50,7 +49,7 @@ class TestService {
 	
 	@Test
 	// Test Keyboard Type
-	void testGetTypeIsKeyboard() throws ExInvalidServiceType {
+	void testGetTypeIsKeyboard() {
 		
 		// Initializing dummy service
 		Service testService = Service.create("K", "5");
