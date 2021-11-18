@@ -67,8 +67,9 @@ public class CmdReadFile implements Command {
     				// Splitting service line into parts
     				serviceLineParts = inFile.nextLine().trim().split(" ");
     				if (serviceLineParts.length != 2) throw new ExInvalidInput("Service Line Should have 2 arguments (e.g. C 5)");
+    				if (!serviceLineParts[0].equals("C") && !serviceLineParts[0].equals("K")) throw new ExInvalidServiceType("Service Type Should be C or K");
+    				if (Integer.parseInt(serviceLineParts[1]) < 1) throw new ExInvalidInput("Service time should be positive integer");
 					s = system.createService(serviceLineParts[0], serviceLineParts[1]);
-					if (Integer.parseInt(serviceLineParts[1]) < 1) throw new ExInvalidInput("Service time should be positive integer");
     				services.add(s);
     			}
     			p = system.createProcess(processLineParts[1], Integer.parseInt(processLineParts[2]), services);
@@ -83,9 +84,9 @@ public class CmdReadFile implements Command {
         } catch (NumberFormatException e) {
         	System.out.println(e.getMessage());
         } catch (ExInvalidInput e) {
-        	
+        	System.out.println(e.getMessage());
         } catch(ExInvalidServiceType e) {
-        	
+        	System.out.println(e.getMessage());
         } finally {
         	system.stopReading(finished);
             if (inFile != null)

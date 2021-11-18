@@ -398,7 +398,7 @@ class TestProcessInCPU {
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU4 = ProcessInCPU.create(testProcess1);
 		
-		//locate service index to the middle of list
+		//locate service index to the beginning of list
 		testProcessInCPU4.setCurServiceIndex(0);
 		
 		 //execute updateQueueingTime()

@@ -1,7 +1,5 @@
 package Project;
 
-import Exceptions.ExInvalidServiceType;
-
 public class Service {
 	private int serviceTime;
 	private ServiceType type;
@@ -12,13 +10,13 @@ public class Service {
 		this.serviceTime = serviceTime; 
 	}
 
-	public static Service create(String type, String serviceTime) throws ExInvalidServiceType {
+	public static Service create(String type, String serviceTime) {
 		if (type.equals("C")) {
         	return new Service(ServiceType.CPU, Integer.parseInt(serviceTime));
 		} else if (type.equals("K")) {
         	return new Service(ServiceType.Keyboard, Integer.parseInt(serviceTime));
         } else {
-        	throw new ExInvalidServiceType(type + " is Invalid Service Type");
+        	return null;
         }
 	}
 	
