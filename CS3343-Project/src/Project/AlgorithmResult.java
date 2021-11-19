@@ -11,7 +11,6 @@ public class AlgorithmResult {
 	private double maxQueuingTime;
 	private double maxTurnaroundTime;
 	private double cpuUtil; 
-	private double throughput;
 	private AlgorithmType algorithmType;
 	
 	private AlgorithmResult(ArrayList<ProcessInCPU> rawProcessResults, AlgorithmType algoType) {
@@ -39,62 +38,37 @@ public class AlgorithmResult {
 		return new AlgorithmResult(processes, algoName);
 	}
 	
-	public double getAvgTurnaroundTime() {
-		return avgTurnaroundTime;
-	}
 	public AlgorithmType getAlgorithmType() {
 		return algorithmType;
 	}
-	
-	
-//	public double getAvgQueueingTime() {
-//		return this.avgQueuingTime;
-//	}
-//	public double getAvgTurnaroundTime() {
-//		return this.avgTurnaroundTime;
-//	}
-//	public double getavgRatioTS() {
-//		return this.avgRatioTS;
-//	}
-//	public double getmaxQueuingTime() {
-//		return this.maxQueuingTime;
-//	}
-//	public double getMaxTurnaroundTime() {
-//		return this.maxTurnaroundTime;
-//	}
-//	public double getCpuUtil() {
-//		return this.cpuUtil;
-//	}
-//	public double getThroughput() {
-//		return this.throughput;
-//	}
-//	
-//	public void setAvgQueueingTime(double aqt) {
-//		this.avgQueuingTime = aqt;
-//	}
-//	public void setAvgTurnaroundTime(double att) {
-//		this.avgTurnaroundTime = att;
-//	}
-//	public void setavgRatioTS(double atsr) {
-//		this.avgRatioTS = atsr;
-//	}
-//	public void setmaxQueuingTime(double mqt) {
-//		this.maxQueuingTime = mqt;
-//	}
-//	public void setMaxTurnaroundTime(double mtt) {
-//		this.maxTurnaroundTime = mtt;
-//	}
-//	public void setThroughput(double t) {
-//		this.throughput = t;
-//	}
+	public double getAvgQueuingTime() {
+		return this.avgQueuingTime;
+	}
+	public double getAvgTurnaroundTime() {
+		return this.avgTurnaroundTime;
+	}
+	public double getAvgRatioTS() {
+		return this.avgRatioTS;
+	}
+	public double getmaxQueuingTime() {
+		return this.maxQueuingTime;
+	}
+	public double getMaxTurnaroundTime() {
+		return this.maxTurnaroundTime;
+	}
+	public double getCpuUtil() {
+		return this.cpuUtil;
+	}
 	
 	public void printStats() {
-		System.out.format("%-15s%-15.0f%-15.2f%-15.2f%-15.2f\n", 
+		System.out.format("%-15s%-15.0f%-15.2f%-15.2f%-15.2f%-15.2f%-15.2f\n", 
 				algorithmType.toShort(), 
 				duration,
 				cpuUtil,
 				avgTurnaroundTime,
-				avgQueuingTime);
+				maxTurnaroundTime,
+				avgQueuingTime,
+				maxQueuingTime);
 	}
 	public void printDetails() {
 		System.out.println("---------------------------------------------------");

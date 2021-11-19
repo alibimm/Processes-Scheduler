@@ -1,7 +1,9 @@
 package Project;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import Exceptions.ExCaseNotFound;
 import Exceptions.ExInvalidServiceType;
@@ -9,6 +11,8 @@ import Exceptions.ExInvalidServiceType;
 public class MainSystem {
 	private static int curInd = -1;
 	
+	private String bestIndicator;
+	private List<String> indicatorOptions;
 	private Case openCase;
 	private AlgorithmType openAlgoType;
 	
@@ -34,6 +38,8 @@ public class MainSystem {
     	
     	openCase = null;
     	openAlgoType = AlgorithmType.None;
+    	bestIndicator = "ATRT";
+    	indicatorOptions = Arrays.asList(new String[] {"AQT", "ATRT", "ARTS", "CpuUtil"});
     }
     
     public static MainSystem getInstance() {
@@ -53,8 +59,10 @@ public class MainSystem {
     	return s;
     }
 
-	public boolean scheduleAlgorithms() {
-		if (allInputs.size() == 0) return false;
+	public int scheduleAlgorithms() {
+		int inputsCount = allInputs.size();
+		if (inputsCount == 0) return 0;
+		
 		for (ArrayList<Process> input : allInputs) {
 			Case newCase = Case.create(allAlgorithms, input);
 			if (newCase != null) {
@@ -63,7 +71,7 @@ public class MainSystem {
 		}
 		allInputs.clear();
 		curInd = -1; // BUG TO TRACK: WITHOUT THIS LINE WHEN INPUTS ARE CLEARED SYSTEM WOULD GO OUT OF BOUNDS
-		return true;
+		return inputsCount;
 	}
 	
 	public boolean openAlgo(AlgorithmType type) {
@@ -127,7 +135,7 @@ public class MainSystem {
 		HashMap<AlgorithmType, Integer> frequencies = new HashMap<AlgorithmType, Integer>();
 		int maxFreq = 0;
 		for (Case c : allCases) {
-			ArrayList<AlgorithmType> best = c.bestAlgorithm();
+			ArrayList<AlgorithmType> best = c.bestAlgorithm(bestIndicator);
 			for (AlgorithmType algo : best) {
 				if (!frequencies.containsKey(algo)) frequencies.put(algo, 0);
 				int freq = frequencies.get(algo);
@@ -154,6 +162,12 @@ public class MainSystem {
 		System.out.println();
 		
 		return performance;
+	}
+	
+	public boolean changeBestIndicator(String indicator) {
+		if (!indicatorOptions.contains(indicator)) return false;
+		bestIndicator = indicator;
+		return true;
 	}
 	
 	public void clear() {

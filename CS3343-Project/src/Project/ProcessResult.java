@@ -31,10 +31,6 @@ public class ProcessResult {
 		ratioTS = turnaroundTime / serviceTime;
 	}
 	
-	public ProcessResult create(ProcessInCPU process) {
-		return new ProcessResult(process);
-	}
-	
 	public static ArrayList<ProcessResult> createResultList(ArrayList<ProcessInCPU> processes) {
 		ArrayList<ProcessResult> results = new ArrayList<ProcessResult>(); 
 		for (ProcessInCPU rawProcess : processes) {
@@ -93,9 +89,5 @@ public class ProcessResult {
 	    System.out.println("Keyboard Queuing Time: " + queuingTimeIO);
 	    System.out.println("Turnaround Time: " + turnaroundTime);
 	    System.out.println();
-	}
-	
-	public void printQueueingTime() {
-	    
 	}
 }

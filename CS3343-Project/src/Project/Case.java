@@ -17,7 +17,6 @@ public class Case {
 			
 			results.add(algoResult);
 		}
-//		printTable();
 	}
 	
 	public static Case create(ArrayList<Algorithm> algorithms, ArrayList<Process> processes) {
@@ -31,25 +30,100 @@ public class Case {
 		return newCase;
 	}
 	
-	public ArrayList<AlgorithmType> bestAlgorithm() {
-		ArrayList<AlgorithmType> bestAlgorithms = new ArrayList<AlgorithmType>();
-		
-		double minAvgTRT = results.get(0).getAvgTurnaroundTime();
-		
-		for (int i = 1; i < results.size(); i++) {
-			AlgorithmResult result = results.get(i);
-			if (result.getAvgTurnaroundTime() < minAvgTRT) {
-				minAvgTRT = result.getAvgTurnaroundTime();
-			}
+	public ArrayList<AlgorithmType> bestAlgorithm(String indicator) {
+		switch (indicator) {
+		case "AQT":
+			return bestAlgorithmAQT();
+		case "ATRT":
+			return bestAlgorithmATRT();
+		case "ARTS":
+			return bestAlgorithmARTS();
+		case "CpuUtil":
+			return bestAlgorithmCpuUtil();
+		default: 
+			return bestAlgorithmATRT();
 		}
-		
-		for (AlgorithmResult result : results) {
-			if (result.getAvgTurnaroundTime() == minAvgTRT) {
-				bestAlgorithms.add(result.getAlgorithmType());
-			}
-		}
-		return bestAlgorithms;
 	}
+	
+	private ArrayList<AlgorithmType> bestAlgorithmAQT() {
+ 		ArrayList<AlgorithmType> bestAlgorithms = new ArrayList<AlgorithmType>();
+ 		double minAvgQT = results.get(0).getAvgQueuingTime();
+
+ 		for (int i = 1; i < results.size(); i++) {
+ 			AlgorithmResult result = results.get(i);
+ 			if (result.getAvgQueuingTime() < minAvgQT) {
+ 				minAvgQT = result.getAvgQueuingTime();
+ 			}
+ 		}
+ 		
+ 		for (AlgorithmResult result : results) {
+ 			if (result.getAvgQueuingTime() == minAvgQT) {
+ 				bestAlgorithms.add(result.getAlgorithmType());
+ 			}
+ 		}
+ 		
+ 		return bestAlgorithms;
+ 	}
+
+ 	private ArrayList<AlgorithmType> bestAlgorithmATRT() {
+ 		ArrayList<AlgorithmType> bestAlgorithms = new ArrayList<AlgorithmType>();
+ 		double minAvgTRT = results.get(0).getAvgTurnaroundTime();
+
+ 		for (int i = 1; i < results.size(); i++) {
+ 			AlgorithmResult result = results.get(i);
+ 			if (result.getAvgTurnaroundTime() < minAvgTRT) {
+ 				minAvgTRT = result.getAvgTurnaroundTime();
+ 			}
+ 		}
+
+ 		for (AlgorithmResult result : results) {
+ 			if (result.getAvgTurnaroundTime() == minAvgTRT) {
+ 				bestAlgorithms.add(result.getAlgorithmType());
+ 			}
+ 		}
+
+ 		return bestAlgorithms;
+ 	}
+
+ 	private ArrayList<AlgorithmType> bestAlgorithmARTS() {
+ 		ArrayList<AlgorithmType> bestAlgorithms = new ArrayList<AlgorithmType>();
+ 		double minAvgRTS = results.get(0).getAvgRatioTS();
+
+ 		for (int i = 1; i < results.size(); i++) {
+ 			AlgorithmResult result = results.get(i);
+ 			if (result.getAvgRatioTS() < minAvgRTS) {
+ 				minAvgRTS = result.getAvgRatioTS();
+ 			}
+ 		}
+
+ 		for (AlgorithmResult result : results) {
+ 			if (result.getAvgRatioTS() == minAvgRTS) {
+ 				bestAlgorithms.add(result.getAlgorithmType());
+ 			}
+ 		}
+ 		
+ 		return bestAlgorithms;
+ 	}
+
+ 	private ArrayList<AlgorithmType> bestAlgorithmCpuUtil() {
+ 		ArrayList<AlgorithmType> bestAlgorithms = new ArrayList<AlgorithmType>();
+ 		double maxCpuUtil = results.get(0).getCpuUtil();
+
+ 		for (int i = 1; i < results.size(); i++) {
+ 			AlgorithmResult result = results.get(i);
+ 			if (result.getCpuUtil() > maxCpuUtil) {
+ 				maxCpuUtil = result.getCpuUtil();
+ 			}
+ 		}
+
+ 		for (AlgorithmResult result : results) {
+ 			if (result.getCpuUtil() == maxCpuUtil) {
+ 				bestAlgorithms.add(result.getAlgorithmType());
+ 			}
+ 		}
+ 		
+ 		return bestAlgorithms;
+ 	}
 	
 	public static Case findCaseWithId(int id, ArrayList<Case> cases) {
 		for (Case c : cases) {
@@ -61,12 +135,14 @@ public class Case {
 	public int getId() { return id; }
 	
 	public void printTable() {
-		System.out.format("%-15s%-15s%-15s%-15s%-15s\n", 
+		System.out.format("%-15s%-15s%-15s%-15s%-15s%-15s%-15s\n", 
 				"Type", 
 				"Duration",
 				"CPU Util",
 				"Avg Turnaround",
-				"Avg Queuing");
+				"Max Turnaround",
+				"Avg Queuing",
+				"Max Queuing");
 		for (AlgorithmResult res : results) {
 			res.printStats();
 		}
