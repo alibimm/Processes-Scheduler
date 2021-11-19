@@ -43,11 +43,6 @@ public class CmdOpen implements Command {
 				success = system.openCase(caseId);
 				openingCase = true;
 			}
-		} catch (NumberFormatException e) {
-			System.out.println("Sorry, there is no such algorithm.");
-		} catch (ExCaseNotFound e) {
-			System.out.println(e.getMessage());
-		} finally {
 			if (!success) {
 				if (openingCase) {
 					System.out.println("There is already case open.");
@@ -57,6 +52,10 @@ public class CmdOpen implements Command {
 			} else {
 				system.display();
 			}
+		} catch (NumberFormatException e) {
+			System.out.println("Sorry, there is no such algorithm.");
+		} catch (ExCaseNotFound e) {
+			System.out.println(e.getMessage());
 		}
 	}
 }

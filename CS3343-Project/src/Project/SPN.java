@@ -46,11 +46,11 @@ public class SPN extends Algorithm {
 				
 				if (curIOProcess.isCurServiceOver()) {
 					curIOProcess.proceedToNextService();
-					Util.moveProcessFrom(blockQueueIO, readyQueue);
+					ProcessInCPU.moveProcessFrom(blockQueueIO, readyQueue);
 				}
 				
 				if (!blockQueueIO.isEmpty()) blockQueueIO.get(0).incrementCurServiceTick();
-				Util.updateQueingTime(blockQueueIO, 1, blockQueueIO.size());
+                ProcessInCPU.updateQueingTime(blockQueueIO, 1, blockQueueIO.size());
 			}
 
             // CPU scheduling
@@ -69,7 +69,7 @@ public class SPN extends Algorithm {
                 }
                 
                 curProcess.incrementCurServiceTick(); // increment the num of ticks that have been spent on current service
-                Util.updateQueingTime(readyQueue, 1, readyQueue.size());
+                ProcessInCPU.updateQueingTime(readyQueue, 1, readyQueue.size());
                 
                 if (curProcess.isCurServiceOver()) { // current service is completed
                     manageCurrentCPUProcess(tick);
@@ -92,9 +92,9 @@ public class SPN extends Algorithm {
     	
         boolean processCompleted = process.proceedToNextService();
         if (processCompleted) {
-            Util.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
+        	ProcessInCPU.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
         } else if (process.getCurServiceType() == ServiceType.Keyboard) { // next service is keyboard input, block current process
-            Util.moveProcessFrom(readyQueue, blockQueueIO);
+        	ProcessInCPU.moveProcessFrom(readyQueue, blockQueueIO);
         }
     }
 	

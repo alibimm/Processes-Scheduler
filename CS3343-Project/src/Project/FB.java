@@ -53,12 +53,12 @@ public class FB extends Algorithm {
         		if (curIOProcess.isCurServiceOver()) { // I/O service is completed
         			curIOProcess.proceedToNextService();
         			int processPriority = priorityMap.get(curIOProcess.getId());
-        			Util.moveProcessFrom(blockQueueIO, allReadyQueues.get(processPriority));
+        			ProcessInCPU.moveProcessFrom(blockQueueIO, allReadyQueues.get(processPriority));
         			
         			
         		}
         		if (!blockQueueIO.isEmpty()) blockQueueIO.get(0).incrementCurServiceTick();
-        		Util.updateQueingTime(blockQueueIO, 1, blockQueueIO.size());
+                ProcessInCPU.updateQueingTime(blockQueueIO, 1, blockQueueIO.size());
         	}
         	
         	// CPU scheduling
@@ -75,9 +75,9 @@ public class FB extends Algorithm {
             		dispatchedTick = tick;
             	
             	curProcess.incrementCurServiceTick(); // increment the num of ticks that have been spent on current service
-            	Util.updateQueingTime(readyQueue, 1, readyQueue.size());
+                ProcessInCPU.updateQueingTime(readyQueue, 1, readyQueue.size());
             	for (int i = firstQueue + 1; i < allReadyQueues.size(); i++) {
-            		Util.updateQueingTime(allReadyQueues.get(i), 0, allReadyQueues.get(i).size());
+                    ProcessInCPU.updateQueingTime(allReadyQueues.get(i), 0, allReadyQueues.get(i).size());
             	}
             	
             	if (curProcess.isCurServiceOver() || tick + 1 - dispatchedTick >= Constants.CLOCK) { // current service is completed
@@ -104,16 +104,16 @@ public class FB extends Algorithm {
     	if (process.isCurServiceOver()) {
     		boolean processCompleted = process.proceedToNextService();
             if (processCompleted) { 
-                Util.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
+            	ProcessInCPU.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
             } else if (process.getCurServiceType() == ServiceType.Keyboard) { // next service is keyboard input, block current process
-                Util.moveProcessFrom(readyQueue, blockQueueIO);
+            	ProcessInCPU.moveProcessFrom(readyQueue, blockQueueIO);
             }
     	} else {
 			if (firstQueue == Constants.PRIORITY_COUNT - 1) {
-				Util.moveProcessFrom(readyQueue, readyQueue);
+				ProcessInCPU.moveProcessFrom(readyQueue, readyQueue);
 			} else {
 				priorityMap.put(process.getId(), firstQueue + 1);
-				Util.moveProcessFrom(readyQueue, allReadyQueues.get(firstQueue + 1));
+				ProcessInCPU.moveProcessFrom(readyQueue, allReadyQueues.get(firstQueue + 1));
 			}
 			dispatchedTick = curTick + 1; // reset the previous dispatched process ID to empty
     	}

@@ -46,11 +46,11 @@ public class HRRN extends Algorithm {
                 
                 if (curIOProcess.isCurServiceOver()) { // I/O service is completed
                     curIOProcess.proceedToNextService();
-                    Util.moveProcessFrom(blockQueueIO, readyQueue);
+                    ProcessInCPU.moveProcessFrom(blockQueueIO, readyQueue);
                 }
                 
                 if (!blockQueueIO.isEmpty()) blockQueueIO.get(0).incrementCurServiceTick();
-                Util.updateQueingTime(blockQueueIO, 1, blockQueueIO.size());
+                ProcessInCPU.updateQueingTime(blockQueueIO, 1, blockQueueIO.size());
             }
 
             // CPU scheduling
@@ -69,7 +69,7 @@ public class HRRN extends Algorithm {
                 }
                 
                 curProcess.incrementCurServiceTick();
-                Util.updateQueingTime(readyQueue, 1, readyQueue.size());
+                ProcessInCPU.updateQueingTime(readyQueue, 1, readyQueue.size());
                 
                 if (curProcess.isCurServiceOver()) {
                     manageCurrentCPUProcess(tick);
@@ -92,9 +92,9 @@ public class HRRN extends Algorithm {
     	
         boolean processCompleted = process.proceedToNextService();
         if (processCompleted) {
-            Util.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
+        	ProcessInCPU.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
         } else if (process.getCurServiceType() == ServiceType.Keyboard) { 
-            Util.moveProcessFrom(readyQueue, blockQueueIO); // next service is keyboard input, block current process
+        	ProcessInCPU.moveProcessFrom(readyQueue, blockQueueIO); // next service is keyboard input, block current process
         }
 	}
 	
