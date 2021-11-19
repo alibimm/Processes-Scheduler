@@ -46,25 +46,25 @@ public class AlgorithmResult {
 		return algorithmType;
 	}
 	
+	public double getAvgQueueingTime() {
+		return this.avgQueuingTime;
+	}
 	
-//	public double getAvgQueueingTime() {
-//		return this.avgQueuingTime;
-//	}
 //	public double getAvgTurnaroundTime() {
 //		return this.avgTurnaroundTime;
 //	}
-//	public double getavgRatioTS() {
-//		return this.avgRatioTS;
-//	}
+	public double getavgRatioTS() {
+		return this.avgRatioTS;
+	}
 //	public double getmaxQueuingTime() {
 //		return this.maxQueuingTime;
 //	}
 //	public double getMaxTurnaroundTime() {
 //		return this.maxTurnaroundTime;
 //	}
-//	public double getCpuUtil() {
-//		return this.cpuUtil;
-//	}
+	public double getCpuUtil() {
+		return this.cpuUtil;
+	}
 //	public double getThroughput() {
 //		return this.throughput;
 //	}

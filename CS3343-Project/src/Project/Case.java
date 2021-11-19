@@ -31,24 +31,86 @@ public class Case {
 		return newCase;
 	}
 	
-	public ArrayList<AlgorithmType> bestAlgorithm() {
-		ArrayList<AlgorithmType> bestAlgorithms = new ArrayList<AlgorithmType>();
+	public ArrayList<AlgorithmType> bestAlgorithmAQT() {
 		
-		double minAvgTRT = results.get(0).getAvgTurnaroundTime();
+		ArrayList<AlgorithmType> bestAlgorithms = new ArrayList<AlgorithmType>();
+		double minAvgQT = results.get(0).getAvgQueueingTime();
 		
 		for (int i = 1; i < results.size(); i++) {
 			AlgorithmResult result = results.get(i);
-			if (result.getAvgTurnaroundTime() < minAvgTRT) {
-				minAvgTRT = result.getAvgTurnaroundTime();
+			if (result.getAvgQueueingTime() < minAvgQT) {
+				minAvgQT = result.getAvgQueueingTime();
 			}
 		}
 		
 		for (AlgorithmResult result : results) {
-			if (result.getAvgTurnaroundTime() == minAvgTRT) {
+			if (result.getAvgQueueingTime() == minAvgQT) {
 				bestAlgorithms.add(result.getAlgorithmType());
 			}
 		}
 		return bestAlgorithms;
+	}
+	
+	public ArrayList<AlgorithmType> bestAlgorithmATRT() {
+		ArrayList<AlgorithmType> bestAlgorithms = new ArrayList<AlgorithmType>();
+		double minAvgATRT = results.get(0).getAvgTurnaroundTime();
+		
+		for (int i = 1; i < results.size(); i++) {
+			AlgorithmResult result = results.get(i);
+			if (result.getAvgTurnaroundTime() < minAvgATRT) {
+				minAvgATRT = result.getAvgTurnaroundTime();
+			}
+		}
+		
+		for (AlgorithmResult result : results) {
+			if (result.getAvgTurnaroundTime() == minAvgATRT) {
+				bestAlgorithms.add(result.getAlgorithmType());
+			}
+		}
+		
+		return bestAlgorithms;
+		
+	}
+	
+	public ArrayList<AlgorithmType> bestAlgorithmARTS() {
+		ArrayList<AlgorithmType> bestAlgorithms = new ArrayList<AlgorithmType>();
+		double minAvgRTS = results.get(0).getavgRatioTS();
+		
+		for (int i = 1; i < results.size(); i++) {
+			AlgorithmResult result = results.get(i);
+			if (result.getavgRatioTS() < minAvgRTS) {
+				minAvgRTS = result.getavgRatioTS();
+			}
+		}
+		
+		for (AlgorithmResult result : results) {
+			if (result.getavgRatioTS() == minAvgRTS) {
+				bestAlgorithms.add(result.getAlgorithmType());
+			}
+		}
+		return bestAlgorithms;
+		
+	}
+	
+	public ArrayList<AlgorithmType> bestAlgorithmCpuUtil() {
+		ArrayList<AlgorithmType> bestAlgorithms = new ArrayList<AlgorithmType>();
+		
+		double minCpuUtil = results.get(0).getCpuUtil();
+		
+		for (int i = 1; i < results.size(); i++) {
+			AlgorithmResult result = results.get(i);
+			if (result.getCpuUtil() < minCpuUtil) {
+				minCpuUtil = result.getCpuUtil();
+			}
+		}
+		
+		for (AlgorithmResult result : results) {
+			if (result.getCpuUtil() == minCpuUtil) {
+				bestAlgorithms.add(result.getAlgorithmType());
+			}
+		}
+		return bestAlgorithms;
+		
 	}
 	
 	public int getId() { return id; }

@@ -27,9 +27,13 @@ public class Main {
             		(new CmdSchedule()).execute(cmdParts);
             	} else if (cmdParts[0].equals("suggest")) {
             		(new CmdSuggest()).execute(cmdParts);
-            	} else if (cmdParts[0].equals("open")) {
-            		(new )
-            	} else {
+            	} else if (cmdParts[0].equals("custom")) {
+            		(new CmdCustom()).execute(cmdParts);
+            	}
+//            	else if (cmdParts[0].equals("open")) {
+//            		
+//            	} 
+            	else {
             		throw new ExNonExistingCommand(cmdParts[0]);
             	}
         	} catch (ExNonExistingCommand e) {

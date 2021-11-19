@@ -33,6 +33,10 @@ public class MainSystem {
         return instance;
     }
     
+    public boolean isCaseEmpty(){
+    	return allCases.isEmpty();
+    }
+    
 //    Creating Processes
     public Process createProcess(String id, int arrivalTime, ArrayList<Service> services) {
     	Process p = Process.create(Integer.parseInt(id), arrivalTime, services);
@@ -59,12 +63,23 @@ public class MainSystem {
 		return true;
 	}
 	
-	public HashMap<Integer, ArrayList<AlgorithmType>> suggest() {
+	public HashMap<Integer, ArrayList<AlgorithmType>> suggest(String indicator) {
 		HashMap<Integer, ArrayList<AlgorithmType>> performance = new HashMap<Integer, ArrayList<AlgorithmType>>();
 		HashMap<AlgorithmType, Integer> frequencies = new HashMap<AlgorithmType, Integer>();
 		int maxFreq = 0;
+		ArrayList<AlgorithmType> best= null;
 		for (Case c : allCases) {
-			ArrayList<AlgorithmType> best = c.bestAlgorithm();
+			
+			if (indicator.equals("AQT")) {
+				 best = c.bestAlgorithmAQT();
+			}else if (indicator.equals("ATRT")) {
+				 best = c.bestAlgorithmATRT();
+			}else if (indicator.equals("ARTS")) {
+				 best = c.bestAlgorithmARTS();
+			}else {
+				 best = c.bestAlgorithmCpuUtil();
+			}
+			
 			for (AlgorithmType algo : best) {
 				if (!frequencies.containsKey(algo)) frequencies.put(algo, 0);
 				int freq = frequencies.get(algo);
@@ -92,6 +107,28 @@ public class MainSystem {
 		
 		return performance;
 	}
+	
+	public void printcases(HashMap<Integer, ArrayList<AlgorithmType>> performance) {
+		System.out.print(String.format("%-15s%s\n", "Case", "Best algorithms"));
+		
+		for (HashMap.Entry<Integer, ArrayList<AlgorithmType>> entry : performance.entrySet()) {
+		    Integer id = entry.getKey();
+		    ArrayList<AlgorithmType> best = entry.getValue();
+		    
+		    System.out.print(String.format("%-15s", "Case #" + id));
+		    boolean first = true;
+		    for (AlgorithmType algo : best) {
+		    	if (!first) {
+		    		System.out.print(", ");
+		    	} else {
+		    		first = false;
+		    	}
+		    	System.out.print(String.format("%s", algo.toShort()));
+		    }
+		    System.out.println();
+		}
+	}
+	
 	
 	public void clear() {
 		allInputs.clear();
