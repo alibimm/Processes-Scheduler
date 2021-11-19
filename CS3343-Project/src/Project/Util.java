@@ -3,6 +3,7 @@ package Project;
 import java.util.ArrayList;
 
 public class Util {
+	private Util() {}
 	public static void moveProcessFrom(ArrayList<ProcessInCPU> from, ArrayList<ProcessInCPU> to){
     	ProcessInCPU tmp = from.get(0);
     	to.add(tmp);

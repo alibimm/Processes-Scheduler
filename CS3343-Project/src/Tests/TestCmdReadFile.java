@@ -24,7 +24,7 @@ public class TestCmdReadFile {
 		MainSystem system = MainSystem.getInstance();
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/1-perfect.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/1-perfect.txt"};
 		
 		// Running execute new Cmd Read FIle
 		(new CmdReadFile()).execute(cmdParts);
@@ -99,7 +99,7 @@ public class TestCmdReadFile {
 	public void TestReadFileWithInvalidFilePathName() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/wws.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/wws.txt"};
 		
 		// Running execute new Cmd Read FIle
 		FileNotFoundException ex = assertThrows(FileNotFoundException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
@@ -110,7 +110,7 @@ public class TestCmdReadFile {
 	public void TestReadFileFirstLineIsNotNumber() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/2-number_of_processes_not_integer.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/2-number_of_processes_not_integer.txt"};
 		
 		// Running execute new Cmd Read FIle
 		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
@@ -122,7 +122,7 @@ public class TestCmdReadFile {
 	public void TestReadFileFirstLineIsNotInteger() {
 			
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/2-number_of_processes_float_number.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/2-number_of_processes_float_number.txt"};
 			
 		// Running execute new Cmd Read FIle
 		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});		
@@ -134,7 +134,7 @@ public class TestCmdReadFile {
 	public void TestReadFileFirstLineIsNegativeInteger() {
 			
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/2-number_of_processes_negative_integer.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/2-number_of_processes_negative_integer.txt"};
 			
 		// Running execute new Cmd Read FIle
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});		
@@ -149,7 +149,7 @@ public class TestCmdReadFile {
 	public void TestReadFileProcessLinePartsSizeIsNot4() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/3-ProcessLinePartsSizeIsNot4.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLinePartsSizeIsNot4.txt"};
 		
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -161,7 +161,7 @@ public class TestCmdReadFile {
 	public void TestReadFileProcessLineParts0IsNotHash() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/3-ProcessLinePartsIsNot#.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLinePartsIsNot#.txt"};
 		
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -173,7 +173,7 @@ public class TestCmdReadFile {
 	public void TestReadFileProcessLineParts1IsNotNumber() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/3-ProcessLineParts1IsNotNumber.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts1IsNotNumber.txt"};
 		
 		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -185,7 +185,7 @@ public class TestCmdReadFile {
 	public void TestReadFileProcessLineParts1IsNotInteger() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/3-ProcessLineParts1IsNotInteger.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts1IsNotInteger.txt"};
 		
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -197,7 +197,7 @@ public class TestCmdReadFile {
 	public void TestReadFileProcessLineParts1IsNegative() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/3-ProcessLineParts1IsNegative.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts1IsNegative.txt"};
 		
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -209,7 +209,7 @@ public class TestCmdReadFile {
 	public void TestReadFileProcessLineParts2IsNotNumber() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/3-ProcessLineParts2IsNotNumber.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts2IsNotNumber.txt"};
 		
 		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -221,7 +221,7 @@ public class TestCmdReadFile {
 	public void TestReadFileProcessLineParts2IsNotInteger() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/3-ProcessLineParts2IsNotInteger.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts2IsNotInteger.txt"};
 		
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -233,7 +233,7 @@ public class TestCmdReadFile {
 	public void TestReadFileProcessLineParts2IsNegative() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/3-ProcessLineParts2IsNegative.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts2IsNegative.txt"};
 		
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -246,7 +246,7 @@ public class TestCmdReadFile {
 	public void TestReadFileProcessLineParts3IsNotNumber() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/3-ProcessLineParts3IsNotNumber.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts3IsNotNumber.txt"};
 		
 		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -258,7 +258,7 @@ public class TestCmdReadFile {
 	public void TestReadFileProcessLineParts3IsNotInteger() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/3-ProcessLineParts3IsNotInteger.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts3IsNotInteger.txt"};
 		
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -270,7 +270,7 @@ public class TestCmdReadFile {
 	public void TestReadFileProcessLineParts3IsNegative() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/3-ProcessLineParts3IsNegative.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts3IsNegative.txt"};
 		
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -281,7 +281,7 @@ public class TestCmdReadFile {
 	public void TestReadFileServiceLinePartsSizeIsNot2() {
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/4-ServiceLinePartsSizeIsNot2.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/4-ServiceLinePartsSizeIsNot2.txt"};
 		
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -292,7 +292,7 @@ public class TestCmdReadFile {
 	public void TestReadFileServiceTypeWrongFormat() {
 
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/4-ServiceLinePartsInvalidServiceType.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/4-ServiceLinePartsInvalidServiceType.txt"};
 		
 		ExInvalidServiceType ex = assertThrows(ExInvalidServiceType.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -303,7 +303,7 @@ public class TestCmdReadFile {
 	public void TestReadFileServiceLineParts1IsNotNumber() {
 
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/4-ServiceLineParts1IsNotNumber.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/4-ServiceLineParts1IsNotNumber.txt"};
 		
 		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -315,7 +315,7 @@ public class TestCmdReadFile {
 	public void TestReadFileServiceLineParts1IsNotInteger() {
 
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/4-ServiceLineParts1IsNotInteger.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/4-ServiceLineParts1IsNotInteger.txt"};
 		
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -327,7 +327,7 @@ public class TestCmdReadFile {
 	public void TestReadFileServiceLineParts1IsNegative() {
 
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/4-ServiceLineParts1IsNegative.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/4-ServiceLineParts1IsNegative.txt"};
 		
 		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
@@ -339,7 +339,7 @@ public class TestCmdReadFile {
 		
 
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","/Users/zhanaidar/Desktop/readfile_cases/5-empty_lines.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/5-empty_lines.txt"};
 		
 		// Getting instance of the Main System
 		MainSystem system = MainSystem.getInstance();

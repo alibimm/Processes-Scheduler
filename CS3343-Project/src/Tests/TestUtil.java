@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import Exceptions.ExInvalidServiceType;
-import Project.Interval;
 import Project.Process;
 import Project.ProcessInCPU;
 import Project.Service;
@@ -17,7 +15,7 @@ public class TestUtil {
 
 	@Test
 	// Testing moveProcessFrom() method in Util class
-	void TestMoveProcessFrom() throws ExInvalidServiceType {
+	void TestMoveProcessFrom() {
 		
 		//creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcessesArr1 = new ArrayList<ProcessInCPU>();
@@ -73,7 +71,7 @@ public class TestUtil {
 	
 	@Test
 	// Testing updateQueingTime() method in Util class
-	void TestUpdateQueingTime() throws ExInvalidServiceType {
+	void TestUpdateQueingTime() {
 		//creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcessesArr = new ArrayList<ProcessInCPU>();
 		

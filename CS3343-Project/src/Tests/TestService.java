@@ -4,9 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import Exceptions.ExIndexOutOfBounds;
-import Exceptions.ExInvalidServiceType;
-import Project.MainSystem;
+
 import Project.Service;
 import Project.ServiceType;
 
@@ -15,7 +13,7 @@ class TestService {
 	// Test getServiceTime Method
 	@Test
 	// 
-	void testGetServiceTime() throws ExInvalidServiceType {
+	void testGetServiceTime() {
 		
 		// Initializing dummy service
 		Service testService = Service.create("C", "5");
@@ -34,7 +32,7 @@ class TestService {
 	// Test getType Method
 	@Test
 	// Test CPU Type
-	void testGetTypeIsCPU() throws ExInvalidServiceType {
+	void testGetTypeIsCPU() {
 		
 		// Initializing dummy service
 		Service testService = Service.create("C", "5");
@@ -51,7 +49,7 @@ class TestService {
 	
 	@Test
 	// Test Keyboard Type
-	void testGetTypeIsKeyboard() throws ExInvalidServiceType {
+	void testGetTypeIsKeyboard() {
 		
 		// Initializing dummy service
 		Service testService = Service.create("K", "5");
@@ -68,19 +66,18 @@ class TestService {
 	
 	@Test
 	// Test Invalid Type
-	void testGetTypeIsInvalid() throws ExInvalidServiceType {
+	void testGetTypeIsNull() {
 		
-		// Initializing dummy service with Invalid type
-		// then, initializing the result of the method call
-		ExInvalidServiceType ex = assertThrows(ExInvalidServiceType.class, () -> {Service.create("Q", "5");});
-		String actual = ex.getMessage();
-				
+		// Initializing dummy service
+		Service testService = Service.create("Q", "5");
+		
+		// Initializing actual result
+		Service actual = testService;
+		
 		// Initializing expected result
-		String expected =  "Q is Invalid Service Type";
-				
-		// Check the correctness
-		assertTrue(actual.contains(expected));
+		Service expected = null;
+		
+		assertEquals(expected, actual);
 		
 	}
-
 }

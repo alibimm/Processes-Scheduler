@@ -18,7 +18,7 @@ public class TestProcess {
 	// 
 	@Test
 	// This testcase adds only one service to the process, and checks that process gets its service time
-	void testGetServiceTimeWith1Service() throws ExInvalidServiceType {
+	void testGetServiceTimeWith1Service() {
 		
 		// Initializing new services ArrayList
 		ArrayList<Service> services = new ArrayList<>();
@@ -46,7 +46,7 @@ public class TestProcess {
 	
 	@Test
 	// This testcase adds more than 1 service to the process, and checks that process gets its service time
-	void testGetServiceTimeWithMoreThan1Service() throws ExInvalidServiceType {
+	void testGetServiceTimeWithMoreThan1Service() {
 		
 		// Initializing new services ArrayList
 		ArrayList<Service> services = new ArrayList<>();
@@ -106,7 +106,7 @@ public class TestProcess {
 	//
 	
 	@Test
-	void testGetServiceTypeWith1ServiceCPU() throws ExInvalidServiceType {
+	void testGetServiceTypeWith1ServiceCPU() {
 		
 		// Initializing new services ArrayList
 				ArrayList<Service> services = new ArrayList<>();
@@ -132,7 +132,7 @@ public class TestProcess {
 	}
 	
 	@Test
-	void testGetServiceTypeWith1ServiceKeyboard() throws ExInvalidServiceType {
+	void testGetServiceTypeWith1ServiceKeyboard() {
 		
 		// Initializing new services ArrayList
 				ArrayList<Service> services = new ArrayList<>();
@@ -158,7 +158,7 @@ public class TestProcess {
 	}
 	
 	@Test
-	void testGetServiceTypeWithMoreThan1Service() throws  ExInvalidServiceType {
+	void testGetServiceTypeWithMoreThan1Service() {
 		
 		// Initializing new services ArrayList
 				ArrayList<Service> services = new ArrayList<>();
@@ -192,21 +192,6 @@ public class TestProcess {
 				expected = ServiceType.CPU;
 				// Check the correctness
 				assertEquals(expected, actual);
-	}
-	
-	@Test
-	void testGetServiceTypeWithNoService()  {
-		
-		// Initializing new services ArrayList
-		ArrayList<Service> services = new ArrayList<>();
-
-		// Initializing test Process object
-		Process testProcess = Process.create(0, 1, services);
-				
-		// Initializing the result of the method call
-		// Trying to get the first service time of the process
-		IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class, () -> {testProcess.getServiceType(0);});
-		
 	}
 	
 	//
