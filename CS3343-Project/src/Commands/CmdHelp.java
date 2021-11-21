@@ -18,6 +18,7 @@ public class CmdHelp implements Command {
 		System.out.println("	suggest					To get suggestions on best algorithm according to TurnAround Time for the given files");
 		System.out.println("	display					Print the current information");
 		System.out.println("	help					Get help for execution and navigation");
+		System.out.println("	exit					Stop execution of the application");
 		System.out.println("");
 		System.out.println("To navigate through given files and algorithms for specific results");
 		System.out.println("");
@@ -25,6 +26,7 @@ public class CmdHelp implements Command {
 		System.out.println("	open [algorithm]			Open the detailed results of the specified algorithm");
 		System.out.println("	close					Go back to previous information");
 		System.out.println("");
+		
 	}
 	
 }
