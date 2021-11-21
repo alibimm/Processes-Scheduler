@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+
+
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,29 +21,27 @@ import Project.MainSystem;
 
 class TestCmdDisplay {
 	
-	ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tear() {
-	}
-
-	@BeforeEach
-	void setUp() {
-	    System.setOut(new PrintStream(outContent));
-	}
-
-	@AfterEach
-	void tearDown() {
-	}
-	
+//	@BeforeAll
+//	static void setUpBeforeClass() throws Exception {
+//
+//	}
+//
+//	@AfterAll
+//	static void tearDownAfterClass() throws Exception {
+//	}
+//
+//	@BeforeEach
+//	void setUp() throws Exception {
+//	}
+//
+//	@AfterEach
+//	void tearDown() throws Exception {
+//	}
 	
 	@Test
-	void testCmdDisplayInStart() {
+	void testCmdDisplayInStart() throws Exception {
 		
+		setOutput();
 		// Getting instance of the Main System
 		MainSystem system = MainSystem.getInstance();
 		
@@ -51,15 +52,17 @@ class TestCmdDisplay {
 		(new CmdDisplay()).execute(cmdParts);
 		
 		String expected = "Scheduled cases:\n"
-				+ "Unscheduled files: 0";
+				+ "Unscheduled files: 0\n"
+				;
 		
-		assertEquals(expected, outContent.toString().trim());
+		assertEquals(expected, getOutput());
 		
 	}
 	
 	@Test
-	void testCmdDisplayAfterReadFile() {
-		
+	void testCmdDisplayAfterReadFile() throws Exception {
+
+		setOutput();
 
 		// Getting instance of the Main System
 		MainSystem system = MainSystem.getInstance();
@@ -70,20 +73,26 @@ class TestCmdDisplay {
 		// Running execute new Cmd Display
 		(new CmdReadFile()).execute(cmdParts);
 		
-		cmdParts = new String[] {"display"};
 		
+		
+		// Initializing cmdParts that will be inputted
+		cmdParts = new String[]{"display"};
+		
+		// Running execute new Cmd Display
 		(new CmdDisplay()).execute(cmdParts);
 		
 		String expected = "Scheduled cases:\n"
-				+ "Unscheduled files: 1\n";
+				+ "Unscheduled files: 1\n"
+				;
 		
-		assertEquals(expected, outContent.toString().trim());
+		assertEquals(expected, getOutput());
 		
 	}
-	
+
 	@Test
-	void testCmdDisplayAfterSchedule() {
-		
+	void testCmdDisplayAfterReadFile2() throws Exception {
+
+		setOutput();
 
 		// Getting instance of the Main System
 		MainSystem system = MainSystem.getInstance();
@@ -94,15 +103,35 @@ class TestCmdDisplay {
 		// Running execute new Cmd Display
 		(new CmdReadFile()).execute(cmdParts);
 		
-		cmdParts = new String[] {"schedule"};
 		
-		(new CmdSchedule()).execute(cmdParts);
 		
-		String expected = "Scheduled cases:\n"
-				+ "Unscheduled files: 1\n";
+		// Initializing cmdParts that will be inputted
+		cmdParts = new String[]{"display"};
 		
-		assertEquals(expected, outContent.toString().trim());
+		// Running execute new Cmd Display
+		(new CmdDisplay()).execute(cmdParts);
+		
+		String expected =  
+				 "Scheduled cases:\n"
+				+ "Unscheduled files: 1\n"
+				;
+		
+		assertEquals(expected, getOutput());
 		
 	}
+	
+	PrintStream oldPrintStream;
+	ByteArrayOutputStream bos;
+
+	  private void setOutput() throws Exception {
+	    oldPrintStream = System.out;
+	    bos = new ByteArrayOutputStream();
+	    System.setOut(new PrintStream(bos));
+	  }
+
+	  private String getOutput() { // throws Exception
+	    System.setOut(oldPrintStream);
+	    return bos.toString();
+	  }
 
 }
