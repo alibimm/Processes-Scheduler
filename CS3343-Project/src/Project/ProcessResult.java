@@ -13,7 +13,7 @@ public class ProcessResult {
 	private final int queuingTimeIO;
 	private double ratioTS;
 	
-	private ProcessResult(ProcessInCPU processInCPU) {
+	protected ProcessResult(ProcessInCPU processInCPU) {
 		process = processInCPU.getProcess();
 		serviceIntervals = processInCPU.getServiceTimes();
 		exitTime = serviceIntervals.get(serviceIntervals.size() - 1).getEnd();
@@ -42,8 +42,8 @@ public class ProcessResult {
 		double[] result = new double[2];
 		int accumulator = 0;
 		for (ProcessResult process : processes) {
-			if (process.queuingTime > result[0]) result[0] = process.queuingTime;
-			accumulator += process.queuingTime;
+			if (process.getQueuingTime() > result[0]) result[0] = process.getQueuingTime();
+			accumulator += process.getQueuingTime();
 		}
 		result[1] = (double) accumulator / processes.size();
 		return result;
@@ -52,8 +52,8 @@ public class ProcessResult {
 		double[] result = new double[2];
 		int accumulator = 0;
 		for (ProcessResult process : processes) {
-			if (process.turnaroundTime > result[0]) result[0] = process.turnaroundTime;
-			accumulator += process.turnaroundTime;
+			if (process.getTurnaroundTime() > result[0]) result[0] = process.getTurnaroundTime();
+			accumulator += process.getTurnaroundTime();
 		}
 		result[1] = (double) accumulator / processes.size();
 		return result;
@@ -62,8 +62,8 @@ public class ProcessResult {
 		double[] result = new double[2];
 		int accumulator = 0;
 		for (ProcessResult process : processes) {
-			if (process.ratioTS > result[0]) result[0] = process.ratioTS;
-			accumulator += process.ratioTS;
+			if (process.getratioTS() > result[0]) result[0] = process.getratioTS();
+			accumulator += process.getratioTS();
 		}
 		result[1] = (double) accumulator / processes.size();
 		return result;
@@ -85,9 +85,42 @@ public class ProcessResult {
 	    	pair.print();
 	    }
 	    System.out.println();
-	    System.out.println("CPU Queuing Time: " + queuingTimeCPU);
-	    System.out.println("Keyboard Queuing Time: " + queuingTimeIO);
-	    System.out.println("Turnaround Time: " + turnaroundTime);
+	    System.out.println("CPU Queuing Time: " + getQueuingTimeCPU());
+	    System.out.println("Keyboard Queuing Time: " + getQueuingTimeIO());
+	    System.out.println("Turnaround Time: " + getTurnaroundTime());
 	    System.out.println();
 	}
+
+	public Process getProcess() {
+		return process;
+	}
+
+	public int getQueuingTimeCPU() {
+		return queuingTimeCPU;
+	}
+
+	public ArrayList<Interval> getServiceItervals() {
+		return serviceIntervals;
+	}
+	
+	public int getQueuingTimeIO() {
+		return queuingTimeIO;
+	}
+
+	public int getQueuingTime() {
+		return queuingTime;
+	}
+
+	public int getServiceTime() {
+		return serviceTime;
+	}
+
+	public int getTurnaroundTime() {
+		return turnaroundTime;
+	}
+
+	public double getratioTS() {
+		return ratioTS;
+	}
+
 }
