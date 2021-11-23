@@ -1,16 +1,11 @@
 package Tests;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.Assert.assertArrayEquals;
-
-import java.lang.reflect.Field;
+import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
-
-import org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
-
+import Exceptions.ExInvalidServiceType;
 import Project.Interval;
-import Project.MainSystem;
 import Project.ProcessInCPU;
 import Project.Service;
 import Project.ServiceType;
@@ -176,9 +171,42 @@ class TestProcessInCPU {
 	// Testing proceedToNextService() method in ProcessInCPU class
 	void testProceedToNextService() {
 		
-		class ProcessInCPU_stub extends ProcessInCPU{
-			
-		}
+//		class ProcessInCPU_stub extends ProcessInCPU{
+//			private Process process;
+//			
+//			private int curServiceTick;
+//			private int curServiceIndex;
+//			private final int servicesCount;
+//			
+//			private ArrayList<Interval> serviceTimes;
+//			private int queuingTimeIO;
+//			private int queuingTimeCPU;
+//			
+//			protected ProcessInCPU_stub(Process process) {
+//				
+//				super(process);
+//				// TODO Auto-generated constructor stub
+//				this.servicesCount = 0;
+//			}
+//			
+//			// METHODS
+//			public boolean isCurServiceOver() {
+//				return super.isCurServiceOver();
+//			}
+//			public void incrementCurServiceTick() {
+//				super.incrementCurServiceTick();
+//			}
+//			
+//			// Call when current service completed
+//		    // if there are no service left, return true. Otherwise, return false
+//			public boolean proceedToNextService_stub() {
+//				return super.proceedToNextService();
+//			}
+//			
+//			public void setCurServiceIndex(int i) {
+//				this.curServiceIndex=i;
+//			}
+//		}
 		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices = new ArrayList<Service>();
@@ -188,36 +216,32 @@ class TestProcessInCPU {
 		// Creating Process using its static create method
 		Process testProcess1 = Process.create(0, 2, testServices);
 		
-//		//stub for ProcessInCPU class to setCurServiceIndex for testing
-//		class ProcessInCPU_stub extends ProcessInCPU{
-//			ProcessInCPU_stub(){
-//				this = new ProcessInCPU.create(getProcess());
-//			}
-//		}
+		//stub for ProcessInCPU class to setCurServiceIndex for testing
+//		ProcessInCPU_stub testProcessInCPU_stub = new ProcessInCPU_stub(testProcess1);
 		
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU = ProcessInCPU.create(testProcess1);
 		
 		//locate service index to the end of list
-//		testProcessInCPU.setCurServiceIndex(1);
-		testProcessInCPU.proceedToNextService();
+//		testProcessInCPU_stub.setCurServiceIndex(1);
+		
 		
 		//actual result
 		 boolean actual = testProcessInCPU.proceedToNextService();
 		
 		//expected result
-		 boolean expected = true;
+		 boolean expected = false;
 		
 		assertEquals(actual, expected);
 		
 		//locate service index to the beginning of list
-		testProcessInCPU.setCurServiceIndex(0);
+//		testProcessInCPU.setCurServiceIndex(0);
 		
 		//actual result
 		  actual = testProcessInCPU.proceedToNextService();
 		
 		//expected result
-		  expected = false;
+		  expected = true;
 		
 		assertEquals(actual, expected);
 	}
@@ -624,5 +648,122 @@ class TestProcessInCPU {
 		int actual = testProcessInCPU.getId();
 		
 		assertEquals(actual, expected);
+	}
+	
+	@Test
+	// Testing moveProcessFrom() method in ProcessInCPU class
+	void testMoveProcessFrom() {
+		
+		//creating dummy ArrayList<ProcessInCPU>
+		ArrayList<ProcessInCPU> testProcessesArr1 = new ArrayList<ProcessInCPU>();
+		
+		//creating dummy ArrayList<ProcessInCPU>
+		ArrayList<ProcessInCPU> testProcessesArr2 = new ArrayList<ProcessInCPU>();
+		
+		// Creating  ArrayList of Services to create a Process
+		ArrayList<Service> testServices = new ArrayList<Service>();
+		testServices.add(Service.create("C", "2"));
+		testServices.add(Service.create("K", "1"));
+		
+		// Creating Process using its static create method
+		Process testProcess1 = Process.create(1, 2, testServices);
+		
+		// Creating ProcessInCPU instance using its create() static method
+		ProcessInCPU testProcessInCPU1 = ProcessInCPU.create(testProcess1);
+		
+		// Creating  ArrayList of Services to create a Process
+		ArrayList<Service> testServices2 = new ArrayList<Service>();
+		testServices2.add(Service.create("C", "2"));
+		testServices2.add(Service.create("K", "1"));
+		
+		// Creating Process using its static create method
+		Process testProcess2 = Process.create(2, 2, testServices2);
+		
+		// Creating ProcessInCPU instance using its create() static method
+		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess2);
+		
+		// Creating  ArrayList of Services to create a Process
+		ArrayList<Service> testServices3 = new ArrayList<Service>();
+		testServices3.add(Service.create("C", "2"));
+		testServices3.add(Service.create("K", "1"));
+		
+		// Creating Process using its static create method
+		Process testProcess3 = Process.create(3, 2, testServices3);
+		
+		// Creating ProcessInCPU instance using its create() static method
+		ProcessInCPU testProcessInCPU3 = ProcessInCPU.create(testProcess3);
+		
+		//add processInCPU to arraylists
+		testProcessesArr1.add(testProcessInCPU1);
+		testProcessesArr1.add(testProcessInCPU2);
+		testProcessesArr2.add(testProcessInCPU3);
+		
+		//execute Util.moveProcessFrom
+		ProcessInCPU.moveProcessFrom(testProcessesArr1, testProcessesArr2);
+		
+		assertEquals(testProcessesArr1.get(0).getId(), 2);
+		assertEquals(testProcessesArr2.get(0).getId(), 3);
+		assertEquals(testProcessesArr2.get(1).getId(), 1);
+	}
+	
+	@Test
+	// Testing updateQueingTime() method in ProcessInCPU class
+	void TestUpdateQueingTime() {
+		//creating dummy ArrayList<ProcessInCPU>
+		ArrayList<ProcessInCPU> testProcessesArr = new ArrayList<ProcessInCPU>();
+		
+		// Creating  ArrayList of Services to create a Process
+		ArrayList<Service> testServices = new ArrayList<Service>();
+		testServices.add(Service.create("C", "2"));
+		testServices.add(Service.create("K", "1"));
+		
+		// Creating Process using its static create method
+		Process testProcess1 = Process.create(1, 2, testServices);
+		
+		// Creating ProcessInCPU instance using its create() static method
+		ProcessInCPU testProcessInCPU1 = ProcessInCPU.create(testProcess1);
+		
+		// Creating  ArrayList of Services to create a Process
+		ArrayList<Service> testServices2 = new ArrayList<Service>();
+		testServices2.add(Service.create("K", "1"));
+		testServices2.add(Service.create("C", "2"));
+		
+		// Creating Process using its static create method
+		Process testProcess2 = Process.create(2, 2, testServices2);
+		
+		// Creating ProcessInCPU instance using its create() static method
+		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess2);
+		
+		// Creating  ArrayList of Services to create a Process
+		ArrayList<Service> testServices3 = new ArrayList<Service>();
+		testServices3.add(Service.create("C", "2"));
+		testServices3.add(Service.create("K", "1"));
+		
+		// Creating Process using its static create method
+		Process testProcess3 = Process.create(3, 2, testServices3);
+		
+		// Creating ProcessInCPU instance using its create() static method
+		ProcessInCPU testProcessInCPU3 = ProcessInCPU.create(testProcess3);
+		
+		//add processInCPU to array lists
+		testProcessesArr.add(testProcessInCPU1);
+		testProcessesArr.add(testProcessInCPU2);
+		testProcessesArr.add(testProcessInCPU3);
+		
+		//expected queuing times
+		int expectedQTime1 = testProcessInCPU1.getQueuingTimeCPU() + testProcessInCPU1.getQueuingTimeIO() + 1;
+		int expectedQTime2 = testProcessInCPU2.getQueuingTimeCPU() + testProcessInCPU2.getQueuingTimeIO() + 1;
+		int expectedQTime3 = testProcessInCPU3.getQueuingTimeCPU() + testProcessInCPU3.getQueuingTimeIO() + 1;
+
+		ProcessInCPU.updateQueingTime(testProcessesArr, 0, 3);
+		
+		//actual queuing times
+		int actualQTime1 = testProcessInCPU1.getQueuingTimeCPU() + testProcessInCPU1.getQueuingTimeIO();
+		int actualQTime2 = testProcessInCPU2.getQueuingTimeCPU() + testProcessInCPU2.getQueuingTimeIO();
+		int actualQTime3 = testProcessInCPU3.getQueuingTimeCPU() + testProcessInCPU3.getQueuingTimeIO();
+		
+		assertEquals(expectedQTime1, actualQTime1);
+		assertEquals(expectedQTime2, actualQTime2);
+		assertEquals(expectedQTime3, actualQTime3);
 	}
 }
