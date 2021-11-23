@@ -42,8 +42,6 @@ class TestCmdDisplay {
 	void testCmdDisplayInStart() throws Exception {
 		
 		setOutput();
-		// Getting instance of the Main System
-		MainSystem system = MainSystem.getInstance();
 		
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"display"};
@@ -52,57 +50,26 @@ class TestCmdDisplay {
 		(new CmdDisplay()).execute(cmdParts);
 		
 		String expected = "Scheduled cases:\n"
-				+ "Unscheduled files: 0\n"
-				;
+				+ "Unscheduled files: 2\n";
+		
+		String wws = getOutput();
 		
 		assertEquals(expected, getOutput());
 		
 	}
 	
-	@Test
-	void testCmdDisplayAfterReadFile() throws Exception {
 
-		setOutput();
-
-		// Getting instance of the Main System
-		MainSystem system = MainSystem.getInstance();
-		
-		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile", "./src/TestSamples/1-perfect.txt"};
-		
-		// Running execute new Cmd Display
-		(new CmdReadFile()).execute(cmdParts);
-		
-		
-		
-		// Initializing cmdParts that will be inputted
-		cmdParts = new String[]{"display"};
-		
-		// Running execute new Cmd Display
-		(new CmdDisplay()).execute(cmdParts);
-		
-		String expected = "Scheduled cases:\n"
-				+ "Unscheduled files: 1\n"
-				;
-		
-		assertEquals(expected, getOutput());
-		
-	}
 
 	@Test
 	void testCmdDisplayAfterReadFile2() throws Exception {
 
 		setOutput();
-
-		// Getting instance of the Main System
-		MainSystem system = MainSystem.getInstance();
 		
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile", "./src/TestSamples/1-perfect.txt"};
 		
 		// Running execute new Cmd Display
 		(new CmdReadFile()).execute(cmdParts);
-		
 		
 		
 		// Initializing cmdParts that will be inputted
@@ -113,8 +80,33 @@ class TestCmdDisplay {
 		
 		String expected =  
 				 "Scheduled cases:\n"
-				+ "Unscheduled files: 1\n"
-				;
+				+ "Unscheduled files: 2\n";
+		
+		assertEquals(expected, getOutput());
+		
+	}
+	
+	@Test
+	void testCmdDisplayAfterReadFile() throws Exception {
+
+		setOutput();
+		
+		// Initializing cmdParts that will be inputted
+		String[] cmdParts = new String[]{"readfile", "./src/TestSamples/1-perfect.txt"};
+		
+		// Running execute new Cmd Display
+		(new CmdReadFile()).execute(cmdParts);
+		
+		
+		
+		// Initializing cmdParts that will be inputted
+		cmdParts = new String[]{"display"};
+		
+		// Running execute new Cmd Display
+		(new CmdDisplay()).execute(cmdParts);
+		
+		String expected = "Scheduled cases:\n"
+				+ "Unscheduled files: 1\n";
 		
 		assertEquals(expected, getOutput());
 		

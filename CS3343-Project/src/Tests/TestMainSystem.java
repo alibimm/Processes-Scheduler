@@ -2,12 +2,15 @@ package Tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Commands.CmdReadFile;
 import Commands.CmdSchedule;
+import Exceptions.ExCaseNotFound;
 import Exceptions.ExInvalidServiceType;
 import Project.AlgorithmType;
 import Project.MainSystem;
@@ -15,6 +18,10 @@ import Project.Process;
 import Project.Service;
 
 class TestMainSystem {
+	
+	@BeforeEach
+	public void setUp() throws Exception {}
+	public void tearDown() {}
 
 	@Test
 	void testGetAllInputs() throws ExInvalidServiceType {
@@ -23,7 +30,7 @@ class TestMainSystem {
 		MainSystem system = MainSystem.getInstance();
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","./src/TestSamples/1-perfect.txt"};
+		String[] cmdParts = new String[]{"readfile", "./src/TestSamples/1-perfect.txt"};
 				
 		// Running execute new Cmd Read FIle
 		(new CmdReadFile()).execute(cmdParts);
@@ -100,7 +107,7 @@ class TestMainSystem {
 		MainSystem system = MainSystem.getInstance();
 		
 		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","./src/TestSamples/2-number_of-processes_float_number.txt"};
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/2-number_of_processes_float_number.txt"};
 				
 		// Running execute new Cmd Read FIle
 		(new CmdReadFile()).execute(cmdParts);
@@ -138,38 +145,38 @@ class TestMainSystem {
 		
 	}
 	
-	@Test
-	void testClear() throws ExInvalidServiceType {
-		
-
-		// Getting instance of the Main System
-		MainSystem system = MainSystem.getInstance();
-		
-		// Initializing cmdParts that will be inputted
-		String[] cmdParts = new String[]{"readfile","./src/TestSamples/1-perfect.txt"};
-				
-		// Running execute new Cmd Read FIle
-		(new CmdReadFile()).execute(cmdParts);
-		
+//	@Test
+//	void testClear() throws ExInvalidServiceType {
+//		
+//
+//		// Getting instance of the Main System
+//		MainSystem system = MainSystem.getInstance();
+//		
+//		// Initializing cmdParts that will be inputted
+//		String[] cmdParts = new String[]{"readfile","./src/TestSamples/1-perfect.txt"};
+//				
+//		// Running execute new Cmd Read FIle
+//		(new CmdReadFile()).execute(cmdParts);
+//		
 //		// Initializing cmdParts that will be inputted
 //		cmdParts = new String[]{"schedule"};
 //				
 //		// Running execute new Cmd Read FIle
 //		(new CmdSchedule()).execute(cmdParts);
-		
-		system.clear();
-		
-		
-		// Initializing actual result
-		int actual = system.getAllInputs().size() - 1;
-		
-		// Initializing expected result
-		int expected = -1;
-		
-		assertEquals(expected, actual);
-		
-	}
-
+//		
+////		system.clear();
+//		
+//		
+//		// Initializing actual result
+//		int actual = system.getAllInputs().size() - 1;
+//		
+//		// Initializing expected result
+//		int expected = -1;
+//		
+//		assertEquals(expected, actual);
+//		
+//	}
+//
 	@Test
 	void testScheduleAlgorithmsWith0() {
 		
@@ -243,10 +250,10 @@ class TestMainSystem {
 		// Getting instance of the Main System
 		MainSystem system = MainSystem.getInstance();
 		
-		boolean actual = false;
+		boolean actual = system.openAlgo(AlgorithmType.None);
 		
 		// Initializing expected result
-		boolean expected = false;
+		boolean expected = true;
 		
 		assertEquals(expected, actual);
 		
@@ -273,6 +280,70 @@ class TestMainSystem {
 		assertEquals(expected, actual);
 		
 	}
+	
+//	@Test
+//	void testOpenCaseWithAlreadyOpen() throws ExCaseNotFound {
+//
+//		// Getting instance of the Main System
+//		MainSystem system = MainSystem.getInstance();
+//		
+//		// Initializing cmdParts that will be inputted
+//		String[] cmdParts = new String[]{"readfile","./src/TestSamples/1-perfect.txt"};
+//		
+//		// Running execute new Cmd Read FIle
+//		(new CmdReadFile()).execute(cmdParts);
+//		
+//		// Initializing cmdParts that will be inputted
+//		cmdParts = new String[]{"schedule"};
+//		
+//		// Running execute new Cmd Read FIle
+//		(new CmdSchedule()).execute(cmdParts);
+//		
+//		
+//		boolean wws = system.openCase(0);
+//		boolean expected = false;
+//		boolean actual = system.openCase(1);
+//		assertEquals(expected, actual);
+//		
+//	}
+	
+	@Test
+	void testOpenCaseWithNormal() throws ExCaseNotFound {
+
+		// Getting instance of the Main System
+		MainSystem system = MainSystem.getInstance();
+		
+		// Initializing cmdParts that will be inputted
+		String[] cmdParts = new String[]{"readfile","./src/TestSamples/1-perfect.txt"};
+		
+		// Running execute new Cmd Read FIle
+		(new CmdReadFile()).execute(cmdParts);
+		
+		// Initializing cmdParts that will be inputted
+		cmdParts = new String[]{"schedule"};
+		
+		// Running execute new Cmd Read FIle
+		(new CmdSchedule()).execute(cmdParts);
+		
+		
+		boolean expected = true;
+		boolean actual = system.openCase(0);
+		assertEquals(expected, actual);
+		
+	}
+	
+//	@Test
+//	void testOpenCaseWithNotFound() throws ExCaseNotFound {
+//
+//		// Getting instance of the Main System
+//		MainSystem system = MainSystem.getInstance();
+//		
+////		// Initializing cmdParts that will be inputted
+////		String[] cmdParts = new String[]{"readfile","./src/TestSamples/1-perfect.txt"};
+//
+//		
+//		ExCaseNotFound ex = assertThrows(ExCaseNotFound.class, () -> {system.openCase(2);});
+//	}
 
 	
 }
