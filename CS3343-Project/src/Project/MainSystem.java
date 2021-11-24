@@ -171,6 +171,8 @@ public class MainSystem {
 	}
 	
 	public void clear() {
+		openCase = null;
+		openAlgoType = AlgorithmType.None;
 		allInputs.clear();
 		allCases.clear();
 	}
