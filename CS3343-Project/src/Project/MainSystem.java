@@ -54,7 +54,7 @@ public class MainSystem {
     }
     
 //    Create Service
-    public Service createService(String type, String serviceTime) throws ExInvalidServiceType {
+    public Service createService(String type, String serviceTime) {
     	Service s = Service.create(type, serviceTime);
     	return s;
     }
