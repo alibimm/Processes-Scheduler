@@ -110,13 +110,15 @@ public class MainSystem {
 		} else {
 			if (openAlgoType != AlgorithmType.None) {
 				System.out.println(String.format("Current algorithm filter: %s", openAlgoType.toString()));
-				System.out.format("%-15s%-15s%-15s%-15s%-15s%-15s\n", 
+				System.out.format("%-15s%-15s%-15s%-15s%-15s%-15s%-15s%-15s\n", 
 						"Case", 
 						"Type",
 						"Duration",
 						"CPU Util",
 						"Avg Turnaround",
-						"Avg Queuing");
+						"Avg Queuing",
+						"Max Turnaround",
+						"Max Queuing");
 				for (Case c : allCases) {
 					c.printAlgoShort(openAlgoType);
 				}
