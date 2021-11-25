@@ -94,7 +94,7 @@ class TestMainSystem {
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/1-perfect.txt"});
 		(new CmdSchedule()).execute(new String[]{"schedule"});
 		boolean expected = true;
-		boolean actual = system.openCase(8);
+		boolean actual = system.openCase(0);
 		assertEquals(expected, actual);
 		actual = system.openCase(1);
 		expected = false;
@@ -134,12 +134,11 @@ class TestMainSystem {
 		
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/1-perfect.txt"});
 		(new CmdSchedule()).execute(new String[]{"schedule"});
-		boolean wws = system.openCase(3);
+		boolean wws = system.openCase(0);
 		system.display();
 		actual = getOutput();
 		expected = "Scheduled cases:\n"
 				+ "Unscheduled files: 0\n";
-		System.out.println("WWWWWW" + actual + "WWWWW");
 		assertEquals(expected, actual);
 		
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/1-perfect.txt"});
@@ -150,7 +149,6 @@ class TestMainSystem {
 		actual = getOutput();
 		expected = "Scheduled cases:\n"
 				+ "Unscheduled files: 0\n";
-		System.out.println("WWWWWW" + actual + "WWWWW");
 		assertEquals(expected, actual);
 		
 		
@@ -163,7 +161,6 @@ class TestMainSystem {
 		actual = getOutput();
 		expected = "Scheduled cases:\n"
 				+ "Unscheduled files: 0\n";
-		System.out.println("WWWWWW" + actual + "WWWWW");
 		assertEquals(expected, actual);
 		
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/1-perfect.txt"});
@@ -174,7 +171,6 @@ class TestMainSystem {
 		actual = getOutput();
 		expected = "Scheduled cases:\n"
 				+ "Unscheduled files: 0\n";
-		System.out.println("WWWWWW" + actual + "WWWWW");
 		assertEquals(expected, actual);
 		
 	}
@@ -185,8 +181,8 @@ class TestMainSystem {
 		ArrayList<AlgorithmType> wws = new ArrayList<>();
 		wws.add(AlgorithmType.SPN);
 		wws.add(AlgorithmType.SRT);
+		expected.put(0, wws);
 		expected.put(1, wws);
-		expected.put(2, wws);
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/sample_1.txt"});
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/sample_3.txt"});
 		(new CmdSchedule()).execute(new String[]{"schedule"});
@@ -207,9 +203,16 @@ class TestMainSystem {
 	
 	@Test
 	void testMainSystem_12_stopReading() {
+		system.clear();
+		system.startReading();
+		system.stopReading(true);
+		ArrayList<ArrayList<Process>> allInputs = system.getAllInputs();
+		assertEquals(1, allInputs.size());
+		
 		system.startReading();
 		system.stopReading(false);
-		system.getAllInputs();
+		allInputs = system.getAllInputs();
+		assertEquals(1, allInputs.size());
 	}
 	
 	

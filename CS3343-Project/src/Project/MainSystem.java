@@ -64,10 +64,9 @@ public class MainSystem {
 		if (inputsCount == 0) return 0;
 		
 		for (ArrayList<Process> input : allInputs) {
-			Case newCase = Case.create(allAlgorithms, input);
-			if (newCase != null) {
-				allCases.add(newCase);
-			}
+			int id = allCases.size();
+			Case newCase = Case.create(id, allAlgorithms, input);
+			allCases.add(newCase);
 		}
 		allInputs.clear();
 		curInd = -1; // BUG TO TRACK: WITHOUT THIS LINE WHEN INPUTS ARE CLEARED SYSTEM WOULD GO OUT OF BOUNDS
@@ -173,6 +172,7 @@ public class MainSystem {
 	}
 	
 	public void clear() {
+		curInd = -1;
 		openCase = null;
 		openAlgoType = AlgorithmType.None;
 		allInputs.clear();

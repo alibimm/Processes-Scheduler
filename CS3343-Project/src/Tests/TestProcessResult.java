@@ -283,7 +283,7 @@ class TestProcessResult {
 
 		pStub1.print();
 		
-		String expectedOutput = "Process #1: 2 12 \r\nCPU Queuing Time: 0\r\nKeyboard Queuing Time: 12\r\nTurnaround Time: 10\r\n\r\n";
+		String expectedOutput = "Process #1: 2 12 \nCPU Queuing Time: 0\nKeyboard Queuing Time: 12\nTurnaround Time: 10\n\n";
 		String actualOutput = getOutput();
 		
 		assertEquals(expectedOutput, actualOutput);

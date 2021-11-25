@@ -19,8 +19,12 @@ class TestCmdOpen {
 	@Test
 	void testOpenAtStart() throws Exception {		
 		// Initializing input
-		String[] cmdParts = new String[] {"open", "0"};
-		ExCaseNotFound ex = assertThrows(ExCaseNotFound.class, () -> {(new CmdOpen()).execute(cmdParts);});
+		setOutput();
+		String[] cmdParts = new String[] {"open", "12345"};
+		(new CmdOpen()).execute(cmdParts);
+		String actual = getOutput();
+		String expected = "Case with ID 12345 was not found\n";
+		assertEquals(expected, actual);
 	}
 	
 	@Test
@@ -33,8 +37,12 @@ class TestCmdOpen {
 	@Test
 	void testOpenWrongNumber() throws Exception {		
 		// Initializing input
+		setOutput();
 		String[] cmdParts = new String[] {"open", "1.2"};
-		ExInsufficientCommandArguments ex = assertThrows(ExInsufficientCommandArguments.class, () -> {(new CmdOpen()).execute(cmdParts);});
+		(new CmdOpen()).execute(cmdParts);
+		String actual = getOutput();
+		String expected = "Sorry, there is no such algorithm.\n";
+		assertEquals(expected, actual);
 	}
 	
 	@Test
@@ -195,8 +203,16 @@ class TestCmdOpen {
 		(new CmdOpen()).execute(cmdParts);
 		
 		String expected = "Current algorithm filter: Shortest Remaining Time Next\n"
-				+ "Case           Type           Duration       CPU Util       Avg Turnaround Avg Queuing    \n"
-				+ "";
+				+ String.format("%-15s%-15s%-15s%-15s%-15s%-15s%-15s%-15s\n", 
+						"Case", 
+						"Type",
+						"Duration",
+						"CPU Util",
+						"Avg Turnaround",
+						"Max Turnaround",
+						"Avg Queuing",
+						"Max Queuing");
+		
 		String actual = getOutput();
 		assertEquals(expected, actual);
 	}
@@ -208,9 +224,7 @@ class TestCmdOpen {
 		String[] cmdParts = new String[] {"open", "SPN"};
 		(new CmdOpen()).execute(cmdParts);
 		
-		String expected = "Current algorithm filter: Shortest Process Next\n"
-				+ "Case           Type           Duration       CPU Util       Avg Turnaround Avg Queuing    \n"
-				+ "";
+		String expected = "Current algorithm filter: Shortest Process Next\nCase           Type           Duration       CPU Util       Avg Turnaround Max Turnaround Avg Queuing    Max Queuing    \n";
 		String actual = getOutput();
 		assertEquals(expected, actual);
 	}

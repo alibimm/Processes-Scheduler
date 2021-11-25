@@ -6,7 +6,7 @@ import Commands.*;
 import Exceptions.*;
 
 public class Main {
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		
 		// Declaring in scanner to read input from keyboard
         Scanner in = new Scanner(System.in);
@@ -41,6 +41,8 @@ public class Main {
             		throw new ExNonExistingCommand(cmdParts[0]);
             	}
         	} catch (ExNonExistingCommand e) {
+        		System.out.println(e.getMessage());
+        	} catch (ExInsufficientCommandArguments e) {
         		System.out.println(e.getMessage());
         	}
         	

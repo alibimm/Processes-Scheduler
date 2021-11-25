@@ -72,12 +72,11 @@ class TestCmdDisplay {
 		
 		String expected = "1 unscheduled inputs scheduled successfully.\n"
 				+ "Scheduled cases:\n"
-				+ "Case 1\n"
+				+ "Case 0\n"
 				+ "Unscheduled files: 0\n"
 				+ "";
 		
 		String actual = getOutput();
-		System.out.println("WWS " + actual + " WWS");
 		
 		assertEquals(expected, actual);
 		
@@ -103,7 +102,7 @@ class TestCmdDisplay {
 		(new CmdSchedule()).execute(cmdParts);
 		
 		// Opening case
-		cmdParts = new String[] {"open", "3"};
+		cmdParts = new String[] {"open", "0"};
 		(new CmdOpen()).execute(cmdParts);
 		
 		String expected = "1 unscheduled inputs scheduled successfully."
@@ -223,11 +222,10 @@ class TestCmdDisplay {
 		(new CmdOpen()).execute(cmdParts);
 		
 		expected += "Current algorithm filter: First Come First Serve\n"
-				+ "Case           Type           Duration       CPU Util       Avg Turnaround Avg Queuing    \n"
-				+ "Case #2        FCFS           50             0.80           39.50          48.00          19.00          24.00          \n";
+				+ "Case           Type           Duration       CPU Util       Avg Turnaround Max Turnaround Avg Queuing    Max Queuing    \n"
+				+ "Case #0        FCFS           50             0.80           39.50          48.00          19.00          24.00          \n";
 		
 		String actual = getOutput();
-//		System.out.println("WWWWS " + actual + " WWWWS");
 		
 		assertEquals(expected, actual);
 		

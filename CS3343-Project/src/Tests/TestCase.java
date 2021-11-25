@@ -59,20 +59,20 @@ class TestCase {
 	@Test
 	void testCreate() {
 		// Executing create()
-		Case actualCase = Case.create(algoList, processList);
+		Case actualCase = Case.create(0, algoList, processList);
 		
 		// Assertions
 		assertEquals(6, actualCase.getResults().size());
-		assertEquals(16, actualCase.getId());
+		assertEquals(0, actualCase.getId());
 	}
 	
 	@Test
 	void testFindCaseWithIdNull() {
 		// Executing create()
-		Case c1 = Case.create(algoList, processList);
-		Case c2 = Case.create(algoList, processList);
-		Case c3 = Case.create(algoList, processList);
-		Case c4 = Case.create(algoList, processList);
+		Case c1 = Case.create(0, algoList, processList);
+		Case c2 = Case.create(1, algoList, processList);
+		Case c3 = Case.create(2, algoList, processList);
+		Case c4 = Case.create(3, algoList, processList);
 		
 		ArrayList<Case> casesList = new ArrayList<Case>(Arrays.asList(c1,c2,c3,c4));
 		
@@ -83,20 +83,20 @@ class TestCase {
 	@Test
 	void testFindCaseWithId() {
 		// Executing create()
-		Case c1 = Case.create(algoList, processList);
-		Case c2 = Case.create(algoList, processList);
-		Case c3 = Case.create(algoList, processList);
-		Case c4 = Case.create(algoList, processList);
+		Case c1 = Case.create(0, algoList, processList);
+		Case c2 = Case.create(1, algoList, processList);
+		Case c3 = Case.create(2, algoList, processList);
+		Case c4 = Case.create(3, algoList, processList);
 		
 		ArrayList<Case> casesList = new ArrayList<Case>(Arrays.asList(c1,c2,c3,c4));
 		
-		Case actualCase = Case.findCaseWithId(12, casesList);
+		Case actualCase = Case.findCaseWithId(0, casesList);
 		assertEquals(c1, actualCase);
 	}
 
 	@Test
 	void testPrintTable() {
-		Case c1 = Case.create(algoList, processList);
+		Case c1 = Case.create(0, algoList, processList);
 		setOutput();
 		c1.printTable();
 		String output = getOutput();
@@ -112,20 +112,20 @@ class TestCase {
 	
 	@Test
 	void testPrintAlgoShort() {
-		Case c1 = Case.create(algoList, processList);
+		Case c1 = Case.create(0, algoList, processList);
 		setOutput();
 		c1.printAlgoShort(AlgorithmType.FCFS);
-		String output = getOutput();
-		String expectedOutput = "Case #8        FCFS           56             0.82           25.60          41.00          14.40          22.00          \n";
+//		String output = getOutput();
+		String expectedOutput = "Case #0        FCFS           56             0.82           25.60          41.00          14.40          22.00          \n";
 		assertEquals(expectedOutput, getOutput());
 	}
 	
 	@Test
 	void testAlgoDetail() {
-		Case c1 = Case.create(algoList, processList);
+		Case c1 = Case.create(0, algoList, processList);
 		setOutput();
 		c1.printAlgoDetail(AlgorithmType.RR);
-		String output = getOutput();
+//		String output = getOutput();
 		String expectedOutput = "---------------------------------------------------\n"
 				+ "Round Robin\n"
 				+ "Process #1: 5 10 \n"
@@ -153,21 +153,21 @@ class TestCase {
 	
 	@Test
 	void testBestAlgorithmAQT() {
-		Case c1 = Case.create(algoList, processList);
+		Case c1 = Case.create(0, algoList, processList);
 		ArrayList<AlgorithmType> actual = c1.bestAlgorithm("AQT");
 		assertEquals(AlgorithmType.SRT, actual.get(0));
 	}
 	
 	@Test
 	void testBestAlgorithmATRT() {
-		Case c1 = Case.create(algoList, processList);
+		Case c1 = Case.create(0, algoList, processList);
 		ArrayList<AlgorithmType> actual = c1.bestAlgorithm("ATRT");
 		assertEquals(AlgorithmType.SRT, actual.get(0));
 	}
 	
 	@Test
 	void testBestAlgorithmARTS() {
-		Case c1 = Case.create(algoList, processList);
+		Case c1 = Case.create(0, algoList, processList);
 		ArrayList<AlgorithmType> actual = c1.bestAlgorithm("ARTS");
 		assertEquals(AlgorithmType.SRT, actual.get(0));
 		assertEquals(AlgorithmType.SPN, actual.get(1));
@@ -175,14 +175,14 @@ class TestCase {
 	
 	@Test
 	void testBestAlgorithmCpuUtil() {
-		Case c1 = Case.create(algoList, processList);
+		Case c1 = Case.create(0, algoList, processList);
 		ArrayList<AlgorithmType> actual = c1.bestAlgorithm("CpuUtil");
 		assertEquals(AlgorithmType.SPN, actual.get(0));
 	}
 	
 	@Test
 	void testBestAlgorithmDefault() {
-		Case c1 = Case.create(algoList, processList);
+		Case c1 = Case.create(0, algoList, processList);
 		ArrayList<AlgorithmType> actual = c1.bestAlgorithm("");
 		assertEquals(AlgorithmType.SRT, actual.get(0));
 	}

@@ -8,7 +8,7 @@ import Project.Command;
 public class CmdHelp implements Command {
 
 	@Override
-	public void execute(String[] cmdParts) throws ExInvalidServiceType, ExInvalidInput, ExInsufficientCommandArguments {
+	public void execute(String[] cmdParts) {
 
 		System.out.println("There are 9 commands used in various situations:");
 		System.out.println("");

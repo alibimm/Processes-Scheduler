@@ -3,7 +3,6 @@ package Project;
 import java.util.ArrayList;
 
 public class Case {
-	private static int newid = 0;
 	
 	private final int id;
 	private ArrayList<AlgorithmResult> results;
@@ -19,8 +18,8 @@ public class Case {
 		}
 	}
 	
-	public static Case create(ArrayList<Algorithm> algorithms, ArrayList<Process> processes) {
-		return new Case(newid++, algorithms, processes);
+	public static Case create(int id, ArrayList<Algorithm> algorithms, ArrayList<Process> processes) {
+		return new Case(id, algorithms, processes);
 	}
 	
 	public ArrayList<AlgorithmType> bestAlgorithm(String indicator) {

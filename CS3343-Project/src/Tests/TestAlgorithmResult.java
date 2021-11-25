@@ -225,25 +225,6 @@ class TestAlgorithmResult {
 		assertEquals(10, actualAvgQueuingTime);
 	}
 	
-	@Test
-	void testGetAvgRatioTS() {
-		
-	}
-	
-	@Test
-	void testGetmaxQueuingTime() {
-		
-	}
-	
-	@Test
-	void testGetMaxTurnaroundTime() {
-		
-	}
-	
-	@Test
-	void testGetCpuUtil() {
-		
-	}
 	
 	//Necessary for print test
 		PrintStream oldPrintStream;
