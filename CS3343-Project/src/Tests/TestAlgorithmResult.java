@@ -152,8 +152,15 @@ class TestAlgorithmResult {
 				
 		setOutput();
 		algoResult.printStats();
-				
-		String expectedOutput = "FB             12             3,33           10,00          10,00          0,00           0,00           \n";
+		String expectedOutput = String.format("%-15s%-15.0f%-15.2f%-15.2f%-15.2f%-15.2f%-15.2f\n", 
+						"FB", 
+						12.00,
+						3.33,
+						10.00,
+						10.00,
+						0.00,
+						0.00);
+		
 		assertEquals(expectedOutput, getOutput());
 		
 	}
@@ -188,7 +195,28 @@ class TestAlgorithmResult {
 				
 		setOutput();
 		algoResult.printDetails();
-		String expectedOutput = "---------------------------------------------------\r\nFeedback\r\nProcess #1: 2 12 \r\nCPU Queuing Time: 0\r\nKeyboard Queuing Time: 0\r\nTurnaround Time: 10\r\n\r\nProcess #2: 2 12 \r\nCPU Queuing Time: 0\r\nKeyboard Queuing Time: 0\r\nTurnaround Time: 10\r\n\r\nProcess #3: 2 12 \r\nCPU Queuing Time: 0\r\nKeyboard Queuing Time: 0\r\nTurnaround Time: 10\r\n\r\nProcess #4: 2 12 \r\nCPU Queuing Time: 0\r\nKeyboard Queuing Time: 0\r\nTurnaround Time: 10\r\n\r\n\r\n";
+		String expectedOutput = "---------------------------------------------------\n"
+				+ "Feedback\n"
+				+ "Process #1: 2 12 \n"
+				+ "CPU Queuing Time: 0\n"
+				+ "Keyboard Queuing Time: 0\n"
+				+ "Turnaround Time: 10\n"
+				+ "\n"
+				+ "Process #2: 2 12 \n"
+				+ "CPU Queuing Time: 0\n"
+				+ "Keyboard Queuing Time: 0\n"
+				+ "Turnaround Time: 10\n"
+				+ "\n"
+				+ "Process #3: 2 12 \n"
+				+ "CPU Queuing Time: 0\n"
+				+ "Keyboard Queuing Time: 0\n"
+				+ "Turnaround Time: 10\n"
+				+ "\n"
+				+ "Process #4: 2 12 \n"
+				+ "CPU Queuing Time: 0\n"
+				+ "Keyboard Queuing Time: 0\n"
+				+ "Turnaround Time: 10\n"
+				+ "\n\n";
 		assertEquals(expectedOutput, getOutput());		
 	}
 	
@@ -214,15 +242,21 @@ class TestAlgorithmResult {
 		ProcessInCPU pCPU4 = ProcessInCPU.create(p4);
 		pCPU4.logWorking(2, 12);
 
+		for (int i=0; i<5;i++) {
+			pCPU1.updateQueueingTime();
+			pCPU2.updateQueueingTime();
+			pCPU3.updateQueueingTime();
+		}
 		// Creating mock ArrayList
 		ArrayList<ProcessInCPU> list = new ArrayList<ProcessInCPU>(Arrays.asList(pCPU1,pCPU2,pCPU3,pCPU4));
+		
 		
 		// Executing the create
 		AlgorithmResult algoResult = AlgorithmResult.create(list, AlgorithmType.FB);
 		
 		Double actualAvgQueuingTime = algoResult.getAvgQueuingTime();
 		
-		assertEquals(10, actualAvgQueuingTime);
+		assertEquals(3.75, actualAvgQueuingTime);
 	}
 	
 	
