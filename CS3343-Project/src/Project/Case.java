@@ -20,9 +20,7 @@ public class Case {
 	}
 	
 	public static Case create(ArrayList<Algorithm> algorithms, ArrayList<Process> processes) {
-		Case newCase;
-		newCase = new Case(newid++, algorithms, processes);
-		return newCase;
+		return new Case(newid++, algorithms, processes);
 	}
 	
 	public ArrayList<AlgorithmType> bestAlgorithm(String indicator) {
