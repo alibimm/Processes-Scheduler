@@ -242,15 +242,21 @@ class TestAlgorithmResult {
 		ProcessInCPU pCPU4 = ProcessInCPU.create(p4);
 		pCPU4.logWorking(2, 12);
 
+		for (int i=0; i<5;i++) {
+			pCPU1.updateQueueingTime();
+			pCPU2.updateQueueingTime();
+			pCPU3.updateQueueingTime();
+		}
 		// Creating mock ArrayList
 		ArrayList<ProcessInCPU> list = new ArrayList<ProcessInCPU>(Arrays.asList(pCPU1,pCPU2,pCPU3,pCPU4));
+		
 		
 		// Executing the create
 		AlgorithmResult algoResult = AlgorithmResult.create(list, AlgorithmType.FB);
 		
 		Double actualAvgQueuingTime = algoResult.getAvgQueuingTime();
 		
-		assertEquals(0, actualAvgQueuingTime);
+		assertEquals(3.75, actualAvgQueuingTime);
 	}
 	
 	
