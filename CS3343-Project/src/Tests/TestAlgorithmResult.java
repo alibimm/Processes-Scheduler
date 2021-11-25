@@ -51,7 +51,7 @@ class TestAlgorithmResult {
 		assertEquals(0.0, actualResult.getAvgQueuingTime(), 0.00);
 		assertEquals(10.25, actualResult.getAvgTurnaroundTime(), 0.00);
 		assertEquals(1.0, actualResult.getAvgRatioTS(), 0.00);
-		assertEquals(0.0, actualResult.getmaxQueuingTime(), 0.00);
+		assertEquals(0.0, actualResult.getMaxQueuingTime(), 0.00);
 		assertEquals(11.0, actualResult.getMaxTurnaroundTime(), 0.00);
 		assertEquals(3.1538461538461537, actualResult.getCpuUtil(), 0.00);		
 	}

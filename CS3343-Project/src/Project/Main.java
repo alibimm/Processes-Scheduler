@@ -35,6 +35,8 @@ public class Main {
             		(new CmdClose()).execute(cmdParts);
             	} else if (cmdParts[0].equals("display")) {
             		(new CmdDisplay()).execute(cmdParts);
+            	} else if (cmdParts[0].equals("help")) {
+            		(new CmdHelp()).execute(cmdParts);
             	} else {
             		throw new ExNonExistingCommand(cmdParts[0]);
             	}
