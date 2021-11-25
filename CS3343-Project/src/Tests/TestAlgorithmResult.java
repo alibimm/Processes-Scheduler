@@ -195,7 +195,6 @@ class TestAlgorithmResult {
 				
 		setOutput();
 		algoResult.printDetails();
-		String a = getOutput();
 		String expectedOutput = "---------------------------------------------------\n"
 				+ "Feedback\n"
 				+ "Process #1: 2 12 \n"
