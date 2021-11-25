@@ -54,6 +54,19 @@ class TestMain {
 	}
 	
 	@Test
+	void testCustom2() throws Exception {
+		
+		setOutput();
+		
+		String expected = "";
+		ByteArrayInputStream in = new ByteArrayInputStream("custom".getBytes());
+		System.setIn(in);
+		Main.main(null);
+		String actual = getOutput();
+		assertEquals(expected, actual);
+	}
+	
+	@Test
 	void testSuggest() throws Exception {
 		
 		setOutput();

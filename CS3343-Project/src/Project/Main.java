@@ -46,9 +46,6 @@ public class Main {
         		System.out.println(e.getMessage());
         	}
         	
-        	
-        	// Something Else
-        	
         }
         
         in.close();
