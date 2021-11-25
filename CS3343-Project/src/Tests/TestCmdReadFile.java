@@ -2,7 +2,8 @@ package Tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.FileNotFoundException;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -96,48 +97,62 @@ public class TestCmdReadFile {
 
 	// Test readfile with invalid filepathname
 	@Test
-	public void TestReadFileWithInvalidFilePathName() {
+	public void TestReadFileWithInvalidFilePathName() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/wws.txt"};
-		
 		// Running execute new Cmd Read FIle
-		FileNotFoundException ex = assertThrows(FileNotFoundException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "./src/TestSamples/wws.txt (No such file or directory)\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
+		
 	}
 	
 	// Test readfile, the first line is not number
 	@Test
-	public void TestReadFileFirstLineIsNotNumber() {
+	public void TestReadFileFirstLineIsNotNumber() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/2-number_of_processes_not_integer.txt"};
-		
-		// Running execute new Cmd Read FIle
-		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "For input string: \"Q\"\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 	// Test readfile, the first line is not integer		
 	@Test
-	public void TestReadFileFirstLineIsNotInteger() {
-			
+	public void TestReadFileFirstLineIsNotInteger() throws Exception {
+		
+		setOutput();	
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/2-number_of_processes_float_number.txt"};
-			
 		// Running execute new Cmd Read FIle
-		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});		
+		(new CmdReadFile()).execute(cmdParts);	
+		String expected = "For input string: \"4.5\"\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
+		
 	}
 	
 	
 	// Test readfile, the first line is negative integer		
 	@Test
-	public void TestReadFileFirstLineIsNegativeInteger() {
+	public void TestReadFileFirstLineIsNegativeInteger() throws Exception {
 			
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/2-number_of_processes_negative_integer.txt"};
-			
 		// Running execute new Cmd Read FIle
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});		
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "Number of processes should be non-negative integer\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
+		
 	}
 	
 	// Test readfile, the process line parts size is not equal to 4
@@ -146,96 +161,119 @@ public class TestCmdReadFile {
 	// 0 - arrival time
 	// 5 - number of services
 	@Test
-	public void TestReadFileProcessLinePartsSizeIsNot4() {
+	public void TestReadFileProcessLinePartsSizeIsNot4() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLinePartsSizeIsNot4.txt"};
-		
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "Process Line Should have 4 arguments (e.g. # 0 5 3)\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 
 	// Test readfile, the processLineParts[0] is not #
 	@Test
-	public void TestReadFileProcessLineParts0IsNotHash() {
+	public void TestReadFileProcessLineParts0IsNotHash() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLinePartsIsNot#.txt"};
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "Process should be initialized with # character (e.g. # 0 5 3)\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
 		
 	}
 	
 
 	// Test readfile, the processLineParts[1] is not number
 	@Test
-	public void TestReadFileProcessLineParts1IsNotNumber() {
+	public void TestReadFileProcessLineParts1IsNotNumber() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts1IsNotNumber.txt"};
-		
-		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "For input string: \"q\"\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 
 	// Test readfile, the processLineParts[1] is not integer
 	@Test
-	public void TestReadFileProcessLineParts1IsNotInteger() {
+	public void TestReadFileProcessLineParts1IsNotInteger() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts1IsNotInteger.txt"};
-		
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "For input string: \"1.1\"\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 
 	// Test readfile, the processLineParts[1] is negative
 	@Test
-	public void TestReadFileProcessLineParts1IsNegative() {
+	public void TestReadFileProcessLineParts1IsNegative() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts1IsNegative.txt"};
-		
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
-		
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "Process ID should be non-negative integer\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 	}
 	
 
 	// Test readfile, the processLineParts[2] is not number
 	@Test
-	public void TestReadFileProcessLineParts2IsNotNumber() {
+	public void TestReadFileProcessLineParts2IsNotNumber() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts2IsNotNumber.txt"};
-		
-		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
-		
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "For input string: \"q\"\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 	}
 	
 
 	// Test readfile, the processLineParts[2] is not integer
 	@Test
-	public void TestReadFileProcessLineParts2IsNotInteger() {
+	public void TestReadFileProcessLineParts2IsNotInteger() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts2IsNotInteger.txt"};
-		
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "For input string: \"1.1\"\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 
 	// Test readfile, the processLineParts[2] is negative
 	@Test
-	public void TestReadFileProcessLineParts2IsNegative() {
+	public void TestReadFileProcessLineParts2IsNegative() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts2IsNegative.txt"};
-		
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "Process Arrival Time should be non-negative integer\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
@@ -243,94 +281,136 @@ public class TestCmdReadFile {
 
 	// Test readfile, the processLineParts[3] is not number
 	@Test
-	public void TestReadFileProcessLineParts3IsNotNumber() {
+	public void TestReadFileProcessLineParts3IsNotNumber() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts3IsNotNumber.txt"};
-		
-		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "Process Line Should have 4 arguments (e.g. # 0 5 3)\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 
 	// Test readfile, the processLineParts[3] is not integer
 	@Test
-	public void TestReadFileProcessLineParts3IsNotInteger() {
+	public void TestReadFileProcessLineParts3IsNotInteger() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts3IsNotInteger.txt"};
+		(new CmdReadFile()).execute(cmdParts);
 		
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		String expected = "For input string: \"1.1\"\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 
 	// Test readfile, the processLineParts[3] is negative
 	@Test
-	public void TestReadFileProcessLineParts3IsNegative() {
+	public void TestReadFileProcessLineParts3IsNegative() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/3-ProcessLineParts3IsNegative.txt"};
-		
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "Number of services in the process should be positive integer\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 	// Test readfile, the service line parts size is not 2
 	@Test
-	public void TestReadFileServiceLinePartsSizeIsNot2() {
+	public void TestReadFileServiceLinePartsSizeIsNot2() throws Exception {
 		
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/4-ServiceLinePartsSizeIsNot2.txt"};
-		
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "Service Line Should have 2 arguments (e.g. C 5)\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 	// Test readfile, the service type is of the non-existing type
 	@Test
-	public void TestReadFileServiceTypeWrongFormat() {
+	public void TestReadFileServiceTypeWrongFormat() throws Exception {
 
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/4-ServiceLinePartsInvalidServiceType.txt"};
-		
-		ExInvalidServiceType ex = assertThrows(ExInvalidServiceType.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "Service Type Should be C or K\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 	// Test readfile, the service time is not number
 	@Test
-	public void TestReadFileServiceLineParts1IsNotNumber() {
+	public void TestReadFileServiceLineParts1IsNotNumber() throws Exception {
 
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/4-ServiceLineParts1IsNotNumber.txt"};
-		
-		NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "For input string: \"q\"\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 
 	// Test readfile, the service time is not integer
 	@Test
-	public void TestReadFileServiceLineParts1IsNotInteger() {
+	public void TestReadFileServiceLineParts1IsNotInteger() throws Exception {
 
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/4-ServiceLineParts1IsNotInteger.txt"};
-		
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "For input string: \"1.1\"\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
 	
 
 	// Test readfile, the service time is negative
 	@Test
-	public void TestReadFileServiceLineParts1IsNegative() {
+	public void TestReadFileServiceLineParts1IsNegative() throws Exception {
 
+		setOutput();
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/4-ServiceLineParts1IsNegative.txt"};
-		
-		ExInvalidInput ex = assertThrows(ExInvalidInput.class, () -> {(new CmdReadFile()).execute(cmdParts);});
+		(new CmdReadFile()).execute(cmdParts);
+		String expected = "Service time should be positive integer\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
 		
 	}
+	
+	
+	// Handling console output
+	PrintStream oldPrintStream;
+	ByteArrayOutputStream bos;
+
+	  private void setOutput() throws Exception {
+	    oldPrintStream = System.out;
+	    bos = new ByteArrayOutputStream();
+	    System.setOut(new PrintStream(bos));
+	  }
+
+	  private String getOutput() { // throws Exception
+	    System.setOut(oldPrintStream);
+	    return bos.toString();
+	  }
+
 	
 }
