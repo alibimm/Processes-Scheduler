@@ -30,7 +30,7 @@ public class HRRN extends Algorithm {
 		reset();
 		
 		// main loop
-        for (int tick = 0; tick < Constants.MAX_LOOP; tick++) {
+        for (int tick = 0; tick < Algorithm.MAX_LOOP; tick++) {
         	
             // long term scheduler
             for (int i = 0; i < processes.size(); i++) {

@@ -27,7 +27,7 @@ public class RR extends Algorithm {
 		reset();
 		
 		// main loop
-		for (int tick = 0; tick < Constants.MAX_LOOP; tick++) {
+		for (int tick = 0; tick < Algorithm.MAX_LOOP; tick++) {
 			
 			// long term scheduler 
 			for (int i = 0; i < processes.size(); i++) {
@@ -63,7 +63,7 @@ public class RR extends Algorithm {
 				curProcess.incrementCurServiceTick();
                 ProcessInCPU.updateQueingTime(readyQueue, 1, readyQueue.size());
 				
-				if (curProcess.isCurServiceOver() || tick + 1 - dispatchedTick >= Constants.CLOCK) {
+				if (curProcess.isCurServiceOver() || tick + 1 - dispatchedTick >= Algorithm.CLOCK) {
 					manageCurrentCPUProcess(tick);
 				}
 				
