@@ -4,10 +4,6 @@ public class ExInvalidInput extends Exception {
 
 private static final long serialVersionUID = 1L;
 	
-	public ExInvalidInput() {
-		super("Invalid Input");
-	}
-	
 	public ExInvalidInput(String msg) {
 		super(msg);
 	}
