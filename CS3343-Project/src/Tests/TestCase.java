@@ -99,14 +99,14 @@ class TestCase {
 		Case c1 = Case.create(algoList, processList);
 		setOutput();
 		c1.printTable();
-		//String output = getOutput();
+		String output = getOutput();
 		String expectedOutput = "Type           Duration       CPU Util       Avg Turnaround Max Turnaround Avg Queuing    Max Queuing    \n"
-				+ "FCFS           45             1.00           23.40          30.00          14.40          22.00          \n"
-				+ "RR             45             1.00           26.40          40.00          17.40          25.00          \n"
-				+ "FB             45             1.00           27.40          45.00          18.40          30.00          \n"
-				+ "SRT            45             1.00           17.40          45.00          8.40           30.00          \n"
-				+ "SPN            45             1.00           17.40          45.00          8.40           30.00          \n"
-				+ "HRRN           45             1.00           23.40          30.00          14.40          22.00          \n\n";
+				+ "FCFS           56             0.82           25.60          41.00          14.40          22.00          \n"
+				+ "RR             56             0.82           28.60          41.00          17.40          25.00          \n"
+				+ "FB             51             0.90           29.60          45.00          18.40          30.00          \n"
+				+ "SRT            46             0.78           19.80          46.00          8.60           31.00          \n"
+				+ "SPN            46             1.00           20.60          45.00          9.40           30.00          \n"
+				+ "HRRN           56             0.82           25.60          41.00          14.40          22.00          \n\n";
 		assertEquals(expectedOutput, getOutput());
 	}
 	
@@ -116,7 +116,7 @@ class TestCase {
 		setOutput();
 		c1.printAlgoShort(AlgorithmType.FCFS);
 		String output = getOutput();
-		String expectedOutput = "Case #5        FCFS           45             1.00           23.40          30.00          14.40          22.00          \n";
+		String expectedOutput = "Case #8        FCFS           56             0.82           25.60          41.00          14.40          22.00          \n";
 		assertEquals(expectedOutput, getOutput());
 	}
 	
@@ -125,27 +125,29 @@ class TestCase {
 		Case c1 = Case.create(algoList, processList);
 		setOutput();
 		c1.printAlgoDetail(AlgorithmType.RR);
-		//String output = getOutput();
+		String output = getOutput();
 		String expectedOutput = "---------------------------------------------------\n"
-				+ "Round Robin\nProcess #1: 5 10 \n"
+				+ "Round Robin\n"
+				+ "Process #1: 5 10 \n"
 				+ "CPU Queuing Time: 5\n"
-				+ "Keyboard Queuing Time: 0\nTurnaround Time: 10\n"
-				+ "\nProcess #2: 10 15 20 25 \n"
+				+ "Keyboard Queuing Time: 0\n"
+				+ "Turnaround Time: 10\n\n"
+				+ "Process #2: 10 15 20 25 \n"
 				+ "CPU Queuing Time: 15\n"
 				+ "Keyboard Queuing Time: 0\n"
 				+ "Turnaround Time: 25\n\n"
 				+ "Process #0: 0 5 15 20 35 40 \n"
 				+ "CPU Queuing Time: 25\n"
-				+ "Keyboard Queuing Time: 0"
-				+ "\nTurnaround Time: 40\n\n"
+				+ "Keyboard Queuing Time: 0\n"
+				+ "Turnaround Time: 40\n\n"
 				+ "Process #3: 25 30 40 42 \n"
 				+ "CPU Queuing Time: 20\n"
 				+ "Keyboard Queuing Time: 0\n"
 				+ "Turnaround Time: 27\n\n"
-				+ "Process #4: 30 35 42 45 \n"
+				+ "Process #4: 30 35 42 45 55 56 \n"
 				+ "CPU Queuing Time: 22\n"
 				+ "Keyboard Queuing Time: 0\n"
-				+ "Turnaround Time: 30\n\n\n";
+				+ "Turnaround Time: 41\n\n\n";
 		assertEquals(expectedOutput, getOutput());	
 	}
 	
