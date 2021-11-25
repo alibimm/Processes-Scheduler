@@ -8,7 +8,7 @@ public class Case {
 	private final int id;
 	private ArrayList<AlgorithmResult> results;
 	
-	private Case(int id, ArrayList<Algorithm> algorithms, ArrayList<Process> processes) {
+	protected Case(int id, ArrayList<Algorithm> algorithms, ArrayList<Process> processes) {
 		this.id = id;
 		results = new ArrayList<AlgorithmResult>();
 		for (Algorithm algo : algorithms) {
@@ -20,14 +20,7 @@ public class Case {
 	}
 	
 	public static Case create(ArrayList<Algorithm> algorithms, ArrayList<Process> processes) {
-		Case newCase;
-		try {
-			newCase = new Case(newid++, algorithms, processes);
-		} catch (IndexOutOfBoundsException e) {
-			System.out.println(e.getMessage());
-			newCase = null;
-		}
-		return newCase;
+		return new Case(newid++, algorithms, processes);
 	}
 	
 	public ArrayList<AlgorithmType> bestAlgorithm(String indicator) {
@@ -134,6 +127,10 @@ public class Case {
 	
 	public int getId() { return id; }
 	
+	public ArrayList<AlgorithmResult> getResults() { 
+		return results;
+	}
+
 	public void printTable() {
 		System.out.format("%-15s%-15s%-15s%-15s%-15s%-15s%-15s\n", 
 				"Type", 
@@ -165,4 +162,6 @@ public class Case {
 			}
 		}
 	}
+	
+	
 }

@@ -13,7 +13,7 @@ public class AlgorithmResult {
 	private double cpuUtil; 
 	private AlgorithmType algorithmType;
 	
-	private AlgorithmResult(ArrayList<ProcessInCPU> rawProcessResults, AlgorithmType algoType) {
+	protected AlgorithmResult(ArrayList<ProcessInCPU> rawProcessResults, AlgorithmType algoType) {
 		algorithmType = algoType;
 		processes = ProcessResult.createResultList(rawProcessResults);
 		
@@ -50,7 +50,7 @@ public class AlgorithmResult {
 	public double getAvgRatioTS() {
 		return this.avgRatioTS;
 	}
-	public double getmaxQueuingTime() {
+	public double getMaxQueuingTime() {
 		return this.maxQueuingTime;
 	}
 	public double getMaxTurnaroundTime() {
@@ -59,7 +59,7 @@ public class AlgorithmResult {
 	public double getCpuUtil() {
 		return this.cpuUtil;
 	}
-	
+
 	public void printStats() {
 		System.out.format("%-15s%-15.0f%-15.2f%-15.2f%-15.2f%-15.2f%-15.2f\n", 
 				algorithmType.toShort(), 
