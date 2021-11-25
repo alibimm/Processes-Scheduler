@@ -115,7 +115,6 @@ class TestCase {
 		Case c1 = Case.create(0, algoList, processList);
 		setOutput();
 		c1.printAlgoShort(AlgorithmType.FCFS);
-//		String output = getOutput();
 		String expectedOutput = "Case #0        FCFS           56             0.82           25.60          41.00          14.40          22.00          \n";
 		assertEquals(expectedOutput, getOutput());
 	}
@@ -125,7 +124,6 @@ class TestCase {
 		Case c1 = Case.create(0, algoList, processList);
 		setOutput();
 		c1.printAlgoDetail(AlgorithmType.RR);
-//		String output = getOutput();
 		String expectedOutput = "---------------------------------------------------\n"
 				+ "Round Robin\n"
 				+ "Process #1: 5 10 \n"
