@@ -31,12 +31,12 @@ public class FB extends Algorithm {
 		reset();
 		
 		// Adding all ready queues into one arraylist
-		for (int i = 0; i < Constants.PRIORITY_COUNT; i++) {
+		for (int i = 0; i < Algorithm.PRIORITY_COUNT; i++) {
 			allReadyQueues.add(new ArrayList<ProcessInCPU>());
 		}
 		
     	// Main Loop
-        for(int tick = 0; tick < Constants.MAX_LOOP; tick++) {
+        for(int tick = 0; tick < Algorithm.MAX_LOOP; tick++) {
         	// Put process into ready queue if it arrived at current tick
         	for (int i = 0; i < processes.size(); i++) {
                 if (processes.get(i).getArrivalTime() == tick) { // process arrives at current tick
@@ -80,7 +80,7 @@ public class FB extends Algorithm {
                     ProcessInCPU.updateQueingTime(allReadyQueues.get(i), 0, allReadyQueues.get(i).size());
             	}
             	
-            	if (curProcess.isCurServiceOver() || tick + 1 - dispatchedTick >= Constants.CLOCK) { // current service is completed
+            	if (curProcess.isCurServiceOver() || tick + 1 - dispatchedTick >= Algorithm.CLOCK) { // current service is completed
             		manageCurrentCPUProcess(tick);
             	}
             	
@@ -109,7 +109,7 @@ public class FB extends Algorithm {
             	ProcessInCPU.moveProcessFrom(readyQueue, blockQueueIO);
             }
     	} else {
-			if (firstQueue == Constants.PRIORITY_COUNT - 1) {
+			if (firstQueue == Algorithm.PRIORITY_COUNT - 1) {
 				ProcessInCPU.moveProcessFrom(readyQueue, readyQueue);
 			} else {
 				priorityMap.put(process.getId(), firstQueue + 1);
