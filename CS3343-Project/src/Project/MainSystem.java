@@ -116,8 +116,8 @@ public class MainSystem {
 						"Duration",
 						"CPU Util",
 						"Avg Turnaround",
-						"Avg Queuing",
 						"Max Turnaround",
+						"Avg Queuing",
 						"Max Queuing");
 				for (Case c : allCases) {
 					c.printAlgoShort(openAlgoType);
