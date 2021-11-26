@@ -18,7 +18,12 @@ class TestCmdCustom {
 	void testCmdCustomWrongInput() throws Exception {		
 		// Initializing input
 		String[] cmdParts = new String[] {"custom"};
-		ExInsufficientCommandArguments ex = assertThrows(ExInsufficientCommandArguments.class, () -> {(new CmdCustom()).execute(cmdParts);});
+		ExInsufficientCommandArguments ex = assertThrows(ExInsufficientCommandArguments.class, () -> {
+			(new CmdCustom()).execute(cmdParts);
+		});
+		String actual = ex.getMessage();
+		String expected = "Custom Command should have 2 arguments";
+		assertTrue(actual.contains(expected));
 	}
 	
 	@Test
