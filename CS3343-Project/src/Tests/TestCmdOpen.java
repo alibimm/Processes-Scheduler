@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Commands.CmdClose;
@@ -13,8 +14,15 @@ import Commands.CmdReadFile;
 import Commands.CmdSchedule;
 import Exceptions.ExCaseNotFound;
 import Exceptions.ExInsufficientCommandArguments;
+import Project.MainSystem;
 
 class TestCmdOpen {
+	
+	@BeforeEach
+	void setUp() {
+		MainSystem system = MainSystem.getInstance();
+		system.clear();
+	}
 
 	@Test
 	void testOpenAtStart() throws Exception {		
@@ -47,159 +55,86 @@ class TestCmdOpen {
 	
 	@Test
 	void testOpenOpenFCFS() throws Exception {		
+		String[] cmdParts = new String[] {"readfile", "./src/TestSamples/1-perfect.txt"};
+		(new CmdReadFile()).execute(cmdParts);
+		
+		cmdParts = new String[] {"schedule"};
+		(new CmdSchedule()).execute(cmdParts);
 		setOutput();
-		String[] cmdParts = new String[] {"close"};
-		(new CmdClose()).execute(cmdParts);
 		// Initializing input
 		cmdParts = new String[] {"open", "FCFS"};
 		(new CmdOpen()).execute(cmdParts);
 		
-		String expected = "---------------------------------------------------\n"
-				+ "First Come First Serve\n"
-				+ "Process #1: 3 4 24 28 \n"
-				+ "CPU Queuing Time: 3\n"
-				+ "Keyboard Queuing Time: 8\n"
-				+ "Turnaround Time: 28\n"
-				+ "\n"
-				+ "Process #3: 7 13 37 42 \n"
-				+ "CPU Queuing Time: 2\n"
-				+ "Keyboard Queuing Time: 16\n"
-				+ "Turnaround Time: 37\n"
-				+ "\n"
-				+ "Process #0: 0 3 13 18 42 45 \n"
-				+ "CPU Queuing Time: 5\n"
-				+ "Keyboard Queuing Time: 19\n"
-				+ "Turnaround Time: 45\n"
-				+ "\n"
-				+ "Process #2: 4 7 29 34 45 50 \n"
-				+ "CPU Queuing Time: 2\n"
-				+ "Keyboard Queuing Time: 21\n"
-				+ "Turnaround Time: 48\n"
-				+ "\n"
-				+ "\n"
-				+ "";
+		String expected = "Current algorithm filter: First Come First Serve\n" 
+				+ "Case           Type           Duration       CPU Util       Avg Turnaround Max Turnaround Avg Queuing    Max Queuing    \n"
+				+ "Case #0        FCFS           50             0.80           39.50          48.00          19.00          24.00          \n";
+				
 		String actual = getOutput();
 		assertEquals(expected, actual);
 	}
 	
 	@Test
-	void testOpenOpenRR() throws Exception {	
+	void testOpenOpenRR() throws Exception {
+		String[] cmdParts = new String[] {"readfile", "./src/TestSamples/1-perfect.txt"};
+		(new CmdReadFile()).execute(cmdParts);
+		
+		cmdParts = new String[] {"schedule"};
+		(new CmdSchedule()).execute(cmdParts);
 		setOutput();
-		String[] cmdParts = new String[] {"close"};
-		(new CmdClose()).execute(cmdParts);
 		// Initializing input
 		cmdParts = new String[] {"open", "RR"};
 		(new CmdOpen()).execute(cmdParts);
 		
-		String expected = "---------------------------------------------------\n"
-				+ "Round Robin\n"
-				+ "Process #1: 3 4 24 28 \n"
-				+ "CPU Queuing Time: 3\n"
-				+ "Keyboard Queuing Time: 8\n"
-				+ "Turnaround Time: 28\n"
-				+ "\n"
-				+ "Process #3: 7 12 12 13 37 42 \n"
-				+ "CPU Queuing Time: 2\n"
-				+ "Keyboard Queuing Time: 16\n"
-				+ "Turnaround Time: 37\n"
-				+ "\n"
-				+ "Process #0: 0 3 13 18 42 45 \n"
-				+ "CPU Queuing Time: 5\n"
-				+ "Keyboard Queuing Time: 19\n"
-				+ "Turnaround Time: 45\n"
-				+ "\n"
-				+ "Process #2: 4 7 29 34 45 50 \n"
-				+ "CPU Queuing Time: 2\n"
-				+ "Keyboard Queuing Time: 21\n"
-				+ "Turnaround Time: 48\n"
-				+ "\n"
-				+ "\n"
-				+ "";
+		String expected = "Current algorithm filter: Round Robin\n" 
+				+ "Case           Type           Duration       CPU Util       Avg Turnaround Max Turnaround Avg Queuing    Max Queuing    \n"
+				+ "Case #0        RR             50             0.80           39.50          48.00          19.00          24.00          \n";
 		String actual = getOutput();
 		assertEquals(expected, actual);
 	}
 	
 	@Test
 	void testOpenOpenFB() throws Exception {	
+		String[] cmdParts = new String[] {"readfile", "./src/TestSamples/1-perfect.txt"};
+		(new CmdReadFile()).execute(cmdParts);
+		
+		cmdParts = new String[] {"schedule"};
+		(new CmdSchedule()).execute(cmdParts);
 		setOutput();
-		String[] cmdParts = new String[] {"close"};
-		(new CmdClose()).execute(cmdParts);
 		// Initializing input
 		cmdParts = new String[] {"open", "FB"};
 		(new CmdOpen()).execute(cmdParts);
 		
-		String expected = "---------------------------------------------------\n"
-				+ "Feedback\n"
-				+ "Process #1: 3 4 24 28 \n"
-				+ "CPU Queuing Time: 3\n"
-				+ "Keyboard Queuing Time: 8\n"
-				+ "Turnaround Time: 28\n"
-				+ "\n"
-				+ "Process #0: 0 3 12 17 34 37 \n"
-				+ "CPU Queuing Time: 4\n"
-				+ "Keyboard Queuing Time: 12\n"
-				+ "Turnaround Time: 37\n"
-				+ "\n"
-				+ "Process #3: 7 12 17 18 38 43 \n"
-				+ "CPU Queuing Time: 7\n"
-				+ "Keyboard Queuing Time: 12\n"
-				+ "Turnaround Time: 38\n"
-				+ "\n"
-				+ "Process #2: 4 7 29 34 45 50 \n"
-				+ "CPU Queuing Time: 2\n"
-				+ "Keyboard Queuing Time: 21\n"
-				+ "Turnaround Time: 48\n"
-				+ "\n"
-				+ "\n"
-				+ "";
+		String expected = "Current algorithm filter: Feedback\n" 
+				+ "Case           Type           Duration       CPU Util       Avg Turnaround Max Turnaround Avg Queuing    Max Queuing    \n"
+				+ "Case #0        FB             50             0.80           37.75          48.00          17.25          23.00          \n";
 		String actual = getOutput();
 		assertEquals(expected, actual);
 	}
 	
 	@Test
-	void testOpenOpenHRRN() throws Exception {		
+	void testOpenOpenHRRN() throws Exception {	
+		String[] cmdParts = new String[] {"readfile", "./src/TestSamples/1-perfect.txt"};
+		(new CmdReadFile()).execute(cmdParts);
+		
+		cmdParts = new String[] {"schedule"};
+		(new CmdSchedule()).execute(cmdParts);
 		setOutput();
-		String[] cmdParts = new String[] {"close"};
-		(new CmdClose()).execute(cmdParts);
 		// Initializing input
 		cmdParts = new String[] {"open", "HRRN"};
 		(new CmdOpen()).execute(cmdParts);
 		
-		String expected = "---------------------------------------------------\n"
-				+ "Highest Response Ratio Next\n"
-				+ "Process #1: 3 4 24 28 \n"
-				+ "CPU Queuing Time: 3\n"
-				+ "Keyboard Queuing Time: 8\n"
-				+ "Turnaround Time: 28\n"
-				+ "\n"
-				+ "Process #3: 7 13 37 42 \n"
-				+ "CPU Queuing Time: 2\n"
-				+ "Keyboard Queuing Time: 16\n"
-				+ "Turnaround Time: 37\n"
-				+ "\n"
-				+ "Process #0: 0 3 13 18 42 45 \n"
-				+ "CPU Queuing Time: 5\n"
-				+ "Keyboard Queuing Time: 19\n"
-				+ "Turnaround Time: 45\n"
-				+ "\n"
-				+ "Process #2: 4 7 29 34 45 50 \n"
-				+ "CPU Queuing Time: 2\n"
-				+ "Keyboard Queuing Time: 21\n"
-				+ "Turnaround Time: 48\n"
-				+ "\n"
-				+ "\n"
-				+ "";
+		String expected = "Current algorithm filter: Highest Response Ratio Next\n" 
+				+ "Case           Type           Duration       CPU Util       Avg Turnaround Max Turnaround Avg Queuing    Max Queuing    \n"
+				+ "Case #0        HRRN           50             0.80           39.50          48.00          19.00          24.00          \n";
 		String actual = getOutput();
 		assertEquals(expected, actual);
 	}
 	
 	@Test
-	void testOpenOpenSRT() throws Exception {		
+	void testOpenOpenSRT() throws Exception {
 		setOutput();
-		String[] cmdParts = new String[] {"close"};
-		(new CmdClose()).execute(cmdParts);
 		// Initializing input
-		cmdParts = new String[] {"open", "SRT"};
+		String[] cmdParts = new String[] {"open", "SRT"};
 		(new CmdOpen()).execute(cmdParts);
 		
 		String expected = "Current algorithm filter: Shortest Remaining Time Next\n"
@@ -218,7 +153,7 @@ class TestCmdOpen {
 	}
 	
 	@Test
-	void testOpenOpenSPN() throws Exception {		
+	void testOpenOpenSPN() throws Exception {
 		setOutput();
 		// Initializing input
 		String[] cmdParts = new String[] {"open", "SPN"};
@@ -230,8 +165,8 @@ class TestCmdOpen {
 	}
 	
 	@Test
-	void testOpenOpenCase() throws Exception {		
-		setOutput();
+	void testOpenOpenAlgorithm() throws Exception {		
+		
 		// Initializing input
 		String[] cmdParts = new String[] {"readfile", "./src/TestSamples/1-perfect.txt"};
 		(new CmdReadFile()).execute(cmdParts);
@@ -239,8 +174,32 @@ class TestCmdOpen {
 		cmdParts = new String[] {"schedule"};
 		(new CmdSchedule()).execute(cmdParts);
 		
-		cmdParts = new String[] {"open", "0"};
+		cmdParts = new String[] {"open", "SPN"};
 		(new CmdOpen()).execute(cmdParts);
+		setOutput();
+		
+		cmdParts = new String[] {"open", "FCFS"};
+		(new CmdOpen()).execute(cmdParts);
+		
+		String expected = "There is already algorithm open.\n";
+		String actual = getOutput();
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testOpenOpenCase() throws Exception {	
+		String[] cmdParts = new String[] {"open", "SRT"};
+		(new CmdOpen()).execute(cmdParts);
+		setOutput();
+		// Initializing input
+		cmdParts = new String[] {"readfile", "./src/TestSamples/1-perfect.txt"};
+		(new CmdReadFile()).execute(cmdParts);
+		
+		cmdParts = new String[] {"schedule"};
+		(new CmdSchedule()).execute(cmdParts);
+		
+		cmdParts = new String[] {"open", "0"};
+		(new CmdOpen()).execute(cmdParts);		
 		
 		String expected = "1 unscheduled inputs scheduled successfully.\n"
 				+ "---------------------------------------------------\n"
@@ -273,7 +232,7 @@ class TestCmdOpen {
 	
 	@Test
 	void testOpenOpenCase2() throws Exception {		
-		setOutput();
+		
 		// Initializing input
 		String[] cmdParts = new String[] {"readfile", "./src/TestSamples/1-perfect.txt"};
 		(new CmdReadFile()).execute(cmdParts);
@@ -284,13 +243,12 @@ class TestCmdOpen {
 		cmdParts = new String[] {"open", "0"};
 		(new CmdOpen()).execute(cmdParts);
 		
+		setOutput();
+		
 		cmdParts = new String[] {"open", "0"};
 		(new CmdOpen()).execute(cmdParts);
 		
-		String expected = "1 unscheduled inputs scheduled successfully.\n"
-				+ "There is already case open.\n"
-				+ "There is already case open.\n"
-				+ "";
+		String expected =  "There is already case open.\n";
 		String actual = getOutput();
 		assertEquals(expected, actual);
 	}
