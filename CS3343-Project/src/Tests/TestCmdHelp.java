@@ -28,14 +28,14 @@ class TestCmdHelp {
 		// Running execute new Cmd Help
 		(new CmdHelp()).execute(cmdParts);
 		
-		String expected = "There are 10 commands used in various situations:\n"
+		String expected = "\nThere are 10 commands used in various situations:\n"
 				+ "\n"
 				+ "  readfile [filepathname]  Let the scheduler read the file                   \n"
 				+ "  schedule                 Start the scheduling                              \n"
 				+ "  suggest                  To get suggestions on best algorithm according to currently set indicator for the given files.\n"
 				+ "				(default: Turnaround time)\n"
 				+ "  custom [indicator]       To get suggestions on best algorithm according to custom indicators for the given files.\n"
-				+ "		  	    Available indicators:\n"
+				+ "		  	     Available indicators:\n"
 				+ "				[AQT] - Average Queueing Time\n"
 				+ "				[ATRT] - Average TurnAround Time\n"
 				+ "				[ARTS] - Average Ratio TS (Turnaround/Service)\n"

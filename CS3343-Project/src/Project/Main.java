@@ -6,7 +6,7 @@ import Commands.*;
 import Exceptions.*;
 
 public class Main {
-	public static void main(String[] args) {
+	public static int main(String[] args) {
 		
 		// Declaring in scanner to read input from keyboard
         Scanner in = new Scanner(System.in);
@@ -49,5 +49,6 @@ public class Main {
         }
         
         in.close();
+        return 0;
 	}
 }
