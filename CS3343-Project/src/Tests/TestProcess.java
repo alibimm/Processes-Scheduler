@@ -13,9 +13,10 @@ import Project.ServiceType;
 
 public class TestProcess {
 	
-	// 
-	// getServiceTime Method Testcases
-	// 
+	
+	
+	// Testing getServiceTime() Method
+	
 	@Test
 	// This testcase adds only one service to the process, and checks that process gets its service time
 	void testGetServiceTimeWith1Service() {
@@ -97,13 +98,9 @@ public class TestProcess {
 		
 	}
 	
-	//
-	//
-	//
 	
-	//
-	// getServiceType Method Testcase
-	//
+	
+	// Testing getServiceType() Method
 	
 	@Test
 	void testGetServiceTypeWith1ServiceCPU() {
@@ -194,13 +191,10 @@ public class TestProcess {
 				assertEquals(expected, actual);
 	}
 	
-	//
-	//
-	//
 	
-	//
-	// getServicesCount Method Testcase
-	//
+	
+	// Testing getServicesCount Method
+	
 	@Test
 	void testGetServicesCount() throws ExInvalidServiceType {
 		// Initializing new services ArrayList
@@ -229,9 +223,10 @@ public class TestProcess {
 		assertEquals(expected, actual);
 	}
 	
-	//
-	// getArrivalTime Method Testcases
-	// 
+	
+	
+	// Testing getArrivalTime Method
+	
 	@Test
 	// This testcase creates new Process and checks getArrivalTime Method
 	void testGetArrivalTime() {
@@ -247,13 +242,10 @@ public class TestProcess {
 		
 		assertEquals(expected, actual);
 	}
-	//
-	//
-	//
 	
-	//
-	// getId Method Testcases
-	// 
+	
+	
+	// Testing getId Method
 	
 	@Test
 	// This testcase creates new Process and checks getId Method
