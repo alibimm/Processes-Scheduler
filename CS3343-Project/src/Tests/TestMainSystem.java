@@ -3,21 +3,16 @@ package Tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import Commands.CmdReadFile;
 import Commands.CmdSchedule;
-import Commands.CmdSuggest;
 import Exceptions.ExCaseNotFound;
-import Exceptions.ExInvalidServiceType;
 import Project.AlgorithmType;
 import Project.MainSystem;
 import Project.Process;
@@ -87,6 +82,7 @@ class TestMainSystem {
 	@Test
 	void testMainSystem_06_openCase() throws ExCaseNotFound {
 		ExCaseNotFound ex = assertThrows(ExCaseNotFound.class, () -> {system.openCase(0);});
+		assertEquals("Case with ID 0 was not found", ex.getMessage());
 	}
 	
 	@Test
@@ -134,7 +130,7 @@ class TestMainSystem {
 		
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/1-perfect.txt"});
 		(new CmdSchedule()).execute(new String[]{"schedule"});
-		boolean wws = system.openCase(0);
+		system.openCase(0);
 		system.display();
 		actual = getOutput();
 		expected = "Scheduled cases:\n"
@@ -143,8 +139,8 @@ class TestMainSystem {
 		
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/1-perfect.txt"});
 		(new CmdSchedule()).execute(new String[]{"schedule"});
-		wws = system.openCase(1);
-		wws = system.openAlgo(AlgorithmType.FCFS);
+		system.openCase(1);
+		system.openAlgo(AlgorithmType.FCFS);
 		system.display();
 		actual = getOutput();
 		expected = "Scheduled cases:\n"
@@ -154,9 +150,9 @@ class TestMainSystem {
 		
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/1-perfect.txt"});
 		(new CmdSchedule()).execute(new String[]{"schedule"});
-		wws = system.close();
-		wws = system.close();
-		wws = system.openAlgo(AlgorithmType.FCFS);
+		system.close();
+		system.close();
+		system.openAlgo(AlgorithmType.FCFS);
 		system.display();
 		actual = getOutput();
 		expected = "Scheduled cases:\n"
@@ -165,8 +161,8 @@ class TestMainSystem {
 		
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/1-perfect.txt"});
 		(new CmdSchedule()).execute(new String[]{"schedule"});
-		wws = system.close();
-		wws = system.close();
+		system.close();
+		system.close();
 		system.display();
 		actual = getOutput();
 		expected = "Scheduled cases:\n"

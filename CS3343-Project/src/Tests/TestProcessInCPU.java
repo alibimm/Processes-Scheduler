@@ -354,7 +354,7 @@ class TestProcessInCPU {
 		Process testProcess2 = Process.create(0, 2, testServices2);
 		
 		// Creating ProcessInCPU instance using its create() static method
-		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess1);
+		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess2);
 		
 		//locate service index to the beginning of list
 //		testProcessInCPU2.setCurServiceIndex(0);
@@ -376,7 +376,7 @@ class TestProcessInCPU {
 //		testProcessInCPU2.setCurServiceIndex(1);
 		testProcessInCPU2.proceedToNextService();
 		
-		expected = 0;
+		expected = 1;
 		
 		actual = ProcessInCPU.findShortestRemainingTimeProcess(testProcesses);
 		
@@ -418,7 +418,7 @@ class TestProcessInCPU {
 		Process testProcess2 = Process.create(0, 2, testServices2);
 		
 		// Creating ProcessInCPU instance using its create() static method
-		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess1);
+		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess2);
 		
 
 		//add these entries to ArrayList
@@ -438,26 +438,26 @@ class TestProcessInCPU {
 		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices3 = new ArrayList<Service>();
-		testServices.add(Service.create("C", "2"));
-		testServices.add(Service.create("K", "1"));
+		testServices3.add(Service.create("C", "2"));
+		testServices3.add(Service.create("K", "1"));
 		
 		// Creating Process using its static create method
 		Process testProcess3 = Process.create(0, 2, testServices3);
 		
 		// Creating ProcessInCPU instance using its create() static method
-		ProcessInCPU testProcessInCPU3 = ProcessInCPU.create(testProcess1);
+		ProcessInCPU testProcessInCPU3 = ProcessInCPU.create(testProcess3);
 		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices4 = new ArrayList<Service>();
-		testServices2.add(Service.create("C", "2"));
-		testServices2.add(Service.create("K", "1"));
-		testServices2.add(Service.create("C", "2"));
+		testServices4.add(Service.create("C", "2"));
+		testServices4.add(Service.create("K", "1"));
+		testServices4.add(Service.create("C", "2"));
 		
 		// Creating Process using its static create method
 		Process testProcess4 = Process.create(0, 2, testServices4);
 		
 		// Creating ProcessInCPU instance using its create() static method
-		ProcessInCPU testProcessInCPU4 = ProcessInCPU.create(testProcess1);
+		ProcessInCPU testProcessInCPU4 = ProcessInCPU.create(testProcess4);
 		
 		//locate service index to the beginning of list
 //		testProcessInCPU4.setCurServiceIndex(0);
@@ -523,7 +523,7 @@ class TestProcessInCPU {
 		Process testProcess2 = Process.create(0, 2, testServices);
 		
 		// Creating ProcessInCPU instance using its create() static method
-		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess1);
+		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess2);
 		
 		//locate service index to the beginning of list
 //		testProcessInCPU2.setCurServiceIndex(0);

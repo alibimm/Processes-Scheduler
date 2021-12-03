@@ -8,11 +8,9 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Commands.CmdClose;
 import Commands.CmdOpen;
 import Commands.CmdReadFile;
 import Commands.CmdSchedule;
-import Exceptions.ExCaseNotFound;
 import Exceptions.ExInsufficientCommandArguments;
 import Project.MainSystem;
 
@@ -40,6 +38,7 @@ class TestCmdOpen {
 		// Initializing input
 		String[] cmdParts = new String[] {"open"};
 		ExInsufficientCommandArguments ex = assertThrows(ExInsufficientCommandArguments.class, () -> {(new CmdOpen()).execute(cmdParts);});
+		assertEquals("Open Command should have more than 2 arguments", ex.getMessage());
 	}
 	
 	@Test

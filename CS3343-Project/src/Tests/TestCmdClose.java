@@ -5,28 +5,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Commands.CmdClose;
 import Commands.CmdReadFile;
-import Project.Case;
 import Project.MainSystem;
 
 class TestCmdClose {
 
 	ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tear() {
-	}
 
 	@BeforeEach
 	void setUp() {
@@ -96,12 +86,7 @@ class TestCmdClose {
 	}
 	
 	@Test
-	void testCmdCloseInAlgo() {
-		
-
-		// Getting instance of the Main System
-		MainSystem system = MainSystem.getInstance();
-		
+	void testCmdCloseInAlgo() {	
 		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile", "./src/TestSamples/1-perfect.txt"};
 		

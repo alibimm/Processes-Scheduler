@@ -11,16 +11,6 @@ import Project.MainSystem;
 import Project.Service;
 
 public class CmdReadFile implements Command {
-	
-	private Project.Process p;
-	private Project.Service s;
-	
-//	// Singleton
-//	private static CmdReadFile instance = new CmdReadFile();
-//	private CmdReadFile() {}
-//	public static CmdReadFile getInstance() {
-//		return instance;
-//	}
 
 	@Override
 	public void execute(String[] cmdParts) {
@@ -69,11 +59,10 @@ public class CmdReadFile implements Command {
     				if (serviceLineParts.length != 2) throw new ExInvalidInput("Service Line Should have 2 arguments (e.g. C 5)");
     				if (!serviceLineParts[0].equals("C") && !serviceLineParts[0].equals("K")) throw new ExInvalidServiceType("Service Type Should be C or K");
     				if (Integer.parseInt(serviceLineParts[1]) < 1) throw new ExInvalidInput("Service time should be positive integer");
-					s = system.createService(serviceLineParts[0], serviceLineParts[1]);
+					Service s = system.createService(serviceLineParts[0], serviceLineParts[1]);
     				services.add(s);
     			}
-    			p = system.createProcess(processLineParts[1], Integer.parseInt(processLineParts[2]), services);
-        		
+    			system.createProcess(processLineParts[1], Integer.parseInt(processLineParts[2]), services);
         	}
         	
         	finished = true;

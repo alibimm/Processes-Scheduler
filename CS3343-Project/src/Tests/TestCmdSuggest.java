@@ -5,34 +5,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Commands.CmdReadFile;
 import Commands.CmdSchedule;
 import Commands.CmdSuggest;
-import Project.MainSystem;
 
 class TestCmdSuggest {
-	
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tear() {
-	}
-
-	@BeforeEach
-	void setUp() {
-	}
-
-	@AfterEach
-	void tearDown() {
-	}
 
 	@Test
 	void testCmdSuggestAtStart() throws Exception {
@@ -82,25 +61,22 @@ class TestCmdSuggest {
 		
 		String actual = getOutput();
 		
-//		System.out.println(actual);
-		
 		assertEquals(expected, actual);
 		
 	}
 	
 	// Handling console output
-		PrintStream oldPrintStream;
-		ByteArrayOutputStream bos;
+	PrintStream oldPrintStream;
+	ByteArrayOutputStream bos;
 
-		  private void setOutput() throws Exception {
-		    oldPrintStream = System.out;
-		    bos = new ByteArrayOutputStream();
-		    System.setOut(new PrintStream(bos));
-		  }
+	private void setOutput() throws Exception {
+		oldPrintStream = System.out;
+	    bos = new ByteArrayOutputStream();
+	    System.setOut(new PrintStream(bos));
+	}
 
-		  private String getOutput() { // throws Exception
-		    System.setOut(oldPrintStream);
-		    return bos.toString();
-		  }
-
+	private String getOutput() { // throws Exception
+	    System.setOut(oldPrintStream);
+	    return bos.toString();
+	}
 }

@@ -93,7 +93,7 @@ public class TestProcess {
 		
 		// Initializing the result of the method call
 		// Trying to get the first service time of the process
-		IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class, () -> {testProcess.getServiceTime(0);});
+		assertThrows(IndexOutOfBoundsException.class, () -> {testProcess.getServiceTime(0);});
 		
 	}
 	

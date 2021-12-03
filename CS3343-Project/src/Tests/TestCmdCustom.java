@@ -8,8 +8,6 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
 
 import Commands.CmdCustom;
-import Commands.CmdOpen;
-import Exceptions.ExCaseNotFound;
 import Exceptions.ExInsufficientCommandArguments;
 
 class TestCmdCustom {
