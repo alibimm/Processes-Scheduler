@@ -247,9 +247,9 @@ class TestAlgorithmResult {
 			pCPU2.updateQueueingTime();
 			pCPU3.updateQueueingTime();
 		}
+		
 		// Creating mock ArrayList
 		ArrayList<ProcessInCPU> list = new ArrayList<ProcessInCPU>(Arrays.asList(pCPU1,pCPU2,pCPU3,pCPU4));
-		
 		
 		// Executing the create
 		AlgorithmResult algoResult = AlgorithmResult.create(list, AlgorithmType.FB);
