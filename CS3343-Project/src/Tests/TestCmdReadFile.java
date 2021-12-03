@@ -79,13 +79,7 @@ public class TestCmdReadFile {
 		// Creating Process with dummy services
 		Process p3 = system.createProcess("3", 5, services3);
 		expected.add(p3);
-		
-		// Not working for some reason
-		// Checking the results
-//		for (int i = 0; i < expected.size(); ++i) {
-//			assertEquals(expected, actual);
-//		}
-		
+
 		// Checking the results
 		for (int i = 0; i < expected.size(); ++i) {
 			assertEquals(expected.get(i).getId(), actual.get(i).getId());
