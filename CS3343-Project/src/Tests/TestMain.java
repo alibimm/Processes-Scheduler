@@ -77,16 +77,14 @@ class TestMain {
 	PrintStream oldPrintStream;
 	ByteArrayOutputStream bos;
 
-	  private void setOutput() throws Exception {
+	private void setOutput() throws Exception {
 	    oldPrintStream = System.out;
 	    bos = new ByteArrayOutputStream();
 	    System.setOut(new PrintStream(bos));
-	  }
+	}
 
-	  private String getOutput() { // throws Exception
+	private String getOutput() { // throws Exception
 	    System.setOut(oldPrintStream);
 	    return bos.toString();
-	  }
-	
-
+	}
 }

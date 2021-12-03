@@ -13,22 +13,16 @@ import Project.Service;
 public class TestHRRN {
 	@Test
 	void testGetType() {
-		
 		HRRN testHRRN = HRRN.getInstance();
 		
-		//actual result
 		AlgorithmType actual = testHRRN.getType();
-		
-		//expected result
 		AlgorithmType expected = AlgorithmType.HRRN;
 		
 		assertEquals(actual, expected);
 	}
 	
 	@Test
-	// Testing schedule() method in HRRN class
 	void testSchedule1() {
-		//creating an instance of HRRN class
 		HRRN testHRRN = HRRN.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -75,8 +69,6 @@ public class TestHRRN {
 		
 		//actual result
 		ArrayList<ProcessInCPU> actual = testHRRN.schedule(processes);
-		
-
 
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
@@ -90,13 +82,10 @@ public class TestHRRN {
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
 		}
-		
 	}
 	
 	@Test
-	// Testing schedule() method in HRRN class
 	void testSchedule2() {
-		//creating an instance of HRRN class
 		HRRN testHRRN = HRRN.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -138,8 +127,6 @@ public class TestHRRN {
 		
 		//actual result
 		ArrayList<ProcessInCPU> actual = testHRRN.schedule(processes);
-		
-
 
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
@@ -153,9 +140,6 @@ public class TestHRRN {
 		
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
-		}
-		
-	}
-	
-	
+		}	
+	}	
 }

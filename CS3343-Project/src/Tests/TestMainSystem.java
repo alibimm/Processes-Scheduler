@@ -18,7 +18,6 @@ import Project.MainSystem;
 import Project.Process;
 import Project.Service;
 
-//@TestMethodOrder(MethodOrderer.MethodName.class)
 
 class TestMainSystem {
 
@@ -45,8 +44,6 @@ class TestMainSystem {
 		assertEquals(expected.getId(), actual.getId());
 		assertEquals(expected.getArrivalTime(), actual.getArrivalTime());
 	}
-	
-	
 	
 	@Test
 	void testMainSystem_02_scheduleAlgorithms_0_Input() {
@@ -118,8 +115,6 @@ class TestMainSystem {
 	
 	@Test
 	void testMainSystem_09_display() throws Exception {
-		
-		// Set the System.out output
 		setOutput();
 		
 		String expected = "Scheduled cases:\n"
@@ -211,21 +206,18 @@ class TestMainSystem {
 		assertEquals(1, allInputs.size());
 	}
 	
-	
-	
 	// Handling console output
 	PrintStream oldPrintStream;
 	ByteArrayOutputStream bos;
 
-	  private void setOutput() throws Exception {
+	private void setOutput() throws Exception {
 	    oldPrintStream = System.out;
 	    bos = new ByteArrayOutputStream();
 	    System.setOut(new PrintStream(bos));
-	  }
+	}
 
-	  private String getOutput() { // throws Exception
+	private String getOutput() { // throws Exception
 	    System.setOut(oldPrintStream);
 	    return bos.toString();
-	  }
-	
+	}
 }

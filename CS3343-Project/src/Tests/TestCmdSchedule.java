@@ -14,22 +14,18 @@ class TestCmdSchedule {
 
 	@Test
 	void testScheduleAtStart() throws Exception {
-		
 		setOutput();
 		
-		// Initializing
 		String[] cmdParts = new String[] {"schedule"};
 		(new CmdSchedule()).execute(cmdParts);
 		
 		String expected = "There are no unscheduled inputs.\n";
 		String actual = getOutput();
-//		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 	
 	@Test
 	void testScheduleAfterUpload() throws Exception {
-		
 		setOutput();
 		
 		// Initializing
@@ -41,27 +37,21 @@ class TestCmdSchedule {
 		
 		String expected = "1 unscheduled inputs scheduled successfully.\n";
 		String actual = getOutput();
-//		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 	
-	
-	
-	
-	
 	// Handling console output
-			PrintStream oldPrintStream;
-			ByteArrayOutputStream bos;
+	PrintStream oldPrintStream;
+	ByteArrayOutputStream bos;
 
-			  private void setOutput() throws Exception {
-			    oldPrintStream = System.out;
-			    bos = new ByteArrayOutputStream();
-			    System.setOut(new PrintStream(bos));
-			  }
+	private void setOutput() throws Exception {
+	    oldPrintStream = System.out;
+	    bos = new ByteArrayOutputStream();
+	    System.setOut(new PrintStream(bos));
+	}
 
-			  private String getOutput() { // throws Exception
-			    System.setOut(oldPrintStream);
-			    return bos.toString();
-			  }
-
+	private String getOutput() { // throws Exception
+	    System.setOut(oldPrintStream);
+	    return bos.toString();
+	}
 }

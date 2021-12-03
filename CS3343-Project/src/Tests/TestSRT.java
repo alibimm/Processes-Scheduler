@@ -13,22 +13,15 @@ import Project.Service;
 public class TestSRT {
 	@Test
 	void testGetType() {
-		
 		SRT testSRT = SRT.getInstance();
-		
-		//actual result
 		AlgorithmType actual = testSRT.getType();
-		
-		//expected result
 		AlgorithmType expected = AlgorithmType.SRT;
 		
 		assertEquals(actual, expected);
 	}
 	
 	@Test
-	// Testing schedule() method in SRT class
 	void testSchedule1() {
-		//creating an instance of SRT class
 		SRT testSRT = SRT.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -75,8 +68,6 @@ public class TestSRT {
 		
 		//actual result
 		ArrayList<ProcessInCPU> actual = testSRT.schedule(processes);
-		
-
 
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
@@ -90,13 +81,10 @@ public class TestSRT {
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
 		}
-		
 	}
 	
 	@Test
-	// Testing schedule() method in SRT class
 	void testSchedule2() {
-		//creating an instance of SRT class
 		SRT testSRT = SRT.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -138,8 +126,6 @@ public class TestSRT {
 		
 		//actual result
 		ArrayList<ProcessInCPU> actual = testSRT.schedule(processes);
-		
-
 
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
@@ -154,8 +140,5 @@ public class TestSRT {
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
 		}
-		
 	}
-	
-	
 }

@@ -12,25 +12,17 @@ import Project.Service;
 
 public class TestRR {
 	@Test
-	// Testing getType() method in RR class
 	void testGetType() {
-		
-		//creating an instance of RR class
 		RR testRR = RR.getInstance();
 		
-		//actual result
 		AlgorithmType actual = testRR.getType();
-		
-		//expected result
 		AlgorithmType expected = AlgorithmType.RR;
 		
 		assertEquals(actual, expected);
 	}
 	
 	@Test
-	// Testing schedule() method in RR class
 	void testSchedule1() {
-		//creating an instance of RR class
 		RR testRR = RR.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -75,11 +67,8 @@ public class TestRR {
 		processes.add(testProcess2);
 		processes.add(testProcess3);
 		
-		//actual result
 		ArrayList<ProcessInCPU> actual = testRR.schedule(processes);
 		
-
-
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
 		// processes leave the CPU
@@ -92,13 +81,10 @@ public class TestRR {
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
 		}
-		
 	}
 	
 	@Test
-	// Testing schedule() method in RR class
 	void testSchedule2() {
-		//creating an instance of RR class
 		RR testRR = RR.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -140,8 +126,6 @@ public class TestRR {
 		
 		//actual result
 		ArrayList<ProcessInCPU> actual = testRR.schedule(processes);
-		
-
 
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
@@ -156,8 +140,5 @@ public class TestRR {
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
 		}
-		
 	}
-	
-	
 }

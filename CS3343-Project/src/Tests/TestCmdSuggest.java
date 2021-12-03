@@ -15,11 +15,8 @@ class TestCmdSuggest {
 
 	@Test
 	void testCmdSuggestAtStart() throws Exception {
-		
-		// Set the System output
 		setOutput();
 		
-		// Initializing inputs
 		String[] cmdParts = new String[] {"suggest"};
 		(new CmdSuggest()).execute(cmdParts);
 		
@@ -37,10 +34,8 @@ class TestCmdSuggest {
 	
 	@Test
 	void testCmdSuggestAfterSchedule() throws Exception {
-		
 		setOutput();
 		
-		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/sample_0.txt"};
 		(new CmdReadFile()).execute(cmdParts);
 		cmdParts = new String[]{"readfile","./src/TestSamples/sample_1.txt"};
@@ -62,7 +57,6 @@ class TestCmdSuggest {
 		String actual = getOutput();
 		
 		assertEquals(expected, actual);
-		
 	}
 	
 	// Handling console output

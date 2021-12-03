@@ -12,25 +12,17 @@ import Project.Service;
 
 public class TestFB {
 	@Test
-	// Testing getType() method in FB class
 	void testGetType() {
-		
-		//creating an instance of FB class
 		FB testFB = FB.getInstance();
 		
-		//actual result
 		AlgorithmType actual = testFB.getType();
-		
-		//expected result
 		AlgorithmType expected = AlgorithmType.FB;
 		
 		assertEquals(actual, expected);
 	}
 	
 	@Test
-	// Testing schedule() method in FB class
 	void testSchedule1() {
-		//creating an instance of FB class
 		FB testFB = FB.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -78,8 +70,6 @@ public class TestFB {
 		//actual result
 		ArrayList<ProcessInCPU> actual = testFB.schedule(processes);
 		
-
-
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
 		// processes leave the CPU
@@ -92,13 +82,10 @@ public class TestFB {
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
 		}
-		
 	}
 	
 	@Test
-	// Testing schedule() method in FB class
 	void testSchedule2() {
-		//creating an instance of FB class
 		FB testFB = FB.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -138,11 +125,8 @@ public class TestFB {
 		processes.add(testProcess3);
 		processes.add(testProcess4);
 		
-		//actual result
 		ArrayList<ProcessInCPU> actual = testFB.schedule(processes);
 		
-
-
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
 		// processes leave the CPU
@@ -156,7 +140,6 @@ public class TestFB {
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
 		}
-		
 	}
 	
 }

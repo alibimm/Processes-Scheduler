@@ -30,7 +30,6 @@ class TestProcessResult {
 		Process p3 = Process.create(3, 2, allServices);
 		Process p4 = Process.create(4, 2, allServices);
 
-
 		// Creating mock processInCPUs
 		ProcessInCPU pCPU1 = ProcessInCPU.create(p1);
 		pCPU1.logWorking(2, 12);
@@ -289,22 +288,6 @@ class TestProcessResult {
 		assertEquals(expectedOutput, actualOutput);
 	}
 	
-	//Necessary for print test
-	PrintStream oldPrintStream;
-	ByteArrayOutputStream bos;
-
-	private void setOutput() {
-		oldPrintStream = System.out;
-		bos = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(bos));
-	}
-
-	private String getOutput() { 
-		System.setOut(oldPrintStream);
-		return bos.toString();
-	}
-	
-	
 	@Test
 	void testGetTimeInCPU() throws ExInvalidServiceType {
 		// Creating mock allServices 
@@ -332,5 +315,20 @@ class TestProcessResult {
 						
 				// Assertion
 				assertEquals(expectedTimeInCPU,actualTimeInCPU);			
+	}
+	
+	//Necessary for print test
+	PrintStream oldPrintStream;
+	ByteArrayOutputStream bos;
+
+	private void setOutput() {
+		oldPrintStream = System.out;
+		bos = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(bos));
+	}
+
+	private String getOutput() { 
+		System.setOut(oldPrintStream);
+		return bos.toString();
 	}
 }

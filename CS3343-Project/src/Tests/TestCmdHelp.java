@@ -17,7 +17,6 @@ class TestCmdHelp {
 		
 		String[] cmdParts = new String[]{"help"};
 		
-		// Running execute new Cmd Help
 		(new CmdHelp()).execute(cmdParts);
 		
 		String expected = "\nThere are 10 commands used in various situations:\n"
@@ -49,16 +48,15 @@ class TestCmdHelp {
 	PrintStream oldPrintStream;
 	ByteArrayOutputStream bos;
 
-	  private void setOutput() throws Exception {
+	private void setOutput() throws Exception {
 	    oldPrintStream = System.out;
 	    bos = new ByteArrayOutputStream();
 	    System.setOut(new PrintStream(bos));
-	  }
+	}
 
-	  private String getOutput() { // throws Exception
+	private String getOutput() { // throws Exception
 	    System.setOut(oldPrintStream);
 	    return bos.toString();
-	  }
-	
+	}
 }
 

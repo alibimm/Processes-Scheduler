@@ -13,25 +13,17 @@ import Project.Service;
 
 public class TestFCFS {
 	@Test
-	// Testing getType() method in FCFS class
 	void testGetType() {
-		
-		//creating an instance of FCFS class
 		FCFS testFCFS = FCFS.getInstance();
 		
-		//actual result
 		AlgorithmType actual = testFCFS.getType();
-		
-		//expected result
 		AlgorithmType expected = AlgorithmType.FCFS;
 		
 		assertEquals(actual, expected);
 	}
 
 	@Test
-	// Testing schedule() method in FCFS class
 	void testSchedule1() {
-		//creating an instance of FCFS class
 		FCFS testFCFS = FCFS.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -78,8 +70,6 @@ public class TestFCFS {
 		
 		//actual result
 		ArrayList<ProcessInCPU> actual = testFCFS.schedule(processes);
-		
-
 
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
@@ -93,13 +83,10 @@ public class TestFCFS {
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
 		}
-		
 	}
 	
 	@Test
-	// Testing schedule() method in FCFS class
 	void testSchedule2() {
-		//creating an instance of FCFS class
 		FCFS testFCFS = FCFS.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -139,10 +126,7 @@ public class TestFCFS {
 		processes.add(testProcess3);
 		processes.add(testProcess4);
 		
-		//actual result
 		ArrayList<ProcessInCPU> actual = testFCFS.schedule(processes);
-		
-
 
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
@@ -157,7 +141,5 @@ public class TestFCFS {
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
 		}
-		
 	}
-	
 }

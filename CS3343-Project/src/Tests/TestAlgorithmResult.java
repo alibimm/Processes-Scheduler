@@ -261,17 +261,17 @@ class TestAlgorithmResult {
 	
 	
 	//Necessary for print test
-		PrintStream oldPrintStream;
-		ByteArrayOutputStream bos;
+	PrintStream oldPrintStream;
+	ByteArrayOutputStream bos;
 
-		private void setOutput() {
-			oldPrintStream = System.out;
-			bos = new ByteArrayOutputStream();
-			System.setOut(new PrintStream(bos));
-		}
+	private void setOutput() {
+		oldPrintStream = System.out;
+		bos = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(bos));
+	}
 
-		private String getOutput() { 
-			System.setOut(oldPrintStream);
-			return bos.toString();
-		}
+	private String getOutput() { 
+		System.setOut(oldPrintStream);
+		return bos.toString();
+	}
 }

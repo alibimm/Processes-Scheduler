@@ -13,22 +13,16 @@ import Project.Service;
 public class TestSPN {
 	@Test
 	void testGetType() {
-		
 		SPN testSPN = SPN.getInstance();
 		
-		//actual result
 		AlgorithmType actual = testSPN.getType();
-		
-		//expected result
 		AlgorithmType expected = AlgorithmType.SPN;
 		
 		assertEquals(actual, expected);
 	}
 	
 	@Test
-	// Testing schedule() method in SPN class
 	void testSchedule1() {
-		//creating an instance of SPN class
 		SPN testSPN = SPN.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -76,8 +70,6 @@ public class TestSPN {
 		//actual result
 		ArrayList<ProcessInCPU> actual = testSPN.schedule(processes);
 		
-
-
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
 		// processes leave the CPU
@@ -90,13 +82,10 @@ public class TestSPN {
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
 		}
-		
 	}
 	
 	@Test
-	// Testing schedule() method in SPN class
 	void testSchedule2() {
-		//creating an instance of SPN class
 		SPN testSPN = SPN.getInstance();
 				
 		// Creating  ArrayList of Services to create a Process
@@ -138,8 +127,6 @@ public class TestSPN {
 		
 		//actual result
 		ArrayList<ProcessInCPU> actual = testSPN.schedule(processes);
-		
-
 
 		// Creating ProcessInCPU instance using its create() static method
 		// The sequence of adding ProcessInCPU objects is the sequence in which
@@ -154,8 +141,5 @@ public class TestSPN {
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(actual.get(i).getId(), expected.get(i).getId());
 		}
-		
 	}
-	
-	
 }

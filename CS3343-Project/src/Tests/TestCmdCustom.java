@@ -85,23 +85,18 @@ class TestCmdCustom {
 		assertEquals(expected, actual);
 	}
 	
-	
-	
 	// Handling console output
-				PrintStream oldPrintStream;
-				ByteArrayOutputStream bos;
+	PrintStream oldPrintStream;
+	ByteArrayOutputStream bos;
 
-				  private void setOutput() throws Exception {
-				    oldPrintStream = System.out;
-				    bos = new ByteArrayOutputStream();
-				    System.setOut(new PrintStream(bos));
-				  }
+	private void setOutput() throws Exception {
+	    oldPrintStream = System.out;
+	    bos = new ByteArrayOutputStream();
+	    System.setOut(new PrintStream(bos));
+	}
 
-				  private String getOutput() { // throws Exception
-				    System.setOut(oldPrintStream);
-				    return bos.toString();
-				  }
-
-
-
+	private String getOutput() { // throws Exception
+	    System.setOut(oldPrintStream);
+	    return bos.toString();
+	}
 }
