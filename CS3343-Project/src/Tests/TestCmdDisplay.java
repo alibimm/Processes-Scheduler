@@ -188,7 +188,6 @@ class TestCmdDisplay {
 				+ "\n";
 		
 		String actual = getOutput();
-//		System.out.println(actual);
 		
 		assertEquals(expected, actual);
 		
@@ -235,14 +234,13 @@ class TestCmdDisplay {
 	// Handling console output
 	PrintStream oldPrintStream;
 	ByteArrayOutputStream bos;
-
-	  private void setOutput() throws Exception {
-	    oldPrintStream = System.out;
+	private void setOutput() throws Exception {
+		oldPrintStream = System.out;
 	    bos = new ByteArrayOutputStream();
 	    System.setOut(new PrintStream(bos));
 	  }
-
-	  private String getOutput() { // throws Exception
+	
+	private String getOutput() {
 	    System.setOut(oldPrintStream);
 	    return bos.toString();
 	  }
