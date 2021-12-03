@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import Project.AlgorithmType;
 import Project.HRRN;
-import Project.HRRN;
 import Project.Process;
 import Project.ProcessInCPU;
 import Project.Service;
