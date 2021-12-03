@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import org.junit.Before;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,6 +18,12 @@ import Commands.CmdSuggest;
 import Project.MainSystem;
 
 class TestCmdSuggest {
+	
+	@BeforeEach
+	void setup() {
+		MainSystem system = MainSystem.getInstance();
+		system.clear();
+	}
 
 	@Test
 	void testCmdSuggestAtStart() throws Exception {
@@ -28,14 +35,10 @@ class TestCmdSuggest {
 		String[] cmdParts = new String[] {"suggest"};
 		(new CmdSuggest()).execute(cmdParts);
 		
-		String expected = "The best performing algorithm(s): Shortest Remaining Time Next\n"
-				+ "Case           Best algorithms\n"
-				+ "Case #0        SRT\n"
-				+ "Case #1        SPN, SRT\n";
+		String expected = "The best performing algorithm(s):\n"
+				+ "Case           Best algorithms\n";
 		
 		String actual = getOutput();
-		
-		System.out.println(actual);
 		
 		assertEquals(expected, actual);
 	}
@@ -61,11 +64,9 @@ class TestCmdSuggest {
 				+ "The best performing algorithm(s): Shortest Remaining Time Next\n"
 				+ "Case           Best algorithms\n"
 				+ "Case #0        SRT\n"
-				+ "Case #1        SPN, SRT\n"
-				+ "";
+				+ "Case #1        SPN, SRT\n";
 		
 		String actual = getOutput();
-		
 		assertEquals(expected, actual);
 		
 	}
