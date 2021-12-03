@@ -23,7 +23,6 @@ class TestCmdSchedule {
 		
 		String expected = "There are no unscheduled inputs.\n";
 		String actual = getOutput();
-//		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 	
@@ -41,7 +40,6 @@ class TestCmdSchedule {
 		
 		String expected = "1 unscheduled inputs scheduled successfully.\n";
 		String actual = getOutput();
-//		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 	
@@ -50,18 +48,18 @@ class TestCmdSchedule {
 	
 	
 	// Handling console output
-			PrintStream oldPrintStream;
-			ByteArrayOutputStream bos;
-
-			  private void setOutput() throws Exception {
-			    oldPrintStream = System.out;
-			    bos = new ByteArrayOutputStream();
-			    System.setOut(new PrintStream(bos));
-			  }
-
-			  private String getOutput() { // throws Exception
-			    System.setOut(oldPrintStream);
-			    return bos.toString();
-			  }
+	PrintStream oldPrintStream;
+	ByteArrayOutputStream bos;
+	
+	private void setOutput() throws Exception {
+		oldPrintStream = System.out;
+		bos = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(bos));
+	}
+	
+	private String getOutput() {
+		System.setOut(oldPrintStream);
+		return bos.toString();
+	}
 
 }
