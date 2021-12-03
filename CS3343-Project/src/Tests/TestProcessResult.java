@@ -9,7 +9,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import Exceptions.ExInvalidServiceType;
 import Project.Interval;
 import Project.Process;
 import Project.ProcessInCPU;
@@ -68,7 +67,7 @@ class TestProcessResult {
 	}
 	
 	@Test
-	void testCalcMaxAvgQueuingTime() throws ExInvalidServiceType {
+	void testCalcMaxAvgQueuingTime() {
 		class ProcessResultStub extends ProcessResult {
 			private int queuingTimeStub; 
 
@@ -122,7 +121,7 @@ class TestProcessResult {
 	}
 
 	@Test
-	void testCalcMaxAvgTurnaroundTime() throws ExInvalidServiceType {
+	void testCalcMaxAvgTurnaroundTime() {
 		class ProcessResultStub extends ProcessResult {
 			private int turnaroundStub; 
 
@@ -157,15 +156,15 @@ class TestProcessResult {
 
 
 		// Creating processResultStubs
-		ProcessResultStub pStub1 = new ProcessResultStub(pCPU1, 10);
-		ProcessResultStub pStub2 = new ProcessResultStub(pCPU2, 12);
+		ProcessResultStub pStub1 = new ProcessResultStub(pCPU1, 9);
+		ProcessResultStub pStub2 = new ProcessResultStub(pCPU2, 13);
 		ProcessResultStub pStub3 = new ProcessResultStub(pCPU3, 6);
-		ProcessResultStub pStub4 = new ProcessResultStub(pCPU4, 15);
+		ProcessResultStub pStub4 = new ProcessResultStub(pCPU4, 19);
 
 		ArrayList<ProcessResult> processResultList = new ArrayList<ProcessResult>(Arrays.asList((ProcessResult)pStub1, (ProcessResult)pStub2, (ProcessResult)pStub3, (ProcessResult)pStub4)); 
 	
 		// Creating expected 
-		double[] expectedMaxAvgTurnaroundTime = new double[] {15, 10.75};
+		double[] expectedMaxAvgTurnaroundTime = new double[] {19, 11.75};
 		
 		// Executing 
 		double[] actualMaxAvgTurnaroundTime = ProcessResult.calcMaxAvgTurnaroundTime(processResultList);
@@ -176,7 +175,7 @@ class TestProcessResult {
 	}
 
 	@Test
-	void testCalcMaxAvgRatioTS() throws ExInvalidServiceType {
+	void testCalcMaxAvgRatioTS() {
 		class ProcessResultStub extends ProcessResult {
 			private double ratioTSStub; 
 
@@ -212,14 +211,14 @@ class TestProcessResult {
 
 		// Creating processResultStubs
 		ProcessResultStub pStub1 = new ProcessResultStub(pCPU1, 10);
-		ProcessResultStub pStub2 = new ProcessResultStub(pCPU2, 12);
-		ProcessResultStub pStub3 = new ProcessResultStub(pCPU3, 6);
-		ProcessResultStub pStub4 = new ProcessResultStub(pCPU4, 15);
+		ProcessResultStub pStub2 = new ProcessResultStub(pCPU2, 13);
+		ProcessResultStub pStub3 = new ProcessResultStub(pCPU3, 5);
+		ProcessResultStub pStub4 = new ProcessResultStub(pCPU4, 16);
 
 		ArrayList<ProcessResult> processResultList = new ArrayList<ProcessResult>(Arrays.asList((ProcessResult)pStub1, (ProcessResult)pStub2, (ProcessResult)pStub3, (ProcessResult)pStub4)); 
 	
 		// Creating expected 
-		double[] expectedMaxAvgRatioTS = new double[] {15, 10.75};
+		double[] expectedMaxAvgRatioTS = new double[] {16, 11};
 		
 		// Executing 
 		double[] actualMaxAvgRatioTS = ProcessResult.calcMaxAvgRatioTS(processResultList);
@@ -231,7 +230,7 @@ class TestProcessResult {
 	}
 
 	@Test
-	void testPrint() throws ExInvalidServiceType {
+	void testPrint() {
 		class ProcessResultStub extends ProcessResult {
 			public int turnaroundTimeStub;
 			public int queuingTimeCPUStub;
@@ -264,7 +263,7 @@ class TestProcessResult {
 		// Creating mock processes 
 		Process p1 = Process.create(1, 2, allServices);
 
-		// Creating mock processInCPUs
+		// Creating mock processInCP2Us
 		ProcessInCPU pCPU1 = ProcessInCPU.create(p1);
 		pCPU1.logWorking(2, 12);
 
@@ -280,6 +279,35 @@ class TestProcessResult {
 		assertEquals(expectedOutput, actualOutput);
 	}
 	
+	@Test
+	void testGetTimeInCPU() {
+		// Creating mock allServices 
+		Service s1 = Service.create("C", "12");
+		ArrayList<Service> allServices = new ArrayList<Service>(Arrays.asList(s1));
+		
+		// Creating mock processes 
+		Process p1 = Process.create(1, 2, allServices);
+
+		// Creating mock processInCPUs
+		ProcessInCPU pCPU1 = ProcessInCPU.create(p1);
+		pCPU1.logWorking(2, 12);
+		pCPU1.logWorking(13, 15);
+
+		ArrayList<ProcessInCPU> list = new ArrayList<ProcessInCPU>(Arrays.asList(pCPU1));
+		
+		// Execute createResultList
+		ArrayList<ProcessResult> processResultList = ProcessResult.createResultList(list);
+		
+		// Creating expected timeInCPU
+		int expectedTimeInCPU = 12;
+		
+		// Executing getTimeInCPU
+		int actualTimeInCPU = processResultList.get(0).getTimeInCPU();
+				
+		// Assertion
+		assertEquals(expectedTimeInCPU,actualTimeInCPU);			
+	}
+	
 	//Necessary for print test
 	PrintStream oldPrintStream;
 	ByteArrayOutputStream bos;
@@ -293,35 +321,5 @@ class TestProcessResult {
 	private String getOutput() { 
 		System.setOut(oldPrintStream);
 		return bos.toString();
-	}
-	
-	
-	@Test
-	void testGetTimeInCPU() throws ExInvalidServiceType {
-		// Creating mock allServices 
-			Service s1 = Service.create("C", "10");
-			ArrayList<Service> allServices = new ArrayList<Service>(Arrays.asList(s1));
-			
-			// Creating mock processes 
-			Process p1 = Process.create(1, 2, allServices);
-
-			// Creating mock processInCPUs
-			ProcessInCPU pCPU1 = ProcessInCPU.create(p1);
-			pCPU1.logWorking(2, 12);
-			pCPU1.logWorking(13, 15);
-
-			ArrayList<ProcessInCPU> list = new ArrayList<ProcessInCPU>(Arrays.asList(pCPU1));
-			
-			// Execute createResultList
-			ArrayList<ProcessResult> processResultList = ProcessResult.createResultList(list);
-			
-			// Creating expected maxAvgTurnaroundTime
-			int expectedTimeInCPU = 12;
-			
-			// Executing calcMaxAvgTurnaroundTime
-			int actualTimeInCPU = processResultList.get(0).getTimeInCPU();
-					
-			// Assertion
-			assertEquals(expectedTimeInCPU,actualTimeInCPU);			
 	}
 }

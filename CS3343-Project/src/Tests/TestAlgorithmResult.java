@@ -247,9 +247,9 @@ class TestAlgorithmResult {
 			pCPU2.updateQueueingTime();
 			pCPU3.updateQueueingTime();
 		}
+		
 		// Creating mock ArrayList
 		ArrayList<ProcessInCPU> list = new ArrayList<ProcessInCPU>(Arrays.asList(pCPU1,pCPU2,pCPU3,pCPU4));
-		
 		
 		// Executing the create
 		AlgorithmResult algoResult = AlgorithmResult.create(list, AlgorithmType.FB);
@@ -261,17 +261,17 @@ class TestAlgorithmResult {
 	
 	
 	//Necessary for print test
-		PrintStream oldPrintStream;
-		ByteArrayOutputStream bos;
+	PrintStream oldPrintStream;
+	ByteArrayOutputStream bos;
 
-		private void setOutput() {
-			oldPrintStream = System.out;
-			bos = new ByteArrayOutputStream();
-			System.setOut(new PrintStream(bos));
-		}
+	private void setOutput() {
+		oldPrintStream = System.out;
+		bos = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(bos));
+	}
 
-		private String getOutput() { 
-			System.setOut(oldPrintStream);
-			return bos.toString();
-		}
+	private String getOutput() { 
+		System.setOut(oldPrintStream);
+		return bos.toString();
+	}
 }
