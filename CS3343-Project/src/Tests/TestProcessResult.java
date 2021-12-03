@@ -289,7 +289,7 @@ class TestProcessResult {
 		Process p1 = Process.create(1, 2, allServices);
 
 		// Creating mock processInCPUs
-		ProcessInCPU pCPU1 = ProcessInCPU.create(p1);1
+		ProcessInCPU pCPU1 = ProcessInCPU.create(p1);
 		pCPU1.logWorking(2, 12);
 		pCPU1.logWorking(13, 15);
 
