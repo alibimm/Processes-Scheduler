@@ -12,7 +12,7 @@ import Project.Service;
 import Project.ServiceType;
 
 public class TestProcess {
-	
+
 	@Test
 	// This testcase adds only one service to the process, and checks that process gets its service time
 	void testGetServiceTimeWith1Service() {
@@ -88,46 +88,46 @@ public class TestProcess {
 	
 	@Test
 	void testGetServiceTypeWith1ServiceKeyboard() {
-				ArrayList<Service> services = new ArrayList<>();
-				Service s = Service.create("K", "5");
-				services.add(s);
-				
-				Process testProcess = Process.create(0, 1, services);
-				
-				// Initializing the result of the method call
-				// Trying to get the first service type of the process
-				ServiceType actual = testProcess.getServiceType(0);
-				ServiceType expected = ServiceType.Keyboard;
-				
-				assertEquals(expected, actual);
+		ArrayList<Service> services = new ArrayList<>();
+		Service s = Service.create("K", "5");
+		services.add(s);
+		
+		Process testProcess = Process.create(0, 1, services);
+		
+		// Initializing the result of the method call
+		// Trying to get the first service type of the process
+		ServiceType actual = testProcess.getServiceType(0);
+		ServiceType expected = ServiceType.Keyboard;
+		
+		assertEquals(expected, actual);
 	}
 	
 	@Test
 	void testGetServiceTypeWithMoreThan1Service() {
-				ArrayList<Service> services = new ArrayList<>();
-				Service s1 = Service.create("C", "5");
-				Service s2 = Service.create("K", "3");
-				Service s3 = Service.create("C", "7");
-				services.add(s1);
-				services.add(s2);
-				services.add(s3);
-				
-				Process testProcess = Process.create(0, 1, services);
-				
-				// Initializing the result of the method call
-				// Trying to get the second service time of the process
-				ServiceType actual = testProcess.getServiceType(1);
-				ServiceType expected = ServiceType.Keyboard;
-				
-				assertEquals(expected, actual);
-				
-				
-				// Initializing the result of the method call
-				// Trying to get the third service time of the process
-				actual = testProcess.getServiceType(2);
-				expected = ServiceType.CPU;
+		ArrayList<Service> services = new ArrayList<>();
+		Service s1 = Service.create("C", "5");
+		Service s2 = Service.create("K", "3");
+		Service s3 = Service.create("C", "7");
+		services.add(s1);
+		services.add(s2);
+		services.add(s3);
+		
+		Process testProcess = Process.create(0, 1, services);
+		
+		// Initializing the result of the method call
+		// Trying to get the second service time of the process
+		ServiceType actual = testProcess.getServiceType(1);
+		ServiceType expected = ServiceType.Keyboard;
+		
+		assertEquals(expected, actual);
+		
+		
+		// Initializing the result of the method call
+		// Trying to get the third service time of the process
+		actual = testProcess.getServiceType(2);
+		expected = ServiceType.CPU;
 
-				assertEquals(expected, actual);
+		assertEquals(expected, actual);
 	}
 	
 	@Test
@@ -159,7 +159,7 @@ public class TestProcess {
 		
 		assertEquals(expected, actual);
 	}
-
+	
 	@Test
 	// This testcase creates new Process and checks getId Method
 	void testGetId() {

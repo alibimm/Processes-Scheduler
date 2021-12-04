@@ -195,14 +195,13 @@ class TestCmdDisplay {
 	ByteArrayOutputStream bos;
 
 	private void setOutput() throws Exception {
-	    oldPrintStream = System.out;
+		oldPrintStream = System.out;
 	    bos = new ByteArrayOutputStream();
 	    System.setOut(new PrintStream(bos));
 	}
-
-	private String getOutput() { // throws Exception
+	
+	private String getOutput() {
 	    System.setOut(oldPrintStream);
 	    return bos.toString();
 	}
-
 }

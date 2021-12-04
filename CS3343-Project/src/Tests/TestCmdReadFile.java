@@ -81,7 +81,6 @@ public class TestCmdReadFile {
 			assertEquals(expected.get(i).getArrivalTime(), actual.get(i).getArrivalTime());
 			assertEquals(expected.get(i).getServicesCount(), actual.get(i).getServicesCount());
 		}
-
 	}
 
 	// Test readfile with invalid filepathname

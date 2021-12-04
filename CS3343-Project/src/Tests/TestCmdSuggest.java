@@ -5,13 +5,21 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Commands.CmdReadFile;
 import Commands.CmdSchedule;
 import Commands.CmdSuggest;
+import Project.MainSystem;
 
 class TestCmdSuggest {
+	
+	@BeforeEach
+	void setup() {
+		MainSystem system = MainSystem.getInstance();
+		system.clear();
+	}
 
 	@Test
 	void testCmdSuggestAtStart() throws Exception {
@@ -20,14 +28,10 @@ class TestCmdSuggest {
 		String[] cmdParts = new String[] {"suggest"};
 		(new CmdSuggest()).execute(cmdParts);
 		
-		String expected = "The best performing algorithm(s): Shortest Remaining Time Next\n"
-				+ "Case           Best algorithms\n"
-				+ "Case #0        SRT\n"
-				+ "Case #1        SPN, SRT\n";
+		String expected = "The best performing algorithm(s):\n"
+				+ "Case           Best algorithms\n";
 		
 		String actual = getOutput();
-		
-		System.out.println(actual);
 		
 		assertEquals(expected, actual);
 	}
@@ -51,8 +55,7 @@ class TestCmdSuggest {
 				+ "The best performing algorithm(s): Shortest Remaining Time Next\n"
 				+ "Case           Best algorithms\n"
 				+ "Case #0        SRT\n"
-				+ "Case #1        SPN, SRT\n"
-				+ "";
+				+ "Case #1        SPN, SRT\n";
 		
 		String actual = getOutput();
 		
@@ -62,15 +65,15 @@ class TestCmdSuggest {
 	// Handling console output
 	PrintStream oldPrintStream;
 	ByteArrayOutputStream bos;
-
+	
 	private void setOutput() throws Exception {
 		oldPrintStream = System.out;
-	    bos = new ByteArrayOutputStream();
-	    System.setOut(new PrintStream(bos));
+		bos = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(bos));
 	}
-
-	private String getOutput() { // throws Exception
-	    System.setOut(oldPrintStream);
-	    return bos.toString();
+	
+	private String getOutput() {
+		System.setOut(oldPrintStream);
+		return bos.toString();
 	}
 }
