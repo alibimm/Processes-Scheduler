@@ -5,13 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-
-
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Commands.CmdDisplay;
@@ -24,18 +17,13 @@ class TestCmdDisplay {
 	
 	@Test
 	void testCmdDisplayInStart() throws Exception {
-		
-		// Set the System.out output
 		setOutput();
 		
 		// Cleaning main system, because it is singleton
 		MainSystem system = MainSystem.getInstance();
 		system.clear();
 		
-		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"display"};
-		
-		// Running execute new Cmd Display
 		(new CmdDisplay()).execute(cmdParts);
 		
 		String actual = getOutput();
@@ -44,29 +32,23 @@ class TestCmdDisplay {
 				+ "Unscheduled files: 0\n";
 		
 		assertEquals(expected, actual);
-		
 	}
 	
 	@Test
 	void testCmdDisplayAfterSchedule() throws Exception {
-		
-		// Set the System.out output
 		setOutput();
 		
 		// Cleaning main system, because it is singleton
 		MainSystem system = MainSystem.getInstance();
 		system.clear();
-		
 
 		// Inputting file
 		String[] cmdParts = new String[] {"readfile", "./src/TestSamples/1-perfect.txt"};
 		(new CmdReadFile()).execute(cmdParts);
 		
-		// Running schedule
 		cmdParts = new String[] {"schedule"};
 		(new CmdSchedule()).execute(cmdParts);
 		
-		// Running display
 		cmdParts = new String[]{"display"};
 		(new CmdDisplay()).execute(cmdParts);
 		
@@ -79,29 +61,22 @@ class TestCmdDisplay {
 		String actual = getOutput();
 		
 		assertEquals(expected, actual);
-		
 	}
 	
 	@Test
 	void testCmdDisplayInCase() throws Exception {
-		
-		// Set the System.out output
 		setOutput();
 		
 		// Cleaning main system, because it is singleton
 		MainSystem system = MainSystem.getInstance();
 		system.clear();
 		
-
-		// Inputting file
 		String[] cmdParts = new String[] {"readfile", "./src/TestSamples/1-perfect.txt"};
 		(new CmdReadFile()).execute(cmdParts);
 		
-		// Running schedule
 		cmdParts = new String[] {"schedule"};
 		(new CmdSchedule()).execute(cmdParts);
 		
-		// Opening case
 		cmdParts = new String[] {"open", "0"};
 		(new CmdOpen()).execute(cmdParts);
 		
@@ -120,13 +95,10 @@ class TestCmdDisplay {
 		String actual = getOutput();
 		
 		assertEquals(expected, actual);
-		
 	}
 	
 	@Test
 	void testCmdDisplayInCaseInAlgo() throws Exception {
-		
-		// Set the System.out output
 		setOutput();
 		
 		// Cleaning main system, because it is singleton
@@ -134,19 +106,14 @@ class TestCmdDisplay {
 		system.clear();
 		
 		String expected = "";
-		
-
-		// Inputting file
 		String[] cmdParts = new String[] {"readfile", "./src/TestSamples/1-perfect.txt"};
 		(new CmdReadFile()).execute(cmdParts);
 		
-		// Running schedule
 		cmdParts = new String[] {"schedule"};
 		(new CmdSchedule()).execute(cmdParts);
 		
 		expected += "1 unscheduled inputs scheduled successfully.\n";
 		
-		// Opening case
 		cmdParts = new String[] {"open", "0"};
 		(new CmdOpen()).execute(cmdParts);
 		
@@ -159,7 +126,6 @@ class TestCmdDisplay {
 				+ "HRRN           50             0.80           39.50          48.00          19.00          24.00          \n"
 				+ "\n";
 		
-		// Opening case
 		cmdParts = new String[] {"open", "FCFS"};
 		(new CmdOpen()).execute(cmdParts);
 		
@@ -195,8 +161,6 @@ class TestCmdDisplay {
 	
 	@Test
 	void testCmdDisplayInAlgo() throws Exception {
-		
-		// Set the System.out output
 		setOutput();
 		
 		// Cleaning main system, because it is singleton
@@ -205,18 +169,14 @@ class TestCmdDisplay {
 		
 		String expected = "";
 		
-
-		// Inputting file
 		String[] cmdParts = new String[] {"readfile", "./src/TestSamples/1-perfect.txt"};
 		(new CmdReadFile()).execute(cmdParts);
 		
-		// Running schedule
 		cmdParts = new String[] {"schedule"};
 		(new CmdSchedule()).execute(cmdParts);
 		
 		expected += "1 unscheduled inputs scheduled successfully.\n";
 		
-		// Opening case
 		cmdParts = new String[] {"open", "FCFS"};
 		(new CmdOpen()).execute(cmdParts);
 		
@@ -227,22 +187,21 @@ class TestCmdDisplay {
 		String actual = getOutput();
 		
 		assertEquals(expected, actual);
-		
 	}
 	
 	
 	// Handling console output
 	PrintStream oldPrintStream;
 	ByteArrayOutputStream bos;
+
 	private void setOutput() throws Exception {
 		oldPrintStream = System.out;
 	    bos = new ByteArrayOutputStream();
 	    System.setOut(new PrintStream(bos));
-	  }
+	}
 	
 	private String getOutput() {
 	    System.setOut(oldPrintStream);
 	    return bos.toString();
-	  }
-
+	}
 }

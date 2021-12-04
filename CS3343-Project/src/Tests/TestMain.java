@@ -16,7 +16,6 @@ class TestMain {
 	void testMain() throws Exception {
 		setOutput();
 		ByteArrayInputStream in;
-		int result;
 		in = new ByteArrayInputStream(("readfile ./src/TestSamples/1-perfect.txt\n"
 				+ "schedule\n"
 				+ "custom AQT\n"
@@ -29,7 +28,7 @@ class TestMain {
 				+ "open\n"
 				+ "exit\n").getBytes());
 		System.setIn(in);
-		result = Main.main(null);
+		Main.main(null);
 		String actual = getOutput();
 		String expected = ">>1 unscheduled inputs scheduled successfully.\n"
 				+ ">Changed the best algorithm indicator to AQT.\n"
@@ -71,7 +70,6 @@ class TestMain {
 				+ "\n"
 				+ ">Command random doesn't exist. To see all commands use 'help'.\n"
 				+ ">Open Command should have more than 2 arguments\n>";
-		assertEquals(0, result);
 		assertEquals(expected,actual);
 	}
 	
@@ -79,16 +77,14 @@ class TestMain {
 	PrintStream oldPrintStream;
 	ByteArrayOutputStream bos;
 
-	  private void setOutput() throws Exception {
+	private void setOutput() throws Exception {
 	    oldPrintStream = System.out;
 	    bos = new ByteArrayOutputStream();
 	    System.setOut(new PrintStream(bos));
-	  }
+	}
 
-	  private String getOutput() { // throws Exception
+	private String getOutput() { // throws Exception
 	    System.setOut(oldPrintStream);
 	    return bos.toString();
-	  }
-	
-
+	}
 }

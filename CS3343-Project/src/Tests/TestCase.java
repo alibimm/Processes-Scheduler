@@ -99,7 +99,6 @@ class TestCase {
 		Case c1 = Case.create(0, algoList, processList);
 		setOutput();
 		c1.printTable();
-		String output = getOutput();
 		String expectedOutput = "Type           Duration       CPU Util       Avg Turnaround Max Turnaround Avg Queuing    Max Queuing    \n"
 				+ "FCFS           56             0.82           25.60          41.00          14.40          22.00          \n"
 				+ "RR             56             0.82           28.60          41.00          17.40          25.00          \n"

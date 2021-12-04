@@ -14,10 +14,8 @@ class TestCmdSchedule {
 
 	@Test
 	void testScheduleAtStart() throws Exception {
-		
 		setOutput();
 		
-		// Initializing
 		String[] cmdParts = new String[] {"schedule"};
 		(new CmdSchedule()).execute(cmdParts);
 		
@@ -28,7 +26,6 @@ class TestCmdSchedule {
 	
 	@Test
 	void testScheduleAfterUpload() throws Exception {
-		
 		setOutput();
 		
 		// Initializing
@@ -42,10 +39,6 @@ class TestCmdSchedule {
 		String actual = getOutput();
 		assertEquals(expected, actual);
 	}
-	
-	
-	
-	
 	
 	// Handling console output
 	PrintStream oldPrintStream;
@@ -61,5 +54,4 @@ class TestCmdSchedule {
 		System.setOut(oldPrintStream);
 		return bos.toString();
 	}
-
 }

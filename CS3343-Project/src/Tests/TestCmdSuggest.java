@@ -5,10 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import org.junit.Before;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,11 +23,8 @@ class TestCmdSuggest {
 
 	@Test
 	void testCmdSuggestAtStart() throws Exception {
-		
-		// Set the System output
 		setOutput();
 		
-		// Initializing inputs
 		String[] cmdParts = new String[] {"suggest"};
 		(new CmdSuggest()).execute(cmdParts);
 		
@@ -45,10 +38,8 @@ class TestCmdSuggest {
 	
 	@Test
 	void testCmdSuggestAfterSchedule() throws Exception {
-		
 		setOutput();
 		
-		// Initializing cmdParts that will be inputted
 		String[] cmdParts = new String[]{"readfile","./src/TestSamples/sample_0.txt"};
 		(new CmdReadFile()).execute(cmdParts);
 		cmdParts = new String[]{"readfile","./src/TestSamples/sample_1.txt"};
@@ -67,8 +58,8 @@ class TestCmdSuggest {
 				+ "Case #1        SPN, SRT\n";
 		
 		String actual = getOutput();
-		assertEquals(expected, actual);
 		
+		assertEquals(expected, actual);
 	}
 	
 	// Handling console output
@@ -81,10 +72,8 @@ class TestCmdSuggest {
 		System.setOut(new PrintStream(bos));
 	}
 	
-	
 	private String getOutput() {
 		System.setOut(oldPrintStream);
 		return bos.toString();
 	}
-
 }

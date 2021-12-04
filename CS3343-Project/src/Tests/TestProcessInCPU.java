@@ -95,7 +95,6 @@ class TestProcessInCPU {
 			assertEquals(actual.get(i).getStart(), expected.get(i).getStart());
 			assertEquals(actual.get(i).getEnd(), expected.get(i).getEnd());
 		}
-				
 	}
 	
 	@Test
@@ -123,7 +122,6 @@ class TestProcessInCPU {
 		
 		assertEquals(actual.getStart(), expected.getStart());
 		assertEquals(actual.getEnd(), expected.getEnd());
-
 	}
 	
 	@Test
@@ -158,10 +156,10 @@ class TestProcessInCPU {
 		testProcessInCPU.incrementCurServiceTick();
 		
 		//actual result
-		 actual = testProcessInCPU.isCurServiceOver();
+		actual = testProcessInCPU.isCurServiceOver();
 		
 		//expected result
-		 expected = true;
+		expected = true;
 		
 		assertEquals(actual, expected);
 	}
@@ -216,32 +214,16 @@ class TestProcessInCPU {
 		// Creating Process using its static create method
 		Process testProcess1 = Process.create(0, 2, testServices);
 		
-		//stub for ProcessInCPU class to setCurServiceIndex for testing
-//		ProcessInCPU_stub testProcessInCPU_stub = new ProcessInCPU_stub(testProcess1);
-		
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU = ProcessInCPU.create(testProcess1);
 		
-		//locate service index to the end of list
-//		testProcessInCPU_stub.setCurServiceIndex(1);
-		
-		
-		//actual result
-		 boolean actual = testProcessInCPU.proceedToNextService();
-		
-		//expected result
-		 boolean expected = false;
+		boolean actual = testProcessInCPU.proceedToNextService();
+		boolean expected = false;
 		
 		assertEquals(actual, expected);
+		actual = testProcessInCPU.proceedToNextService();
 		
-		//locate service index to the beginning of list
-//		testProcessInCPU.setCurServiceIndex(0);
-		
-		//actual result
-		  actual = testProcessInCPU.proceedToNextService();
-		
-		//expected result
-		  expected = true;
+		expected = true;
 		
 		assertEquals(actual, expected);
 	}
@@ -261,33 +243,18 @@ class TestProcessInCPU {
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU = ProcessInCPU.create(testProcess1);
 		
-		//locate service index to the end of list
-//		testProcessInCPU.setCurServiceIndex(1);
-//		boolean tmp = testProcessInCPU.proceedToNextService();
-		
-		//expected result
-		 int expected = testProcessInCPU.getQueuingTimeIO();
-		
-		 //execute updateQueueingTime()
-		 testProcessInCPU.updateQueueingTime();
+		int expected = testProcessInCPU.getQueuingTimeIO();
 		 
-		//actual result
-		 int actual = testProcessInCPU.getQueuingTimeIO();
+		testProcessInCPU.updateQueueingTime();
+		int actual = testProcessInCPU.getQueuingTimeIO();
 		
 		assertEquals(actual, expected);
 		
-		//locate service index to the beginning of list
-//		testProcessInCPU.setCurServiceIndex(0);
 		
-		//expected result
-		  expected = testProcessInCPU.getQueuingTimeCPU()+1;
+		expected = testProcessInCPU.getQueuingTimeCPU() + 1;
 
-		 //execute updateQueueingTime()
-		 testProcessInCPU.updateQueueingTime();
-		 
-		//actual result
-		  actual = testProcessInCPU.getQueuingTimeCPU();
-		
+		testProcessInCPU.updateQueueingTime();
+		actual = testProcessInCPU.getQueuingTimeCPU();
 		
 		assertEquals(actual, expected);
 		
@@ -301,15 +268,10 @@ class TestProcessInCPU {
 		
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess2);
+		
+		expected = testProcessInCPU2.getQueuingTimeIO() + 1;
 
-		
-		//expected result
-		expected = testProcessInCPU2.getQueuingTimeIO()+1;
-		
-		 //execute updateQueueingTime()
 		testProcessInCPU2.updateQueueingTime();
-		 
-		//actual result
 		actual = testProcessInCPU2.getQueuingTimeIO();
 		
 		assertEquals(actual, expected);
@@ -319,13 +281,13 @@ class TestProcessInCPU {
 	// Testing findShortestRemainingTimeProcess() method in ProcessInCPU class
 	void testFindShortestRemainingTimeProcess() {
 
-		//creating dummy ArrayList<ProcessInCPU>
+		// creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcesses = new ArrayList<ProcessInCPU>();
 		
-		//expected result
+		// expected result
 		int expected = -1;
 		
-		//actual result
+		// actual result
 		int actual = ProcessInCPU.findShortestRemainingTimeProcess(testProcesses);
 		
 		assertEquals(actual, expected);
@@ -341,8 +303,6 @@ class TestProcessInCPU {
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU1 = ProcessInCPU.create(testProcess1);
 		
-		//locate service index to the end of list
-//		testProcessInCPU1.setCurServiceIndex(1);
 		testProcessInCPU1.proceedToNextService();
 		
 		// Creating  ArrayList of Services to create a Process
@@ -354,10 +314,7 @@ class TestProcessInCPU {
 		Process testProcess2 = Process.create(0, 2, testServices2);
 		
 		// Creating ProcessInCPU instance using its create() static method
-		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess1);
-		
-		//locate service index to the beginning of list
-//		testProcessInCPU2.setCurServiceIndex(0);
+		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess2);
 		
 		//add these entries to ArrayList
 		testProcesses.add(testProcessInCPU1);
@@ -369,15 +326,8 @@ class TestProcessInCPU {
 		
 		assertEquals(actual, expected);
 		
-		//locate service index to the beginning of list
-//		testProcessInCPU1.setCurServiceIndex(0);
-		
-		//locate service index to the end of list
-//		testProcessInCPU2.setCurServiceIndex(1);
 		testProcessInCPU2.proceedToNextService();
-		
-		expected = 0;
-		
+		expected = 1;
 		actual = ProcessInCPU.findShortestRemainingTimeProcess(testProcesses);
 		
 		assertEquals(actual, expected);
@@ -389,11 +339,7 @@ class TestProcessInCPU {
 		
 		//creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcesses = new ArrayList<ProcessInCPU>();
-		
-		//expected result
 		int expected = -1;
-		
-		//actual result
 		int actual = ProcessInCPU.findHighestResponseRatioProcess(testProcesses);
 		
 		assertEquals(actual, expected);
@@ -418,17 +364,11 @@ class TestProcessInCPU {
 		Process testProcess2 = Process.create(0, 2, testServices2);
 		
 		// Creating ProcessInCPU instance using its create() static method
-		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess1);
-		
-
-		//add these entries to ArrayList
+		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess2);
 		testProcesses.add(testProcessInCPU1);
 		testProcesses.add(testProcessInCPU2);
 		
-		//expected result
 		expected = 0;
-		
-		//actual result
 		actual = ProcessInCPU.findHighestResponseRatioProcess(testProcesses);
 		
 		assertEquals(actual, expected);
@@ -438,45 +378,34 @@ class TestProcessInCPU {
 		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices3 = new ArrayList<Service>();
-		testServices.add(Service.create("C", "2"));
-		testServices.add(Service.create("K", "1"));
+		testServices3.add(Service.create("C", "2"));
+		testServices3.add(Service.create("K", "1"));
 		
 		// Creating Process using its static create method
 		Process testProcess3 = Process.create(0, 2, testServices3);
 		
 		// Creating ProcessInCPU instance using its create() static method
-		ProcessInCPU testProcessInCPU3 = ProcessInCPU.create(testProcess1);
+		ProcessInCPU testProcessInCPU3 = ProcessInCPU.create(testProcess3);
 		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices4 = new ArrayList<Service>();
-		testServices2.add(Service.create("C", "2"));
-		testServices2.add(Service.create("K", "1"));
-		testServices2.add(Service.create("C", "2"));
+		testServices4.add(Service.create("C", "2"));
+		testServices4.add(Service.create("K", "1"));
+		testServices4.add(Service.create("C", "2"));
 		
 		// Creating Process using its static create method
 		Process testProcess4 = Process.create(0, 2, testServices4);
 		
 		// Creating ProcessInCPU instance using its create() static method
-		ProcessInCPU testProcessInCPU4 = ProcessInCPU.create(testProcess1);
-		
-		//locate service index to the beginning of list
-//		testProcessInCPU4.setCurServiceIndex(0);
-		
-		 //execute updateQueueingTime()
-		 testProcessInCPU4.updateQueueingTime();
-
-		//locate service index to the end of list
-//		testProcessInCPU4.setCurServiceIndex(1);
-		 testProcessInCPU4.proceedToNextService();
+		ProcessInCPU testProcessInCPU4 = ProcessInCPU.create(testProcess4);
+		testProcessInCPU4.updateQueueingTime();
+		testProcessInCPU4.proceedToNextService();
 		 
 		//add these entries to ArrayList
 		testProcesses2.add(testProcessInCPU3);
 		testProcesses2.add(testProcessInCPU4);
 		
-		//expected result
 		expected = 1;
-		
-		//actual result
 		actual = ProcessInCPU.findHighestResponseRatioProcess(testProcesses2);
 		
 		assertEquals(actual, expected);
@@ -488,16 +417,12 @@ class TestProcessInCPU {
 
 		//creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcesses = new ArrayList<ProcessInCPU>();
-		
-		//expected result
+
 		int expected = -1;
-		
-		//actual result
 		int actual = ProcessInCPU.findShortestServiceNextProcess(testProcesses);
 		
 		assertEquals(actual, expected);
 		
-
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices = new ArrayList<Service>();
 		testServices.add(Service.create("C", "2"));
@@ -508,11 +433,7 @@ class TestProcessInCPU {
 		
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU1 = ProcessInCPU.create(testProcess1);
-		
-		//locate service index to the end of list
-//		testProcessInCPU1.setCurServiceIndex(1);
 		testProcessInCPU1.proceedToNextService();
-		
 		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices2 = new ArrayList<Service>();
@@ -523,21 +444,14 @@ class TestProcessInCPU {
 		Process testProcess2 = Process.create(0, 2, testServices);
 		
 		// Creating ProcessInCPU instance using its create() static method
-		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess1);
-		
-		//locate service index to the beginning of list
-//		testProcessInCPU2.setCurServiceIndex(0);
-		
-		//add these entries to ArrayList
+		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess2);
 		testProcesses.add(testProcessInCPU1);
 		testProcesses.add(testProcessInCPU2);
 		
 		expected = 0;
-		
 		actual = ProcessInCPU.findShortestServiceNextProcess(testProcesses);
 		
 		assertEquals(actual, expected);
-
 	}
 	
 	@Test
@@ -547,15 +461,11 @@ class TestProcessInCPU {
 		//creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcesses = new ArrayList<ProcessInCPU>();
 		
-		//expected result
 		int expected = -1;
-		
-		//actual result
 		int actual = ProcessInCPU.findShortestServiceNextProcess(testProcesses);
 		
 		assertEquals(actual, expected);
 		
-
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices = new ArrayList<Service>();
 		testServices.add(Service.create("C", "4"));
@@ -567,39 +477,27 @@ class TestProcessInCPU {
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU1 = ProcessInCPU.create(testProcess1);
 		
-		//locate service index to the end of list
-//		testProcessInCPU1.setCurServiceIndex(1);
 		testProcessInCPU1.proceedToNextService();
-		
-		
 		
 		// Creating  ArrayList of Services to create a Process
 		ArrayList<Service> testServices2 = new ArrayList<Service>();
 		testServices2.add(Service.create("C", "1"));
 		testServices2.add(Service.create("C", "2"));
 		
-		
 		// Creating Process using its static create method
 		Process testProcess2 = Process.create(0, 2, testServices2);
-		
+
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU2 = ProcessInCPU.create(testProcess2);
 		
-		//locate service index to the beginning of list
-//		testProcessInCPU2.setCurServiceIndex(0);
 		testProcessInCPU2.proceedToNextService();
-		
-		
-		//add these entries to ArrayList
 		testProcesses.add(testProcessInCPU1);
 		testProcesses.add(testProcessInCPU2);
 		
 		expected = 1;
-		
 		actual = ProcessInCPU.findShortestServiceNextProcess(testProcesses);
 		
 		assertEquals(actual, expected);
-
 	}
 	
 	@Test
@@ -617,10 +515,7 @@ class TestProcessInCPU {
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU = ProcessInCPU.create(testProcess1);
 		
-		//expected result
 		ServiceType expected = ServiceType.CPU;
-		
-		//actual result
 		ServiceType actual = testProcessInCPU.getCurServiceType();
 		
 		assertEquals(actual, expected);
@@ -640,11 +535,8 @@ class TestProcessInCPU {
 		
 		// Creating ProcessInCPU instance using its create() static method
 		ProcessInCPU testProcessInCPU = ProcessInCPU.create(testProcess1);
-		
-		//expected result
+
 		int expected = 0;
-		
-		//actual result
 		int actual = testProcessInCPU.getId();
 		
 		assertEquals(actual, expected);
@@ -698,7 +590,7 @@ class TestProcessInCPU {
 		testProcessesArr1.add(testProcessInCPU2);
 		testProcessesArr2.add(testProcessInCPU3);
 		
-		//execute Util.moveProcessFrom
+		//execute ProcessInCPU.moveProcessFrom
 		ProcessInCPU.moveProcessFrom(testProcessesArr1, testProcessesArr2);
 		
 		assertEquals(testProcessesArr1.get(0).getId(), 2);
@@ -709,7 +601,7 @@ class TestProcessInCPU {
 	@Test
 	// Testing updateQueingTime() method in ProcessInCPU class
 	void TestUpdateQueingTime() {
-		//creating dummy ArrayList<ProcessInCPU>
+		// creating dummy ArrayList<ProcessInCPU>
 		ArrayList<ProcessInCPU> testProcessesArr = new ArrayList<ProcessInCPU>();
 		
 		// Creating  ArrayList of Services to create a Process

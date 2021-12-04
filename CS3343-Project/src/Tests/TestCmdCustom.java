@@ -8,8 +8,6 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
 
 import Commands.CmdCustom;
-import Commands.CmdOpen;
-import Exceptions.ExCaseNotFound;
 import Exceptions.ExInsufficientCommandArguments;
 
 class TestCmdCustom {
@@ -87,8 +85,6 @@ class TestCmdCustom {
 		assertEquals(expected, actual);
 	}
 	
-	
-	
 	// Handling console output
 	PrintStream oldPrintStream;
 	ByteArrayOutputStream bos;
@@ -103,5 +99,4 @@ class TestCmdCustom {
 		System.setOut(oldPrintStream);
 		return bos.toString();
 	}
-	
 }
