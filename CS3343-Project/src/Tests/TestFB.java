@@ -142,4 +142,29 @@ public class TestFB {
 		}
 	}
 	
+	@Test
+	void testSchedule3() {
+		FB testFB = FB.getInstance();
+				
+		// Creating  ArrayList of Services to create a Process
+		ArrayList<Service> testServices0 = new ArrayList<Service>();
+		testServices0.add(Service.create("C", "25"));
+		
+		Process testProcess0 = Process.create(0, 0, testServices0);
+		
+		ArrayList<Process> processes = new ArrayList<>();
+		processes.add(testProcess0);
+		
+		ArrayList<ProcessInCPU> actual = testFB.schedule(processes);
+		
+		// Creating ProcessInCPU instance using its create() static method
+		// The sequence of adding ProcessInCPU objects is the sequence in which
+		// processes leave the CPU
+		ArrayList<ProcessInCPU> expected = new ArrayList<ProcessInCPU>();
+		expected.add(ProcessInCPU.create(testProcess0));
+		
+		for (int i = 0; i < actual.size(); i++) {
+			assertEquals(actual.get(i).getId(), expected.get(i).getId());
+		}
+	}
 }

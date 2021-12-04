@@ -53,7 +53,7 @@ public class ProcessInCPU {
 	public void updateQueueingTime() {
 		if (getCurServiceType() == ServiceType.Keyboard) {
 			this.queuingTimeIO++;
-		} else if (getCurServiceType() == ServiceType.CPU) { // TODO: check is this way correct? why access service type outside
+		} else if (getCurServiceType() == ServiceType.CPU) {
 			this.queuingTimeCPU++;
 		}
 	}
