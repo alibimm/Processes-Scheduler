@@ -1,128 +1,110 @@
 package Project;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class RR implements Algorithm {
-	private ArrayList<Process> readyQueue;
-	private ArrayList<Process> blockQueueK;
-	private ArrayList<Process> processesDone;
-	private int completeNum;
+public class RR extends Algorithm {
+	private final AlgorithmType type = AlgorithmType.RR;
+	private ArrayList<ProcessInCPU> readyQueue;
+	private ArrayList<ProcessInCPU> blockQueueIO;
+	private ArrayList<ProcessInCPU> completedProcesses;
 	private int dispatchedTick;
-	private int curProcessId;
-	private int prevProcessId;
-	private int maxLoop;
-	private int CLOCK;
-	
-	private static RR instance = new RR();
+	private int curProcessId, prevProcessId;
 	
 	private RR() {
-		readyQueue = new ArrayList<>();
-		blockQueueK = new ArrayList<>();
-		processesDone = new ArrayList<>();
-		completeNum = 0;
+		readyQueue = new ArrayList<ProcessInCPU>();
+		blockQueueIO = new ArrayList<ProcessInCPU>();
+		completedProcesses = new ArrayList<ProcessInCPU>();
 		dispatchedTick = 0;
 		curProcessId = -1;
 		prevProcessId = -1;
-		maxLoop = 1000;
-		CLOCK = 5;
 	}
 	
-	public static RR getInstance() {
-		return instance;
-	}
-
+	private static RR instance = new RR();
+	public static RR getInstance() { return instance; }
+	
 	@Override
-	public Result schedule(ArrayList<Process> processes) {
-		// storage of loggers for each process
-		HashMap<Integer, ProcessInCPU> loggerMap = new HashMap<Integer, ProcessInCPU>();
-		
-		// create new logger for each session
-		for (int i=0; i<processes.size(); i++) {
-			ProcessInCPU logger = new ProcessInCPU(processes.get(i));
-			loggerMap.put(processes.get(i).getId(), logger);
-		}
-		
+	public ArrayList<ProcessInCPU> schedule(ArrayList<Process> processes) {
+		reset();
 		
 		// main loop
-		for (int curTick=0; curTick < maxLoop; curTick++) {
+		for (int tick = 0; tick < Algorithm.MAX_LOOP; tick++) {
+			
 			// long term scheduler 
-			for (int i=0; i<processes.size(); i++) {
-				if (processes.get(i).getArrivalTime() == curTick) {
-					readyQueue.add(processes.get(i));
+			for (int i = 0; i < processes.size(); i++) {
+				if (processes.get(i).getArrivalTime() == tick) {
+					ProcessInCPU logger = ProcessInCPU.create(processes.get(i));
+                    readyQueue.add(logger);
 				}
-				
 			}
 			
 			// keyboard I/O device scheduling
-			if (!blockQueueK.isEmpty()) {
-				Process curIoProcess = blockQueueK.get(0);
+			if (!blockQueueIO.isEmpty()) {
+				ProcessInCPU curIOProcess = blockQueueIO.get(0);
 				
-				if (curIoProcess.cur_service_tick >= curIoProcess.getCurServiceTime()) {
-					curIoProcess.proceedToNextService();
-					SystemHelper.moveProcessFrom(blockQueueK, readyQueue);
-					if (!blockQueueK.isEmpty()) {
-						curIoProcess = blockQueueK.get(0);
-					} 
-					else {
-						curIoProcess = null;
-					}
+				if (curIOProcess.isCurServiceOver()) {
+					curIOProcess.proceedToNextService();
+					ProcessInCPU.moveProcessFrom(blockQueueIO, readyQueue);
 				}
-				for (int i=1; i<blockQueueK.size(); i++) {
-//                	blockQueueK.get(i).updateQueueingTime();
-                	loggerMap.get(blockQueueK.get(i).getId()).updateQueueingTime();
-                }
 				
-				if (curIoProcess != null) {
-					curIoProcess.cur_service_tick++;
-				}
+				if (!blockQueueIO.isEmpty()) blockQueueIO.get(0).incrementCurServiceTick();
+                ProcessInCPU.updateQueingTime(blockQueueIO, 1, blockQueueIO.size());
 			}
 			
-			// cpu scheduling
+			// CPU scheduling
 			if (readyQueue.isEmpty()) {
 				prevProcessId = -1;
-			} 
-			else {
-				boolean loggedWorking = false;
-				Process curProcess = readyQueue.get(0);
+			} else {
+				ProcessInCPU curProcess = readyQueue.get(0);
 				curProcessId = curProcess.getId();
 				if (curProcessId != prevProcessId) {
-					dispatchedTick = curTick;
+					dispatchedTick = tick;
 				}
 				
-				curProcess.cur_service_tick++;
-				for (int i=1; i<readyQueue.size(); i++) {
-//                	readyQueue.get(i).updateQueueingTime();
-                	loggerMap.get(readyQueue.get(i).getId()).updateQueueingTime();
-                }
-				if (curProcess.isCurServiceOver()) {
-					ManageNextServiceFCFS.manageNextServiceFcfs(curProcess, completeNum, dispatchedTick, curTick, readyQueue,
-							processesDone, blockQueueK, loggerMap.get(curProcess.getId()));
-					loggedWorking = true;
+				curProcess.incrementCurServiceTick();
+                ProcessInCPU.updateQueingTime(readyQueue, 1, readyQueue.size());
+				
+				if (curProcess.isCurServiceOver() || tick + 1 - dispatchedTick >= Algorithm.CLOCK) {
+					manageCurrentCPUProcess(tick);
 				}
 				
-				if (curTick + 1 - dispatchedTick >= CLOCK) {
-					if (loggedWorking == false) {
-						loggerMap.get(curProcess.getId()).logWorking(dispatchedTick, curTick + 1);
-						SystemHelper.moveProcessFrom(readyQueue, readyQueue);
-						prevProcessId = -1;
-						dispatchedTick = curTick + 1;
-					}
-				}
 				prevProcessId = curProcessId;
 			}
-			if (completeNum == processes.size()) {
-				break;
-			}
+			
+			if (completedProcesses.size() == processes.size()) break;
 		}
 		
-		Result res = new Result(processes);
-		res.setSequence(loggerMap);
-		
-//		res.printSequences();
-//        res.printQueueingTimes();
-		res.printStats();
-		return res;
+		return completedProcesses;
 	}
 	
+	@Override
+	protected void manageCurrentCPUProcess(int curTick) {
+    	ProcessInCPU process = readyQueue.get(0);
+    	process.logWorking(dispatchedTick, curTick + 1);
+    	
+    	if (process.isCurServiceOver()) {
+    		boolean processCompleted = process.proceedToNextService();
+            if (processCompleted) {
+            	ProcessInCPU.moveProcessFrom(readyQueue, completedProcesses); // remove current process from ready queue
+            } else if (process.getCurServiceType() == ServiceType.Keyboard) { 
+            	ProcessInCPU.moveProcessFrom(readyQueue, blockQueueIO); // next service is keyboard input, block current process
+            }
+    	} else {
+    		ProcessInCPU.moveProcessFrom(readyQueue, readyQueue);
+			dispatchedTick = curTick + 1;
+    	}
+    }
+	
+	private void reset() {
+		readyQueue.clear();
+		blockQueueIO .clear();
+		completedProcesses.clear();
+		dispatchedTick = 0;
+		curProcessId = -1;
+		prevProcessId = -1;
+	}
+	
+	@Override
+	public AlgorithmType getType() {
+		return type;
+	}
 }

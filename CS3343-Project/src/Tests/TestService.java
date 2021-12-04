@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import Project.MainSystem;
+
 import Project.Service;
 import Project.ServiceType;
 
@@ -12,35 +12,38 @@ class TestService {
 
 	@Test
 	void testGetServiceTime() {
-		
+
 		Service testService = Service.create("C", "5");
+		int actual = testService.getServiceTime();
+		int expected = 5;
 		
-		Double testServiceTime = testService.getServiceTime();
-		
-		assertEquals(testServiceTime, Double.parseDouble("5"));
-		
+		assertEquals(expected, actual);
 	}
 	
 	@Test
 	void testGetTypeIsCPU() {
-		
 		Service testService = Service.create("C", "5");
+		ServiceType actual = testService.getType();
+		ServiceType expected = ServiceType.CPU;
 		
-		ServiceType testType = testService.getType();
-		
-		assertEquals(testType, ServiceType.CPU);
-		
+		assertEquals(expected, actual);
 	}
 	
 	@Test
 	void testGetTypeIsKeyboard() {
-		
 		Service testService = Service.create("K", "5");
+		ServiceType actual = testService.getType();
+		ServiceType expected = ServiceType.Keyboard;
 		
-		ServiceType testType = testService.getType();
-		
-		assertEquals(testType, ServiceType.Keyboard);
-		
+		assertEquals(expected, actual);
 	}
+	
+	@Test
+	void testGetTypeIsNull() {
+		Service testService = Service.create("Q", "5");
+		Service actual = testService;
+		Service expected = null;
 
+		assertEquals(expected, actual);
+	}
 }
