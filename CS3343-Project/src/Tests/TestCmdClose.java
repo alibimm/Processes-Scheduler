@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import Commands.CmdClose;
 import Commands.CmdReadFile;
+import Exceptions.ExInsufficientCommandArguments;
 import Project.MainSystem;
 
 class TestCmdClose {
@@ -24,7 +25,7 @@ class TestCmdClose {
 	}
 	
 	@Test
-	void testCmdCloseInTheRoot() {
+	void testCmdCloseInTheRoot() throws ExInsufficientCommandArguments {
 		
 		MainSystem system = MainSystem.getInstance();
 		

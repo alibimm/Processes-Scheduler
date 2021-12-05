@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import Exceptions.ExInsufficientCommandArguments;
 import Exceptions.ExInvalidInput;
 import Exceptions.ExInvalidServiceType;
 import Project.Command;
@@ -13,8 +14,8 @@ import Project.Service;
 public class CmdReadFile implements Command {
 
 	@Override
-	public void execute(String[] cmdParts) {
-		
+	public void execute(String[] cmdParts) throws ExInsufficientCommandArguments {
+		if (cmdParts.length < 2) throw new ExInsufficientCommandArguments("Please, provide filepath.");
 		// Reading filepath name from user input
 		String filepathname = cmdParts[1];
 		

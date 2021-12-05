@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import Commands.CmdReadFile;
 import Commands.CmdSchedule;
 import Exceptions.ExCaseNotFound;
+import Exceptions.ExInsufficientCommandArguments;
 import Project.AlgorithmType;
 import Project.MainSystem;
 import Project.Process;
@@ -37,7 +38,7 @@ class TestMainSystem {
 	}
 	
 	@Test
-	void testMainSystem_03_createProcess() {
+	void testMainSystem_03_createProcess() throws ExInsufficientCommandArguments {
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/1-perfect.txt"});
 		Process expected = Process.create(0, 0, null);
 		Process actual = system.createProcess("0", 0, null);
@@ -53,7 +54,7 @@ class TestMainSystem {
 	}
 	
 	@Test
-	void testMainSystem_01_scheduleAlgorithms_1_Input() {
+	void testMainSystem_01_scheduleAlgorithms_1_Input() throws ExInsufficientCommandArguments {
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/1-perfect.txt"});
 		int expected = 1;
 		int actual = system.scheduleAlgorithms();
@@ -83,7 +84,7 @@ class TestMainSystem {
 	}
 	
 	@Test
-	void testMainSystem_07_openCase() throws ExCaseNotFound {
+	void testMainSystem_07_openCase() throws ExCaseNotFound, ExInsufficientCommandArguments {
 		(new CmdReadFile()).execute(new String[]{"readfile", "./src/TestSamples/1-perfect.txt"});
 		(new CmdSchedule()).execute(new String[]{"schedule"});
 		boolean expected = true;
@@ -95,7 +96,7 @@ class TestMainSystem {
 	}
 	
 	@Test
-	void testMainSystem_08_close() throws ExCaseNotFound {
+	void testMainSystem_08_close() throws ExCaseNotFound, ExInsufficientCommandArguments {
 		boolean expected = false;
 		boolean actual = system.close();
 		assertEquals(expected, actual);
@@ -167,7 +168,7 @@ class TestMainSystem {
 	}
 	
 	@Test
-	void testMainSystem_10_suggest() {
+	void testMainSystem_10_suggest() throws ExInsufficientCommandArguments {
 		HashMap<Integer, ArrayList<AlgorithmType>> expected = new HashMap<>();
 		ArrayList<AlgorithmType> wws = new ArrayList<>();
 		wws.add(AlgorithmType.SPN);

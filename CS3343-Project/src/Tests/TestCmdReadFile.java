@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import Commands.CmdReadFile;
+import Exceptions.ExInsufficientCommandArguments;
 import Exceptions.ExInvalidInput;
 import Exceptions.ExInvalidServiceType;
 import Project.MainSystem;
@@ -19,7 +20,7 @@ public class TestCmdReadFile {
 	
 	// Test right input
 	@Test
-	public void TestReadFile() throws ExInvalidServiceType, ExInvalidInput {
+	public void TestReadFile() throws ExInvalidServiceType, ExInvalidInput, ExInsufficientCommandArguments {
 		
 		MainSystem system = MainSystem.getInstance();
 		
@@ -353,6 +354,18 @@ public class TestCmdReadFile {
 		(new CmdReadFile()).execute(cmdParts);
 		String expected = "Service time should be positive integer\n";
 		String actual = getOutput();
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void TestEmptyFilePath() throws Exception {
+		String[] cmdParts = new String[]{"readfile"};
+		
+		ExInsufficientCommandArguments ex = assertThrows(ExInsufficientCommandArguments.class, () -> {
+			(new CmdReadFile()).execute(cmdParts);
+		});
+		String expected = "Please, provide filepath.";
+		String actual = ex.getMessage();
 		assertEquals(expected, actual);
 	}
 	
