@@ -5,5 +5,11 @@ The program is designed primarily for developers. Developers can create mock pro
 
 - User is able to input file with data into the system
 - User can launch scheduler after the system received input data successfully
-- Scheduling is performed using FCFS (First-Come-First-Served), RR (Round-Robin), FB (Feedback), Shortest Process Next (SPN), Shortest Remaining Time (SRT), Highest Response Ratio Next (HRRN)  scheduling algorithms 
+- Scheduling is performed using:
+  - FCFS (First-Come-First-Served), 
+  - RR (Round-Robin), FB (Feedback), 
+  - Shortest Process Next (SPN), 
+  - Shortest Remaining Time (SRT), 
+  - Highest Response Ratio Next (HRRN) 
+  scheduling algorithms 
 - System outputs all important details (turnaround time, queuing time, etc) as a result of scheduling
